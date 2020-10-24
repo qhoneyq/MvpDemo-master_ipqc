@@ -1,0 +1,91 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent</item>
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@android:color/background_dark</item>
+    </style>
+    <!--<style name="AppTheme" parent="@style/BaseAppTheme">-->
+
+    <!--</style>-->
+    <!--<style name="BaseAppTheme" parent="Theme.AppCompat.Light.NoActionBar">-->
+        <!--<item name="colorPrimary">@color/colorPrimary</item>-->
+        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+        <!--<item name="colorAccent">@color/colorAccent</item>-->
+    <!--</style>-->
+
+
+    <style name="checkdetailTextStyle" parent="Widget.AppCompat.Light.DropDownItem.Spinner">
+        <item name="android:textSize">@dimen/sp_13</item>
+        <item name="android:textColor">@color/_8A000000</item>
+        <item name="android:colorControlNormal" tools:targetApi="lollipop">@color/FFFFFF</item>
+    </style>
+
+    <style name="SpnStyle">
+        <item name="android:colorControlNormal" tools:targetApi="lollipop">#ffffff</item>
+    </style>
+
+
+    <style name="menu_ll">
+        <item name="android:paddingLeft">@dimen/dp_20</item>
+        <item name="android:paddingRight">@dimen/dp_20</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="menu_text">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_marginLeft">@dimen/dp_14</item>
+        <item name="android:textSize">@dimen/sp_15</item>
+        <item name="android:textColor">@color/de000000</item>
+    </style>
+    <!--首页模块标题字体-->
+    <style name="main_model_tv_style">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">@dimen/sp_11</item>
+        <item name="android:textColor">@color/_8A000000</item>
+        <item name="android:layout_marginTop">@dimen/dp_8</item>
+    </style>
+
+
+
+    <!--waitDialog样式-->
+    <style name="loadingDialogStyle" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@color/_00000000</item><!--设置dialog的背景-->
+        <item name="android:windowFrame">@null</item><!--Dialog的windowFrame框为无-->
+        <item name="android:windowNoTitle">true</item><!--是否显示title-->
+        <item name="android:windowIsFloating">true</item><!--是否浮现在activity之上-->
+        <item name="android:windowIsTranslucent">true</item><!--是否半透明-->
+        <item name="android:windowContentOverlay">@null</item><!--是否半透明-->
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog
+        </item><!-- 对话框是否有遮盖 -->
+        <item name="android:backgroundDimEnabled">true</item><!--背景是否模糊显示-->
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:backgroundDimAmount">0.6</item><!--背景的灰度-->
+    </style>
+
+    <!-- dialog style -->
+    <style name="MyDialog" parent="android:Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- <item name="android:backgroundDimEnabled">false</item> -->
+        <item name="android:windowBackground">@drawable/shape_dialog</item>
+    </style>
+
+
+    <style name="SplashTheme" parent="AppTheme">
+        <!-- 将splash图片设置在这，这样这张图片取代白屏 -->
+<!--        <item name="android:windowBackground">@drawable/splash</item>-->
+        <item name="android:windowFullscreen">true</item>
+        <!-- 或者是将主题设置成透明，虽然点击图标会有点小小的卡顿，但是用户体验不影响 -->
+         <item name="android:windowIsTranslucent">true</item>
+    </style>
+</resources>

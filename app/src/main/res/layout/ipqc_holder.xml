@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <youdian.ipqc.ipqc.utils.CustomHeaderView
+            android:id="@+id/headerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            binding:left_icon="@mipmap/login_icon_user" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/headerview"
+            android:background="@color/F1F5F7">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/ipqc_main_zhicheng_rv"
+                android:layout_width="@dimen/dp_120"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:layout_width="@dimen/px_1"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/ipqc_main_zhicheng_rv"
+                android:background="@color/_8A000000" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/ipqc_main_tablelist_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dp_1"
+                android:layout_toRightOf="@id/ipqc_main_zhicheng_rv"
+                android:background="@color/FFFFFF"
+                android:divider="@drawable/divider"
+                android:dividerHeight="@dimen/px_1"
+                android:padding="@dimen/dp_10" />
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>

@@ -1,0 +1,128 @@
+<resources  xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation">
+<!--    <string name="app_name">优点</string>-->
+    <string name="app_name">IPQC</string>
+    <!--<string name="app_name">优点(内部)</string>-->
+    <string name="my">我的</string>
+    <!--<string name="app">优·点(G)</string>-->
+    <string name="app">ipqc</string>
+
+    <string name="app_name_ch">点检系统</string>
+
+    <!-- login  -->
+    <string name="pnum">工号</string>
+    <string name="pw">密码</string>
+    <string name="login">登录</string>
+    <string name="regisiter">注册</string>
+    <string name="edt_pnum">请输入</string>
+    <string name="complate">请填写完整信息</string>
+    <string name="baoyang">保养</string>
+    <string name="dianjian">点检</string>
+    <string name="restore">暂存</string>
+    <string name="repeat">重复刷卡</string>
+    <string name="card_error">卡片类型不符</string>
+
+
+
+
+    <string name="chujianbiao">初件表</string>
+    <string name="xunjianbiao">巡检表</string>
+    <string name="jianchajilu">检查记录</string>
+    <string name="fanhuibiaodan">返回表单</string>
+    <string name="ipqcbiaodan">IPQC表单</string>
+    <string name="ipqcrecordlist">IPQC检验记录</string>
+    <string name="xinabie">线别：</string>
+    <string name="gongling">工令：</string>
+    <string name="snma">SN码：</string>
+    <string name="banci">版次：</string>
+    <string name="liaohao">料号：</string>
+    <string name="banbie">班别：</string>
+    <string name="saomiaosn">扫描SN</string>
+    <string name="shengchanpici">生产批次：</string>
+    <string name="jianyanshuliang">检验数量：</string>
+    <string name="chujianleixing">初件类型：</string>
+    <string name="beizhu">备注：</string>
+    <string name="jizhong">机种：</string>
+    <string name="xiugaibiaotou">修改表头</string>
+    <string name="huanxian">换线</string>
+    <string name="meiban">每班</string>
+    <string name="jianchabianzhun">检查标准</string>
+    <string name="biaotouxinxi">表头信息</string>
+    <string name="kaishijianyan">开始检验</string>
+    <string name="input_sn">请扫描SN</string>
+    <string name="input_xianbie">请输入线别</string>
+    <string name="tip_tempstore">该表头存在暂存记录，请选择是否恢复暂存？</string>
+    <string name="recover">恢复</string>
+    <string name="recover_temp">恢复暂存</string>
+    <string name="chaheshiji">查核时机:</string>
+    <string name="jianyanshijian">检验时间：</string>
+    <string name="tip_unsave">您的巡检记录还未保存，请问是否继续退出？</string>
+    <string name="quit">退出</string>
+    <string name="recovertemp_tip">检测到您在该查核时机有暂存巡检记录，请问是否选择恢复暂存并继续巡检？</string>
+
+
+    <array name="chujian_category">
+        <item>每日初件</item>
+        <item>每批初件</item>
+        <item>修機初件</item>
+        <item>物料變更</item>
+    </array>
+    
+    <string name="simplified">简体中文</string>
+    <string name="traditional">繁體中文</string>
+    <string name="none_record_pandian">当前没有盘点记录</string>
+
+    <array name="array_status_en">
+        <item>Inspected</item>
+        <item>UnCheck</item>
+        <item>Exception</item>
+        <item>InIdle</item>
+        <item>Transfer</item>
+        <item>Scrap</item>
+        <item>Reimbursement</item>
+        <item>LoanOut</item>
+        <item>Maintain</item>
+        <item>InUse</item>
+        <item>HAsset</item>
+        <item>IAsset</item>
+        <item>Model</item>
+        <item>Plant</item>
+        <item>none</item>
+    </array>
+    <array name="array_status_ch">
+        <item>已盘点</item>
+        <item>未盘点</item>
+        <item>盘点异常</item>
+        <item>闲置</item>
+        <item>移转中</item>
+        <item>报废中</item>
+        <item>待报废</item>
+        <item>外借</item>
+        <item>维修</item>
+        <item>使用中</item>
+        <item>有形资产</item>
+        <item>无形资产</item>
+        <item>自制模具</item>
+        <item>厂房工程</item>
+        <item>无</item>
+    </array>
+
+    <string name="CameraError">打开相机出错</string>
+    <string name="TooDark">环境太暗，请打开闪光灯</string>
+
+    <string name="user_login">用户登录</string>
+    <string name="empty_login">用户名和密码不能为空</string>
+    <string name="empty_dev">设备编号不能为空</string>
+    <string name="login_fail">账号或密码错误</string>
+    <string name="token_empty">登录失效，请重新登录</string>
+
+
+
+    <string name="title">电子段制程巡检</string>
+    <string name="pagetitle_chujian">电子段初件检验表</string>
+    <string name="pagetitle_xunjain">电子段巡检检验表</string>
+    <string name="title_chujian">初件检验表</string>
+    <string name="title_xunjian">巡检检验表</string>
+    <string name="storetemp">暂存记录</string>
+    <string name="failrecord">上传失败记录</string>
+</resources>

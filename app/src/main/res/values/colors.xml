@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#5A85FF</color>
+    <color name="colorPrimaryDark">#4975F3</color>
+    <color name="colorAccent">#5A85FF</color>
+    <color name="_66CBFF">#66CBFF</color>
+    <color name="_4975F3">#4975F3</color>
+    <color name="FFFFFF">#FFFFFF</color>
+    <color name="F1F5F7">#F1F5F7</color>
+    <color name="_4CFFFFFF">#4CFFFFFF</color>
+    <color name="DD000000">#DD000000</color>
+    <color name="_89000000">#89000000</color>
+    <color name="_5A85FF">#5A85FF</color>
+    <color name="fd5e72">#fd5e72</color>
+    <color name="_4D71D9">#4D71D9</color>
+    <color name="_404019">#404019</color>
+    <color name="fffefe">#fffefe</color>
+    <color name="fefefe">#fefefe</color>
+    <color name="transparent">#00000000</color>
+    <color name="_00000000">#00000000</color>
+    <color name="_000000">#000000</color>
+    <color name="_8AFFF177">#8AFFF177</color>
+    <color name="_8A4975F3">#8A4975F3</color>
+    <color name="_94b0ff">#94b0ff</color>
+    <color name="fff177">#fff177</color>
+    <color name="_95949A">#95949A</color>
+    <color name="c5ced3">#c5ced3</color>
+    <color name="_4A79F4">#4A79F4</color>
+    <color name="e7ecf2">#e7ecf2</color>
+    <color name="fef177">#fef177</color>
+    <!--外投影20%-->
+    <color name="_4d000000">#4d000000</color>
+    <color name="_4dffffff">#4dffffff</color>
+    <!--不透明度87%-->
+    <color name="de000000">#de000000</color>
+    <color name="de010101">#de010101</color>
+    <color name="_8A000000">#8A000000</color>
+    <color name="text_black">#60000000</color>
+
+    <color name="shadow">#bdbdbd</color>
+    <!-- QRCode scanner color begin -->
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="result_view">#B0000000</color>
+    <color name="viewfinder_frame">#90FFFFFF</color>
+    <color name="result_point_color">#C0FFFF00</color>
+    <color name="laser_color">#0F0</color>
+    <color name="corner_color">#00FF00</color>
+
+    <!--对话框dialog -->
+    <color name="remind_infomation_split_line_color">#FFE8E8E8</color>
+    <color name="remind_infomation_btn_ok_normal">#FF1B81FF</color>
+    <color name="remind_infomation_btn_ok_pressed">#FF0F4D9B</color>
+    <color name="remind_infomation_btn_ok_disable">#FF888888</color>
+    <color name="remind_infomation_bg_color">#FFFFFFFF</color>
+
+    <drawable name="color_user_item_normal">#FFFFFFFF</drawable>
+    <drawable name="color_user_item_pressed">#FFDDDDDD</drawable>
+
+    <color name="F56A55">#F56A55</color>
+    <color name="_2EC27B">#2EC27B</color>
+    <color name="F7F7F7">#F7F7F7</color>
+    <color name="EEEEEE">#EEEEEE</color>
+    <color name="B9BEC9">#B9BEC9</color>
+    <color name="_737A87">#737A87</color>
+    <color name="A3A9B5">#A3A9B5</color>
+    <color name="_2F394F">#2F394F</color>
+    <color name="green">#339966</color>
+    <color name="white">#FFFFFF</color>
+    <color name="Hgray">#DCDAE2</color>
+    <color name="total">#6F6E82</color>
+    <color name="triangle">#72d572</color>
+    <color name="circle">#738ffe</color>
+    <color name="rect">#e84e40</color>
+    <color name="background">#FFFFFF</color>
+    <color name="main_color">#ff9a00</color>
+    <color name="secondary_color">#466B96</color>
+    <color name="ldrawer_color">#94939E</color>
+    <color name="applyed_color">#e5e5e5</color>
+    <color name="applyed_textcolor">#c6c5c5</color>
+    <color name="_4C000000">#4C000000</color>
+    <color name="C5CED3">#C5CED3</color>
+
+
+    <color name="efeff4">#efeff4</color>
+    <color name="_333333">#333333</color>
+    <color name="cdcdcd">#CDCDCD</color>
+    <color name="efefef">#efefef</color>
+    <color name="cccccc">#cccccc</color>
+    <color name="_999999">#999999</color>s
+    <color name="_5a79b7">#5a79b7</color>
+    <color name="_666666">#666666</color>
+    <color name="c0c4ce">#c0c4ce</color>
+    <color name="_00FFFFFF">#00FFFFFF</color>
+    <color name="black_87">#de000000</color>
+    <color name="black_54">#8A000000</color>
+</resources>

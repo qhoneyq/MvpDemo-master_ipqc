@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/F1F5F7">
+
+    <include
+        android:id="@+id/ipqc_jianyan_tabletitle_title_jianyan"
+        layout="@layout/global_title" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/ipqc_jianyan_tabletitle_title_jianyan"
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:id="@+id/ipqc_jianyan_tabletitle_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/F1F5F7"
+            android:minHeight="@dimen/dp_300"
+            android:paddingLeft="@dimen/dp_15"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_15"
+            android:paddingBottom="@dimen/dp_20">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/ipqc_jianyan_tabletitle_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:text="@string/biaotouxinxi"
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/ipqc_jianyan_tabletitle_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:text="2019-09-19" />
+
+                <!--   线别 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/dp_3"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="@dimen/dp_2">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp_30"
+                        android:gravity="center_vertical|left"
+                        android:text="@string/xinabie" />
+
+                    <EditText
+                        android:id="@+id/ipqc_jianyan_tabletitle_xianbie"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_30"
+                        android:background="@drawable/edt_search_bg"
+                        android:gravity="center_vertical|left"
+                        android:text=""
+                        android:paddingLeft="@dimen/dp_8"
+                        android:singleLine="true"
+                        android:textColor="@color/_8A000000"
+                        android:textSize="@dimen/sp_13"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/dp_3"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="@dimen/dp_2">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp_30"
+                        android:gravity="center_vertical|left"
+                        android:text="@string/banbie" />
+
+                    <EditText
+                        android:id="@+id/ipqc_jianyan_tabletitle_banbie"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_30"
+                        android:layout_weight="1"
+                        android:background="@drawable/edt_search_bg"
+                        android:ellipsize="middle"
+                        android:gravity="center_vertical|left"
+                        android:paddingLeft="@dimen/dp_8"
+                        android:singleLine="true"
+                        android:textColor="@color/_8A000000"
+                        android:textSize="@dimen/sp_13" />
+                </LinearLayout>
+
+                <!-- 工令  -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/dp_3"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="@dimen/dp_2">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp_30"
+                        android:layout_alignParentEnd="true"
+                        android:layout_toRightOf="@id/ipqc_jianyan_tabletitle_xianbie"
+                        android:gravity="center_vertical|left"
+                        android:text="@string/gongling" />
+
+                    <EditText
+                        android:id="@+id/ipqc_jianyan_tabletitle_gongling"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_30"
+                        android:layout_alignParentEnd="true"
+                        android:layout_toRightOf="@id/ipqc_jianyan_tabletitle_xianbie"
+                        android:background="@drawable/edt_search_bg"
+                        android:gravity="center_vertical|left"
+                        android:paddingLeft="@dimen/dp_8"
+                        android:singleLine="true"
+                        android:textColor="@color/_8A000000"
+                        android:textSize="@dimen/sp_13" />
+                </LinearLayout>
+
+                <!-- 料号   -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/dp_3"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="@dimen/dp_2">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp_30"
+                        android:gravity="center_vertical|left"
+                        android:text="@string/liaohao" />
+
+                    <EditText
+                        android:id="@+id/ipqc_jianyan_tabletitle_liaohao"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_30"
+                        android:background="@drawable/edt_search_bg"
+                        android:gravity="center_vertical|left"
+                        android:text=""
+                        android:paddingLeft="@dimen/dp_8"
+                        android:singleLine="true"
+                        android:textColor="@color/_8A000000"
+                        android:textSize="@dimen/sp_13" />
+                </LinearLayout>
+
+                <!-- 版次   -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/dp_3"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="@dimen/dp_2">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp_30"
+                        android:layout_alignParentEnd="true"
+                        android:layout_toRightOf="@id/ipqc_jianyan_tabletitle_xianbie"
+                        android:gravity="center_vertical|left"
+                        android:text="@string/banci" />
+
+                    <EditText
+                        android:id="@+id/ipqc_jianyan_tabletitle_banci"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_30"
+                        android:layout_alignParentEnd="true"
+                        android:layout_toRightOf="@id/ipqc_jianyan_tabletitle_xianbie"
+                        android:background="@drawable/edt_search_bg"
+                        android:gravity="center_vertical|left"
+                        android:paddingLeft="@dimen/dp_8"
+                        android:singleLine="true"
+                        android:textColor="@color/_8A000000"
+                        android:textSize="@dimen/sp_13"
+                        android:text=""/>
+                </LinearLayout>
+
+                <!-- 版次   -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/dp_3"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="@dimen/dp_2">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp_30"
+                        android:layout_alignParentEnd="true"
+                        android:layout_toRightOf="@id/ipqc_jianyan_tabletitle_xianbie"
+                        android:gravity="center_vertical|left"
+                        android:text="@string/jizhong" />
+
+                    <EditText
+                        android:id="@+id/ipqc_jianyan_tabletitle_jizhong"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_30"
+                        android:layout_alignParentEnd="true"
+                        android:layout_toRightOf="@id/ipqc_jianyan_tabletitle_xianbie"
+                        android:background="@drawable/edt_search_bg"
+                        android:gravity="center_vertical|left"
+                        android:paddingLeft="@dimen/dp_8"
+                        android:singleLine="true"
+                        android:textColor="@color/_8A000000"
+                        android:textSize="@dimen/sp_13"
+                        android:text=""/>
+                </LinearLayout>
+
+
+                <!-- 生产批次-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/dp_3"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="@dimen/dp_2">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp_30"
+                        android:gravity="center_vertical|left"
+                        android:text="@string/shengchanpici" />
+
+                    <EditText
+                        android:id="@+id/ipqc_jianyan_tabletitle_shengchanpici"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_30"
+                        android:layout_weight="1"
+                        android:background="@drawable/edt_search_bg"
+                        android:gravity="center_vertical|left"
+                        android:paddingLeft="@dimen/dp_8"
+                        android:singleLine="true"
+                        android:textColor="@color/_8A000000"
+                        android:textSize="@dimen/sp_13" />
+
+
+                </LinearLayout>
+
+                <!-- 检验数量 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/dp_3"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="@dimen/dp_2">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp_30"
+                        android:gravity="center_vertical|left"
+                        android:text="@string/jianyanshuliang" />
+
+                    <EditText
+                        android:id="@+id/ipqc_jianyan_tabletitle_jianyanshuliang"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_30"
+                        android:layout_weight="1"
+                        android:background="@drawable/edt_search_bg"
+                        android:ellipsize="middle"
+                        android:gravity="center_vertical|left"
+                        android:paddingLeft="@dimen/dp_8"
+                        android:singleLine="true"
+                        android:textColor="@color/_8A000000"
+                        android:textSize="@dimen/sp_13"
+                        android:inputType="number"/>
+                </LinearLayout>
+
+
+                <!-- 备注 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/dp_3"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="@dimen/dp_2">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp_30"
+                        android:gravity="center_vertical|left"
+                        android:text="@string/beizhu" />
+
+                    <EditText
+                        android:id="@+id/ipqc_jianyan_tabletitle_beizhu"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_30"
+                        android:layout_weight="1"
+                        android:background="@drawable/edt_search_bg"
+                        android:ellipsize="middle"
+                        android:gravity="center_vertical|left"
+                        android:paddingLeft="@dimen/dp_8"
+                        android:singleLine="true"
+                        android:textColor="@color/_8A000000"
+                        android:textSize="@dimen/sp_13" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/ipqc_jianyan_tabletitle_btn_kaishijianyan"
+                android:layout_width="@dimen/dp_100"
+                android:layout_height="@dimen/dp_36"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/btn_commit_bg"
+                android:text="@string/kaishijianyan"
+                android:textColor="@color/FFFFFF" />
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto"
+
+    >
+
+    <data>
+        <variable
+            name=""
+            type="" />
+
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <youdian.ipqc.ipqc.utils.CustomHeaderView
+            android:id="@+id/home_headerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            binding:left_icon="@mipmap/login_icon_user" />
+
+        <LinearLayout
+            android:id="@+id/home_chujian"
+            android:layout_width="@dimen/dp_280"
+            android:layout_height="@dimen/dp_83"
+            android:layout_marginTop="@dimen/dp_60"
+            android:background="@drawable/bg_trans"
+            android:gravity="center_vertical"
+            android:onClick="@{}"
+            android:orientation="horizontal"
+
+            android:padding="@dimen/dp_1">
+
+            <ImageView
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_60"
+                android:layout_marginLeft="@dimen/dp_30"
+                android:layout_marginRight="@dimen/dp_20"
+                android:src="@mipmap/chujian_icon" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/title_chujian"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="@dimen/dp_280"
+            android:layout_height="@dimen/dp_40"
+            android:layout_marginTop="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+            android:id="@+id/chujian_temp"
+            android:layout_width="@dimen/dp_130"
+            android:layout_height="@dimen/dp_40"
+            android:background="@drawable/bg_btn_logout"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:src="@mipmap/ipqc_icon_save"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:text="@string/storetemp"
+                android:layout_marginLeft="@dimen/dp_6"/>
+                
+            </LinearLayout>
+
+            <LinearLayout
+            android:id="@+id/chujian_commit"
+            android:layout_width="@dimen/dp_130"
+            android:layout_height="@dimen/dp_40"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:background="@drawable/bg_btn_logout"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:src="@mipmap/ipqc_icon_save"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:text="@string/failrecord"
+                android:layout_marginLeft="@dimen/dp_6"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/home_xunjian"
+            android:layout_width="@dimen/dp_280"
+            android:layout_height="@dimen/dp_83"
+            android:layout_marginTop="@dimen/dp_65"
+            android:background="@drawable/bg_trans"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/dp_1">
+
+            <ImageView
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_60"
+                android:layout_marginLeft="@dimen/dp_30"
+                android:layout_marginRight="@dimen/dp_20"
+                android:src="@mipmap/xunjian_icon" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/title_xunjian"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="@dimen/dp_280"
+            android:layout_height="@dimen/dp_40"
+            android:layout_marginTop="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/xunjian_temp"
+                android:layout_width="@dimen/dp_130"
+                android:layout_height="@dimen/dp_40"
+                android:background="@drawable/bg_btn_logout"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_24"
+                    android:src="@mipmap/ipqc_icon_save"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:text="@string/storetemp"
+                    android:layout_marginLeft="@dimen/dp_6"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/xunjian_commit"
+                android:layout_width="@dimen/dp_130"
+                android:layout_height="@dimen/dp_40"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:background="@drawable/bg_btn_logout"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_24"
+                    android:src="@mipmap/ipqc_icon_save"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:text="@string/failrecord"
+                    android:layout_marginLeft="@dimen/dp_6"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

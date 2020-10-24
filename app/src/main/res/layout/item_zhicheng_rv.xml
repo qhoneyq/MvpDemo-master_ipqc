@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+<variable
+    name="sedata"
+    type="youdian.apk.ipqc.obsever.SEObsever" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="@dimen/dp_120"
+        android:layout_height="@dimen/dp_45"
+        android:background="@drawable/bg_ipqc_se"
+        android:layout_margin="@dimen/px_1">
+
+        <TextView
+            android:id="@+id/item_ipqc_zhicheng_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="@dimen/dp_2"
+            android:text="@={sedata.se_name}"
+            android:ellipsize="middle"
+            android:autoSizeMinTextSize="@dimen/sp_10"
+            android:textColor="@color/bg_textcolor_rb"
+            android:singleLine="true" />
+    </RelativeLayout>
+</layout>

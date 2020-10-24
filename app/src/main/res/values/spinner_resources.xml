@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="test_string_array1">
+        <item>全部</item>
+        <item>A01</item>
+        <item>A02</item>
+        <item>B01</item>
+        <item>B02</item>
+    </string-array>
+
+    <string-array name="test_string_array2">
+        <item>位置</item>
+        <item>一楼</item>
+        <item>二楼</item>
+        <item>三楼</item>
+    </string-array>
+
+    <string-array name="test_string_array3">
+        <item>设备类型</item>
+        <item>空调</item>
+        <item>电脑</item>
+        <item>电脑</item>
+    </string-array>
+
+</resources>
