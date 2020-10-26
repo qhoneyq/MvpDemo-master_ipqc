@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import youdian.apk.ipqc.R;
 import youdian.apk.ipqc.base.BaseActivity;
 import youdian.apk.ipqc.databinding.ActivityHomeBinding;
+import youdian.apk.ipqc.utils.Constans;
 import youdian.apk.ipqc.utils.UserUtils;
 
 public class ActivityHome extends BaseActivity {
@@ -49,7 +50,13 @@ public class ActivityHome extends BaseActivity {
     }
 
     public void firstCheckClick(){
+            ChujianTableActivity.startTableListActivity(this, Constans.FirstCheck);
+            finish();
+    }
 
+    public void insChecksClick(){
+            ChujianTableActivity.startTableListActivity(this, Constans.FirstCheck);
+            finish();
     }
 
 

@@ -39,7 +39,7 @@ public class ChujianTableActivity extends BaseMvpActivity<ChujianPresenter> impl
     /**
      * 静态方法跳转到当前页面
      */
-    public static void startMainActivity(Context context, String data) {
+    public static void startTableListActivity(Context context, String data) {
         Intent intent = new Intent(context, ChujianTableActivity.class);
         intent.putExtra("param", data);
         context.startActivity(intent);

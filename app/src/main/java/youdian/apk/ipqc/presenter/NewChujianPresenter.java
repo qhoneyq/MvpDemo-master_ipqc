@@ -4,12 +4,7 @@ package youdian.apk.ipqc.presenter;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 
-import com.foxconn.youdian.youdian.ipqc.contract.NewChujianContract;
-import com.foxconn.youdian.youdian.ipqc.contract.NewChujianContract.Presenter;
-import com.foxconn.youdian.youdian.ipqc.model.TableaTitle_Chujian;
-import com.foxconn.youdian.youdian.sqlite.DBServer;
-import com.foxconn.youdian.youdian.utils.Constans;
-
+import youdian.apk.ipqc.contract.NewChujianContract;
 
 /**
  * Created by Android Studio.
@@ -18,18 +13,13 @@ import com.foxconn.youdian.youdian.utils.Constans;
  * Time: 上午 9:14
  * Function:
  */
-public class NewChujianPresenter implements Presenter {
+public class NewChujianPresenter extends BasePresenter<NewChujianContract.View> implements NewChujianContract.Presenter {
 
     private NewChujianContract.View view;
 
     public NewChujianPresenter(NewChujianContract.View view) {
         this.view = view;
         view.setPresenter(this);
-    }
-
-    @Override
-    public void start() {
-        view.showSfc();
     }
 
     @Override
@@ -59,32 +49,5 @@ public class NewChujianPresenter implements Presenter {
 
     }
 
-    /**
-     *
-     */
-    @Override
-    public void showDialog(DBServer dbServer, String line_code, String table_no, String time, Drawable drawable) {
-        String table_id = dbServer.getTableId_temp(line_code, table_no, time, Constans.IPQC_XUNJIAN);
-        if (table_id != null) {
-            //存在该line_code的表头记录
-            view.showDialog(drawable, "已存在该线别的表头信息", "恢复表头信息查看或修改", table_id);
-        } else {
-            if (view.isShowingDialog()) {
-                view.hideDialog();
-            }
-        }
-    }
-
-
-    @Override
-    public void getTableTitle(DBServer dbServer, String table_id) {
-        TableaTitle_Chujian tableaTitle = dbServer.get_tabletitle(table_id);
-        view.recoverTable(tableaTitle);
-    }
-
-    @Override
-    public void recoverData(SQLiteDatabase sqLiteDatabase, DBServer dbServer, String result_id) {
-
-    }
 
 }

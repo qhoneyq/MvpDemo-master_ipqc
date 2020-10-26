@@ -48,6 +48,7 @@
     <string name="meiban">每班</string>
     <string name="jianchabianzhun">检查标准</string>
     <string name="biaotouxinxi">表头信息</string>
+    <string name="time">检验日期</string>
     <string name="kaishijianyan">开始检验</string>
     <string name="input_sn">请扫描SN</string>
     <string name="input_xianbie">请输入线别</string>

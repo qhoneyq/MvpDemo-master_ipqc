@@ -93,4 +93,6 @@
     <color name="_00FFFFFF">#00FFFFFF</color>
     <color name="black_87">#de000000</color>
     <color name="black_54">#8A000000</color>
+    <color name="gray_87">#de010101</color>
+    <color name="gray_54">#dc010101</color>
 </resources>
