@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp_20">
+
+    <ListView
+        android:id="@+id/bottom_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/c5ced3"
+        android:dividerHeight="@dimen/px_1"/>
+
+</android.support.constraint.ConstraintLayout>

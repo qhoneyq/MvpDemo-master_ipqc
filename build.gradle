@@ -7,10 +7,12 @@ buildscript {
         maven { url 'https://maven.aliyun.com/repository/public/' }
         maven { url 'https://maven.aliyun.com/repository/google/' }
         maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://jitpack.io' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.4.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0'//QRCODE
 
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -25,6 +27,13 @@ allprojects {
         maven { url 'https://maven.aliyun.com/repository/jcenter' }
         maven { url "https://jitpack.io" }
     }
+    version = '3.4.0'
+    group = 'com.journeyapps'
+//    apply plugin: 'android-sdk-manager'
+
+    ext.androidBuildTools = '28.0.3'
+    ext.androidTargetSdk = 28
+    ext.zxingCore = 'com.google.zxing:core:3.2.1'
 }
 
 task clean(type: Delete) {

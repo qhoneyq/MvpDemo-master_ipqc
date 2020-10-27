@@ -1,18 +1,43 @@
 package youdian.apk.ipqc.activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import youdian.apk.ipqc.R;
+import youdian.apk.ipqc.adapter.BottomSheetAdapter;
+import youdian.apk.ipqc.adapter.OptionBottomSheetAdapter;
 import youdian.apk.ipqc.base.BaseMvpActivity;
+import youdian.apk.ipqc.bean.Lines;
+import youdian.apk.ipqc.bean.OptionData;
 import youdian.apk.ipqc.contract.NewChujianContract;
 import youdian.apk.ipqc.databinding.ActivityIpqcTabletitleChujianBinding;
 import youdian.apk.ipqc.obsever.FirstCheckResultObserver;
 import youdian.apk.ipqc.presenter.NewChujianPresenter;
 import youdian.apk.ipqc.utils.Constans;
+
+import static youdian.apk.ipqc.utils.Constans.FLAG_LINE;
+import static youdian.apk.ipqc.utils.Constans.FLAG_SN;
+import static youdian.apk.ipqc.utils.Constans.FirstCheck;
+import static youdian.apk.ipqc.utils.Constans.REQ_PERM_CAMERA;
 
 
 /**
@@ -27,13 +52,18 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
     ActivityIpqcTabletitleChujianBinding binding;
 
     private FirstCheckResultObserver resultObserver;
+    private BottomSheetDialog dialog;
+    private BottomSheetDialog checktypedialog;
+    private BottomSheetDialog dialogshift;
 
+    private List<String> shiftList;
 
     private String title, temp_id;
     private PopupWindow popuList;            //下拉控件
     String sn, classes, work_order, line_code, part_no, edtion, product_quantity, check_quantity, chujian_type, note, machine_type, se_name, se_id, se_no, table_name, table_no, log_type;
     boolean isRecover = false;
     private String table_id;
+
     /**
      * 静态方法跳转到当前页面
      */
@@ -51,7 +81,7 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
     @Override
     public void initView() {
         Bundle bundle = getIntent().getBundleExtra("param");
-        resultObserver = (FirstCheckResultObserver) bundle.getSerializable(Constans.FirstCheck);
+        resultObserver = (FirstCheckResultObserver) bundle.getSerializable(FirstCheck);
         binding.setFirstcheck(resultObserver);
         binding.headview.setTitleText(getResources().getString(R.string.biaotouxinxi));
         binding.headview.setLeftIcon(R.mipmap.home_icon_return);
@@ -61,8 +91,9 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
                 finish();
             }
         });
-
+        dealData();
     }
+
 
     @Override
     public void showLoading() {
@@ -75,12 +106,147 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
     }
 
     @Override
-    public void showSfc() {
+    public void showError(int flag, String msg) {
 
     }
 
     @Override
-    public void hideSfc() {
+    public void setLines(List<Lines> list) {
+
+    }
+
+    /**
+     * 显示线别下拉选项
+     */
+    @Override
+    public void showLineBottomDialog(List<Lines> list) {
+        if (dialog == null) {
+            dialog = new BottomSheetDialog(this);
+            dialog = new BottomSheetDialog(this);
+        }
+        if (dialog.isShowing())
+            dialog.dismiss();
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(true);
+        View view = LayoutInflater.from(NewChujian_Activity.this).inflate(R.layout.bottom_dialog, null);
+        ListView bottom_lv = view.findViewById(R.id.bottom_lv);
+        BottomSheetAdapter adapter = new BottomSheetAdapter(list, this);
+        bottom_lv.setAdapter(adapter);
+        bottom_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                resultObserver.setLine_code(list.get(i).getLine_code());
+                resultObserver.setLine_name(list.get(i).getLine_name());
+            }
+        });
+
+        dialog.setContentView(view);
+        dialog.show();
+    }
+
+    @Override
+    public void showCheckTypeBottomDialog(List<OptionData> list) {
+        if (checktypedialog == null) {
+            checktypedialog = new BottomSheetDialog(this);
+            checktypedialog = new BottomSheetDialog(this);
+        }
+        if (checktypedialog.isShowing())
+            checktypedialog.dismiss();
+        checktypedialog.setCancelable(false);
+        checktypedialog.setCanceledOnTouchOutside(true);
+        View view = LayoutInflater.from(NewChujian_Activity.this).inflate(R.layout.bottom_dialog, null);
+        ListView bottom_lv = view.findViewById(R.id.bottom_lv);
+        OptionBottomSheetAdapter adapter = new OptionBottomSheetAdapter(list, this);
+        bottom_lv.setAdapter(adapter);
+        bottom_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                resultObserver.setChujian_type(list.get(i).getOption_value());
+                binding.chujianleixing.setText(list.get(i).getOption_name());
+            }
+        });
+
+        checktypedialog.setContentView(view);
+        checktypedialog.show();
+    }
+
+    /**
+     * 显示白晚班下拉选项
+     */
+    public void showShiftBottomDialog() {
+        if (dialogshift == null) {
+            dialogshift = new BottomSheetDialog(this);
+            dialogshift = new BottomSheetDialog(this);
+        }
+        if (dialogshift.isShowing())
+            dialogshift.dismiss();
+
+        dialogshift.setCancelable(false);
+        dialogshift.setCanceledOnTouchOutside(true);
+        View view = LayoutInflater.from(NewChujian_Activity.this).inflate(R.layout.bottom_dialog, null);
+        ListView bottom_lv = view.findViewById(R.id.bottom_lv);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                NewChujian_Activity.this, R.layout.bottom_lv_item, shiftList);
+        bottom_lv.setAdapter(adapter);
+        bottom_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                resultObserver.setShift_name(shiftList.get(i));
+            }
+        });
+
+        dialogshift.setContentView(view);
+        dialogshift.show();
+    }
+
+
+    /**
+     * 获取准备数据
+     */
+    public void dealData() {
+        //LINE
+        mPresenter.getLines(resultObserver.getSe_code());
+        binding.line.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPresenter.showBottomDialog(FLAG_LINE);
+            }
+        });
+
+        //CHECKTYPE
+        mPresenter.getSelectInfo("CHUJIAN_TYPE");
+        binding.line.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPresenter.showBottomDialog(Constans.FLAG_CHECKTYPE);
+            }
+        });
+
+        //SHIFT
+        shiftList = new ArrayList<>();
+        shiftList.add("白班");
+        shiftList.add("晚班");
+        binding.banbie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showShiftBottomDialog();
+            }
+        });
+
+        //SN
+        binding.ipqcChujianTabletitleSnBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startQrCode();
+            }
+        });
+
+        binding.commit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                commit();
+            }
+        });
 
     }
 
@@ -105,183 +271,144 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
     }
 
 
-//
-//    private void initView() {
-//        title = sp.getString(Constans.IPQC_Table_TITLE_NAME, "");
-//        title_text.setText(title);
-//        ipqc_chujian_tabletitle_time.setText(MyUtils_P.getTime(this));
-//        se_name = sp.getString(Constans.IPQC_SE_NAME, "");
-//        se_id = sp.getString(Constans.IPQC_SE_ID, "");
-//        table_name = sp.getString(Constans.IPQC_Table_TITLE_NAME, "");
-//        table_no = sp.getString(Constans.IPQC_Table_TITLE_NO, "");
-//        mpresenter.start();
-//        if (isUpdate) {
-//            isRecover = true;
-//            table_id = sp.getString(Constans.IPQC_TITLE_ID, "");
-//            mpresenter.getTableTitle(dbServer, table_id);
-//        }
-//
-//    }
-//
-//
-//    @OnClick({R.id.ipqc_chujian_tabletitle_btn_kaishijianyan, R.id.ipqc_chujian_tabletitle_sn_btn, R.id.ipqc_chujian_tabletitle_chujianleixing})
-//    public void onClick(View view) {
-//        switch (view.getId()) {
-//            case R.id.ipqc_chujian_tabletitle_sn_btn:
-//                //扫描SN
-//                startQrCode();
-//                break;
-//            case R.id.ipqc_chujian_tabletitle_btn_kaishijianyan:
-//                //开始巡检
-//                String time = MyUtils_P.getTime(this);
-////                if (ipqc_chujian_tabletitle_sn_smg.getVisibility() != View.GONE) {
-//                work_order = ipqc_chujian_tabletitle_gongling.getText().toString();
-//                line_code = ipqc_chujian_tabletitle_xianbie.getText().toString();
-//                part_no = ipqc_chujian_tabletitle_liaohao.getText().toString();
-//                edtion = ipqc_chujian_tabletitle_banci.getText().toString();
-//                product_quantity = ipqc_chujian_tabletitle_shengchanpici.getText().toString();
-////                } else {
-////                    work_order = "";
-////                    line_code = "";
-////                    part_no = "";
-////                    edtion = "";
-////                    product_quantity = "";
-////                }
-//                sn = ipqc_chujian_tabletitle_sn_tv.getText().toString();
-//                classes = ipqc_chujian_tabletitle_banbie.getText().toString();
-//                check_quantity = ipqc_chujian_tabletitle_jianyanshuliang.getText().toString();
-//                chujian_type = ipqc_chujian_tabletitle_chujianleixing.getText().toString();
-//                note = ipqc_chujian_tabletitle_beizhu.getText().toString();
-//                machine_type = ipqc_chujian_tabletitle_jizhong.getText().toString();
-//                se_no = MyUtils_IPQC.getSeNo(localData, se_id);
-//
-//                if (!isUpdate) {
-//                    log_type = Constans.IPQC_RESTORE_NONE;
-//                    if (!sn.equals("") && !sn.equals("error")) {
-//                        int category = sp.getInt(Constans.IPQC_CATEGORY, Constans.IPQC_CHUJIAN);
-//                        int table_id = dbServer.save_tabletitle_chujian(new TableaTitle_Chujian(sn, classes, work_order, line_code, part_no, edtion, product_quantity, check_quantity, chujian_type, note, machine_type, se_name, se_no, se_id, table_name, table_no, log_type, category, time), temp_id, isRecover);
-//                        sp.edit().putString(Constans.IPQC_TITLE_ID, table_id + "").commit();
-//                        Intent intent = new Intent(this, CheckDetail_Chujian_Activity.class);
-//                        intent.putExtra(Constans.IPQC_RECOVER_TEMP, isRecover);
-//                        startActivity(intent);
-//                        finish();
-//                    } else {
-//                        MyUtils.MyToast(this, getResources().getString(R.string.input_sn));
-//                    }
-//                }else{
-//                    int category = sp.getInt(Constans.IPQC_CATEGORY, Constans.IPQC_CHUJIAN);
-//                    dbServer.save_tabletitle_chujian(new TableaTitle_Chujian(sn, classes, work_order, line_code, part_no, edtion, product_quantity, check_quantity, chujian_type, note, machine_type, se_name, se_no, se_id, table_name, table_no, tableaTitle_chujian.getLog_type(), category, time), table_id, isRecover);
-////                    Intent intent = new Intent(this, CheckDetail_Chujian_Activity.class);
-////                    sp.edit().putString(Constans.IPQC_TITLE_ID, table_id).commit();
-//
-////                    intent.putExtra(Constans.IPQC_RECOVER_TEMP, isRecover);
-////                    startActivity(intent);
-////                    finish();
-//                    setResult(Constans.RSP_UPDATE_OK);
-//                    finish();
-//
-//                }
-//                break;
-//            case R.id.ipqc_chujian_tabletitle_chujianleixing:
-//                // 点击控件后显示popup窗口
-//                initSelectPopup(ipqc_chujian_tabletitle_chujianleixing, getResources().getStringArray(R.array.chujian_category));
-//                // 使用isShowing()检查popup窗口是否在显示状态
-//                if (popuList != null && !popuList.isShowing()) {
-//                    popuList.showAsDropDown(ipqc_chujian_tabletitle_chujianleixing, 0, 10);
-//                }
-//        }
-//
-//    }
-//
-//    // 开始扫码
-//    private void startQrCode() {
-//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-//            // 申请权限
-//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, Constans.REQ_PERM_CAMERA);
-//            return;
-//        }
-//        // 二维码扫码
-//        Intent intent = new Intent(this, Inventory_QRCodeScanActivity.class);
-//        startActivityForResult(intent, Constans.IPQC_RQ_CHUJIAN_SN);
-//    }
-//
-//
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-//                                           @NonNull int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        switch (requestCode) {
-//            case Constans.REQ_PERM_CAMERA:
-//                // 摄像头权限申请
-//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    // 获得授权
-//                    startQrCode();
-//                } else {
-//                    // 被禁止授权
-//                    Toast.makeText(this, "请至权限中心打开本应用的相机访问权限", Toast.LENGTH_LONG).show();
-//                }
-//                break;
-//        }
-//    }
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        //二维码扫描结果回调
-//        if (requestCode == Constans.IPQC_RQ_CHUJIAN_SN && resultCode == RESULT_OK) {
-//            Bundle bundle = data.getExtras();
-//            String scanResult = bundle.getString(Constans.INTENT_EXTRA_KEY_QR_SCAN);
-//            ipqc_chujian_tabletitle_sn_tv.setText(scanResult);
-//            sp.edit().putString(Constans.IPQC_SN, scanResult).commit();
-//            int category = sp.getInt(Constans.IPQC_CATEGORY, Constans.IPQC_CHUJIAN);
-//            mpresenter.handlerSN();
-//            String time = MyUtils_P.getTime(this);
-//            temp_id = dbServer.getTableId_temp(scanResult, table_no, time, category);
-//            if (temp_id != null) {
-//                CommonDialog dialog = null;
-//                if (dialog == null) {
-//                    dialog = new CommonDialog(this, getDrawable(R.mipmap.mine_icon_wdzl),
-//                            getString(R.string.tip_tempstore), getString(R.string.recover), getString(R.string.cancel), new CommonDialog.DialogClickListener() {
-//                        @Override
-//                        public void onDialogClick() {
-//                            //恢复暂存
-//                            TableaTitle_Chujian tableaTitle_chujian = dbServer.get_tabletitle(temp_id);
-//                            ipqc_chujian_tabletitle_sn_tv.setText(tableaTitle_chujian.getSn());
-//                            ipqc_chujian_tabletitle_banbie.setText(tableaTitle_chujian.getClasses());
-//                            ipqc_chujian_tabletitle_jianyanshuliang.setText(tableaTitle_chujian.getCheck_quantity());
-//                            ipqc_chujian_tabletitle_chujianleixing.setText(tableaTitle_chujian.getChujian_type());
-//                            ipqc_chujian_tabletitle_beizhu.setText(tableaTitle_chujian.getNote());
-//                            ipqc_chujian_tabletitle_jizhong.setText(tableaTitle_chujian.getMachine_type());
-//                            ipqc_chujian_tabletitle_gongling.setText(tableaTitle_chujian.getWork_order());
-//                            ipqc_chujian_tabletitle_xianbie.setText(tableaTitle_chujian.getLine_code());
-//                            ipqc_chujian_tabletitle_liaohao.setText(tableaTitle_chujian.getPart_no());
-//                            ipqc_chujian_tabletitle_banci.setText(tableaTitle_chujian.getEdtion());
-//                            ipqc_chujian_tabletitle_shengchanpici.setText(tableaTitle_chujian.getProduct_quantity());
-//                            ipqc_chujian_tabletitle_sn_btn.setClickable(false);
-//                            ipqc_chujian_tabletitle_sn_btn.setEnabled(false);
-//                            isRecover = true;
-//                            return;
-//                        }
-//                    }, new CommonDialog.DialogClickListener() {
-//                        @Override
-//                        public void onDialogClick() {
-//                            //删除暂存记录，不恢复
-//                            isRecover = false;
-//                            dbServer.delete_chujian_temp(temp_id);
-//                        }
-//                    });
-//                    dialog.setCanceledOnTouchOutside(false);
-//                }
-//
-//                dialog.show();
-//
-//            }
-//
-//        } else {
-//            ipqc_chujian_tabletitle_sn_tv.setText("error");
-//
-//        }
-//    }
+    /**
+     * 提交数据
+     */
+    private void commit() {
+        if (resultObserver.getSn().isEmpty()) {
+            binding.snTl.setErrorEnabled(true);
+            binding.snTl.setError(getResources().getString(R.string.sn_err));
+            return;
+        } else {
+            binding.snTl.setErrorEnabled(false);
+        }
+        if (resultObserver.getShift().isEmpty()) {
+            binding.shiftrl.setErrorEnabled(true);
+            binding.shiftrl.setError(getResources().getString(R.string.shift_err));
+            return;
+        } else {
+            binding.shiftrl.setErrorEnabled(false);
+        }
+        if (resultObserver.getWork_no().isEmpty()) {
+            binding.gonglingrl.setErrorEnabled(true);
+            binding.gonglingrl.setError(getResources().getString(R.string.workno_err));
+            return;
+        } else {
+            binding.gonglingrl.setErrorEnabled(false);
+        }
+        if (resultObserver.getWork_no().isEmpty()) {
+            binding.liaohao.setErrorEnabled(true);
+            binding.liaohao.setError(getResources().getString(R.string.workno_err));
+            return;
+        } else {
+            binding.liaohao.setErrorEnabled(false);
+        }
+        if (resultObserver.getEdition().isEmpty()) {
+            binding.banci.setErrorEnabled(true);
+            binding.banci.setError(getResources().getString(R.string.banci_err));
+            return;
+        } else {
+            binding.banci.setErrorEnabled(false);
+        }
+        if (resultObserver.getProduct_quantity().isEmpty()) {
+            binding.shengchanpici.setErrorEnabled(true);
+            binding.shengchanpici.setError(getResources().getString(R.string.banci_err));
+            return;
+        } else {
+            binding.shengchanpici.setErrorEnabled(false);
+        }
+        if (resultObserver.getLine_code().isEmpty()||resultObserver.getLine_name().isEmpty()) {
+            binding.linerl.setErrorEnabled(true);
+            binding.linerl.setError(getResources().getString(R.string.line_err));
+            return;
+        } else {
+            binding.linerl.setErrorEnabled(false);
+        }
+        if (resultObserver.getCheck_quantity().isEmpty()) {
+            binding.checkrl.setErrorEnabled(true);
+            binding.checkrl.setError(getResources().getString(R.string.checkno_err));
+            return;
+        } else {
+            binding.checkrl.setErrorEnabled(false);
+        }
+        if (resultObserver.getCheck_quantity().isEmpty()) {
+            binding.checkrl.setErrorEnabled(true);
+            binding.checkrl.setError(getResources().getString(R.string.checkno_err));
+            return;
+        } else {
+            binding.checkrl.setErrorEnabled(false);
+        }
+        if (resultObserver.getChujian_type().isEmpty()) {
+            binding.chujiantyperl.setErrorEnabled(true);
+            binding.chujiantyperl.setError(getResources().getString(R.string.chujianleixing));
+            return;
+        } else {
+            binding.chujiantyperl.setErrorEnabled(false);
+        }
+        if (resultObserver.getChujian_type().isEmpty()) {
+            binding.chujiantyperl.setErrorEnabled(true);
+            binding.chujiantyperl.setError(getResources().getString(R.string.checktype_err));
+            return;
+        } else {
+            binding.chujiantyperl.setErrorEnabled(false);
+        }
+        if (resultObserver.getMachine_type().isEmpty()) {
+            binding.jizhongrl.setErrorEnabled(true);
+            binding.jizhongrl.setError(getResources().getString(R.string.jizhong_err));
+            return;
+        } else {
+            binding.jizhongrl.setErrorEnabled(false);
+        }
+        //页面跳转
+    }
+
+
+    // 开始扫码
+    private void startQrCode() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            // 申请权限
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQ_PERM_CAMERA);
+            return;
+        }
+        // 二维码扫码
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.setOrientationLocked(false);
+        integrator.setCaptureActivity(SmallCaptureActivity.class);
+        integrator.initiateScan();
+    }
+
+    //
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case Constans.REQ_PERM_CAMERA:
+                // 摄像头权限申请
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // 获得授权
+                    startQrCode();
+                } else {
+                    // 被禁止授权
+                    Toast.makeText(this, "请至权限中心打开本应用的相机访问权限", Toast.LENGTH_LONG).show();
+                }
+                break;
+        }
+    }
+
+    //
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //二维码扫描结果回调
+        if (requestCode == IntentIntegrator.REQUEST_CODE && resultCode == RESULT_OK) {
+            IntentResult Result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+            String scanResult = Result.getContents();
+            resultObserver.setSn(scanResult);
+        } else {
+            showError(FLAG_SN, "请重新扫描");
+        }
+    }
 //
 //    /**
 //     * 点检动作下拉选择弹窗
@@ -359,33 +486,5 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
 //    public void showDialog(Drawable drawable, String contentmsg, String confirm_text, String table_id) {
 //
 //    }
-//
-//    @Override
-//    public void failed() {
-//
-//    }
-//
-//    @Override
-//    public void recoverTable(TableaTitle_Chujian tableaTitle_chujian) {
-//        this.tableaTitle_chujian = tableaTitle_chujian;
-//        ipqc_chujian_tabletitle_sn_tv.setText(tableaTitle_chujian.getSn());
-//        ipqc_chujian_tabletitle_banbie.setText(tableaTitle_chujian.getClasses());
-//        ipqc_chujian_tabletitle_jianyanshuliang.setText(tableaTitle_chujian.getCheck_quantity());
-//        ipqc_chujian_tabletitle_chujianleixing.setText(tableaTitle_chujian.getChujian_type());
-//        ipqc_chujian_tabletitle_beizhu.setText(tableaTitle_chujian.getNote());
-//        ipqc_chujian_tabletitle_jizhong.setText(tableaTitle_chujian.getMachine_type());
-//        ipqc_chujian_tabletitle_gongling.setText(tableaTitle_chujian.getWork_order());
-//        ipqc_chujian_tabletitle_xianbie.setText(tableaTitle_chujian.getLine_code());
-//        ipqc_chujian_tabletitle_liaohao.setText(tableaTitle_chujian.getPart_no());
-//        ipqc_chujian_tabletitle_banci.setText(tableaTitle_chujian.getEdtion());
-//        ipqc_chujian_tabletitle_shengchanpici.setText(tableaTitle_chujian.getProduct_quantity());
-//        ipqc_chujian_tabletitle_sn_btn.setClickable(false);
-//        ipqc_chujian_tabletitle_sn_btn.setEnabled(false);
-//        isRecover = true;
-//    }
-//
-//    @Override
-//    public void setPresenter(NewChujianContract.Presenter presenter) {
-//        mpresenter = presenter;
-//    }
+
 }

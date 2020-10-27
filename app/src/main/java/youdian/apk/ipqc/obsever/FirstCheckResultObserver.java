@@ -3,14 +3,17 @@ package youdian.apk.ipqc.obsever;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
+import java.io.Serializable;
 import java.util.List;
 
 import youdian.apk.ipqc.BR;
+import youdian.apk.ipqc.utils.Constans;
 
-public class FirstCheckResultObserver extends BaseObservable {
+public class FirstCheckResultObserver extends BaseObservable implements Serializable {
     private String sn;
     private String suggestion;
     private String shift;
+    private String shift_name;
     private String result_status;
     private String se_name;
     private String se_code;
@@ -58,7 +61,24 @@ public class FirstCheckResultObserver extends BaseObservable {
 
     public void setShift(String shift) {
         this.shift = shift;
+        if (shift.equals(Constans.Day))
+            setShift_name("白班");
+        else
+            setShift_name("晚班");
         notifyPropertyChanged(BR.shift);
+    }
+@Bindable
+    public String getShift_name() {
+        return shift_name;
+    }
+
+    public void setShift_name(String shift_name) {
+        this.shift_name = shift_name;
+        if (shift_name.equals("白班"))
+            setShift(Constans.Day);
+        else
+            setShift(Constans.Night);
+        notifyPropertyChanged(BR.shift_name);
     }
 
     @Bindable

@@ -126,4 +126,17 @@
     <string name="title_xunjian">巡检检验表</string>
     <string name="storetemp">暂存记录</string>
     <string name="failrecord">上传失败记录</string>
+
+    <string name="sn_err">请扫描SN</string>
+    <string name="line_err">请选择线别</string>
+    <string name="shift_err">请选择班别</string>
+    <string name="workno_err">请输入工令</string>
+    <string name="partno_err">请输入料号</string>
+    <string name="banci_err">请输入版次</string>
+    <string name="product_err">请输入生产批次</string>
+    <string name="checkno_err">请输入检验数量</string>
+    <string name="jizhong_err">请输入机种</string>
+    <string name="checktype_err">请选择初件类型</string>
+    <string name="jianyanpinlv">检验频率</string>
+    <string name="shiajianduan">时间段</string>
 </resources>

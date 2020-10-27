@@ -4,12 +4,11 @@ package youdian.apk.ipqc.obsever;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
-import com.example.azheng.rxjavamvpdemo.BR;
+import youdian.apk.ipqc.BR;
 
 import java.io.Serializable;
 
 import youdian.apk.ipqc.bean.HomeTableData;
-import youdian.apk.ipqc.bean.SEData;
 
 /**
  *
@@ -17,6 +16,7 @@ import youdian.apk.ipqc.bean.SEData;
 public class HomeTableObsever extends BaseObservable implements Serializable {
     private int id;
     private String se_name;
+    private String se;
     private String list_name;
     private String list_code;
 
@@ -24,6 +24,7 @@ public class HomeTableObsever extends BaseObservable implements Serializable {
     public HomeTableObsever(HomeTableData tableData) {
         this.id = tableData.getId();
         this.se_name = tableData.getSe_name();
+        this.se = tableData.getSe();
         this.list_code = tableData.getList_code();
         this.list_name = tableData.getList_name();
 
@@ -66,4 +67,13 @@ public class HomeTableObsever extends BaseObservable implements Serializable {
         this.list_code = list_code;
         notifyPropertyChanged(BR.list_code);}
 
+   @Bindable
+   public String getSe() {
+        return se;
+    }
+
+    public void setSe(String se) {
+        this.se = se;
+        notifyPropertyChanged(BR.se);
+    }
 }

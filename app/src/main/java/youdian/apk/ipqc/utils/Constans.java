@@ -25,4 +25,17 @@ public class Constans {
 
     public static String FirstCheck = "FirstCheck";
     public static String Inspection = "Inspection";
+
+    public static final String Day = "Day";
+    public static final String Night = "Night";
+
+
+    //表头页标识位
+    public static final int FLAG_LINE = 1;
+    public static final int FLAG_SN = 2;
+    public static final int FLAG_CHECKTYPE = 3;
+    public static final int FLAG_CHUJIANLEIXING = 2;
+
+    private static final int REQ_PERM_CAMERA = 100;
+
 }

@@ -1,6 +1,16 @@
 package youdian.apk.ipqc.contract;
 
 
+import com.foxconn.youdian.apk.ipqc.bean.ListResponseData;
+
+import java.util.List;
+
+import io.reactivex.rxjava3.core.Observable;
+import youdian.apk.ipqc.base.BaseView;
+import youdian.apk.ipqc.bean.Lines;
+import youdian.apk.ipqc.bean.OptionData;
+import youdian.apk.ipqc.bean.Response;
+
 /**
  * Created by Android Studio.
  * User: Administrator
@@ -11,22 +21,30 @@ package youdian.apk.ipqc.contract;
 public interface NewChujianContract {
     interface IMainModel {
 
-//        void getSFC(Callback callback);
+        Observable<Response<ListResponseData<Lines>>> getLines(String secode);
+        Observable<Response<List<OptionData>>> getSelectInfo(String selectinfos);
 
     }
 
     interface View extends BaseView {
 
         void showLoading();
+
         void hideLoading();
 
-        void  showSfc();
-        void hideSfc();
+        void showError(int flag, String msg);
+
+        void setLines(List<Lines> list);
+
+        void showLineBottomDialog(List<Lines> list);
+
+        void showCheckTypeBottomDialog(List<OptionData> list);
 
 
-//        void showDialog(Drawable drawable, String contentmsg, String confirm_text, String table_id);
         void hideDialog();
+
         boolean isShowingDialog();
+
         void failed();
 //        void recoverTable(TableaTitle_Chujian tabletitle);
 
@@ -34,10 +52,12 @@ public interface NewChujianContract {
     }
 
 
-    interface Presenter  {
+    interface Presenter {
 
-        void handlerSN();
-//        void showDialog(DBServer dbServer, String line_code, String table_no, String time, Drawable drawable);
-//        void getTableTitle(DBServer dbServer, String table_id);
-        }
+        void getLines(String secode);
+        //获取下拉值
+        void getSelectInfo(String selectinfo);
+
+        void showBottomDialog(int flag);
+    }
 }

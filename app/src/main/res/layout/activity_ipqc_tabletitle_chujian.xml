@@ -36,7 +36,7 @@
                 <TextView
                     android:id="@+id/ipqc_chujian_tabletitle_title"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_30"
+                    android:layout_height="@dimen/dp_40"
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/dp_20"
                     android:text="@string/biaotouxinxi"
@@ -46,12 +46,15 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_50"
+                    android:background="@color/white"
                     android:orientation="horizontal"
-                    android:paddingRight="@dimen/dp_20">
+                    android:paddingRight="@dimen/dp_20"
+                    android:paddingBottom="@dimen/dp_10">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/dp_10"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/dp_20"
                         android:text="@string/time"
@@ -63,19 +66,20 @@
                         android:layout_height="match_parent"
                         android:background="@drawable/bg_rg_ipqc_tv">
 
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/time"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:editable="false"
                             android:focusableInTouchMode="true"
-                            android:gravity="right"
+                            android:gravity="right|center_vertical"
                             android:hint="请选择日期"
                             android:maxLength="25"
                             android:maxLines="1"
                             android:paddingLeft="@dimen/dp_5"
                             android:textColor="@color/gray_87"
-                            android:textSize="@dimen/sp_14" />
+                            android:textSize="@dimen/sp_14"
+                            android:text="@={firstcheck.check_time}"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
@@ -84,11 +88,13 @@
                 <!-- sn -->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_40"
+                    android:layout_height="@dimen/dp_50"
                     android:layout_marginTop="@dimen/dp_10"
+                    android:background="@color/white"
                     android:orientation="horizontal"
                     android:paddingLeft="@dimen/dp_20"
-                    android:paddingRight="@dimen/dp_20">
+                    android:paddingRight="@dimen/dp_20"
+                    android:paddingBottom="@dimen/dp_10">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -100,6 +106,7 @@
                         android:textSize="@dimen/sp_14" />
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/sn_tl"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="3"
@@ -126,6 +133,7 @@
                         android:id="@+id/ipqc_chujian_tabletitle_sn_btn"
                         android:layout_width="@dimen/dp_60"
                         android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/dp_10"
                         android:background="@color/colorPrimary"
                         android:text="@string/saomiaosn"
                         android:textColor="@color/FFFFFF"
@@ -137,37 +145,41 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_10"
                     android:background="@color/white"
-                    android:divider="@color/c5ced3"
+                    android:divider="@drawable/divider"
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/dp_20"
                     android:paddingRight="@dimen/dp_20"
-                    android:showDividers="middle">
+                    android:showDividers="middle"
+                    >
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_40">
+                        android:layout_height="@dimen/dp_45"
+                        android:paddingBottom="@dimen/dp_10">
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:layout_height="@dimen/dp_30"
+                            android:layout_height="match_parent"
                             android:gravity="center_vertical|left"
+                            android:layout_marginTop="@dimen/dp_10"
                             android:text="@string/xinabie"
                             android:textColor="@color/gray_87"
                             android:textSize="@dimen/sp_14" />
 
                         <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/linerl"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_40">
+                            android:layout_height="@dimen/dp_35">
 
-                            <EditText
+                            <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/line"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:background="@drawable/edt_search_bg"
-                                android:editable="false"
+                                android:hint="@string/line_err"
                                 android:gravity="center_vertical|right"
-                                android:textColor="@color/gray_54"
                                 android:text="@={firstcheck.line_name}"
+                                android:textColor="@color/gray_54"
                                 android:textSize="@dimen/sp_14" />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -175,8 +187,8 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_10">
+                        android:layout_height="@dimen/dp_45"
+                        android:paddingBottom="@dimen/dp_10">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -185,9 +197,10 @@
                             android:gravity="center_vertical|left"
                             android:text="@string/gongling"
                             android:textColor="@color/gray_87"
-                            android:textSize="@dimen/sp_14"/>
+                            android:textSize="@dimen/sp_14" />
 
                         <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/gonglingrl"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dp_40">
 
@@ -197,17 +210,17 @@
                                 android:layout_height="match_parent"
                                 android:background="@drawable/edt_search_bg"
                                 android:gravity="center_vertical|right"
-                                android:textColor="@color/gray_54"
                                 android:text="@={firstcheck.work_no}"
-                                android:textSize="@dimen/sp_14" />
+                                android:textColor="@color/gray_54"
+                                android:textSize="@dimen/sp_14"/>
                         </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
 
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_10">
+                        android:layout_height="@dimen/dp_45"
+                        android:paddingBottom="@dimen/dp_10">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -227,8 +240,8 @@
                                 android:layout_height="match_parent"
                                 android:background="@drawable/edt_search_bg"
                                 android:gravity="center_vertical|right"
-                                android:textColor="@color/gray_54"
                                 android:text="@={firstcheck.part_no}"
+                                android:textColor="@color/gray_54"
                                 android:textSize="@dimen/sp_14" />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -236,8 +249,8 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_10">
+                        android:layout_height="@dimen/dp_45"
+                        android:paddingBottom="@dimen/dp_10">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -245,7 +258,7 @@
                             android:gravity="center_vertical|left"
                             android:text="@string/banci"
                             android:textColor="@color/gray_87"
-                            android:textSize="@dimen/sp_14"/>
+                            android:textSize="@dimen/sp_14" />
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
@@ -258,9 +271,9 @@
                                 android:background="@drawable/edt_search_bg"
                                 android:editable="false"
                                 android:gravity="center_vertical|right"
-                                android:textColor="@color/gray_54"
                                 android:text="@={firstcheck.edition}"
-                                android:textSize="@dimen/sp_14"/>
+                                android:textColor="@color/gray_54"
+                                android:textSize="@dimen/sp_14" />
                         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -268,8 +281,8 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_10">
+                        android:layout_height="@dimen/dp_45"
+                        android:paddingBottom="@dimen/dp_10">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -277,7 +290,7 @@
                             android:gravity="center_vertical|left"
                             android:text="@string/shengchanpici"
                             android:textColor="@color/gray_87"
-                            android:textSize="@dimen/sp_14"/>
+                            android:textSize="@dimen/sp_14" />
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
@@ -290,28 +303,18 @@
                                 android:background="@drawable/edt_search_bg"
                                 android:editable="false"
                                 android:gravity="center_vertical|right"
-                                android:textColor="@color/gray_54"
                                 android:text="@={firstcheck.product_quantity}"
+                                android:textColor="@color/gray_54"
                                 android:textSize="@dimen/sp_14" />
                         </com.google.android.material.textfield.TextInputLayout>
 
 
                     </LinearLayout>
 
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_10"
-                        android:orientation="vertical"
-                        android:paddingLeft="@dimen/dp_5"
-                        android:paddingTop="@dimen/dp_10"
-                        android:paddingRight="@dimen/dp_5"
-                        android:paddingBottom="@dimen/dp_10">
-
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="@dimen/dp_45"
+                            android:paddingBottom="@dimen/dp_10">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -322,6 +325,7 @@
                                 android:textSize="@dimen/sp_14" />
 
                             <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/shiftrl"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/dp_40">
 
@@ -331,16 +335,16 @@
                                     android:layout_height="match_parent"
                                     android:background="@drawable/edt_search_bg"
                                     android:gravity="center_vertical|right"
+                                    android:text="@={firstcheck.shift_name}"
                                     android:textColor="@color/gray_54"
-                                    android:text="@={firstcheck.shift}"
                                     android:textSize="@dimen/sp_14" />
                             </com.google.android.material.textfield.TextInputLayout>
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dp_10">
+                            android:layout_height="@dimen/dp_45"
+                            android:paddingBottom="@dimen/dp_10">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -348,9 +352,10 @@
                                 android:gravity="center_vertical|left"
                                 android:text="@string/jianyanshuliang"
                                 android:textColor="@color/gray_87"
-                                android:textSize="@dimen/sp_14"/>
+                                android:textSize="@dimen/sp_14" />
 
                             <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/checkrl"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/dp_40">
 
@@ -361,16 +366,16 @@
                                     android:background="@drawable/edt_search_bg"
                                     android:editable="false"
                                     android:gravity="center_vertical|right"
-                                    android:textColor="@color/gray_54"
                                     android:text="@={firstcheck.check_quantity}"
+                                    android:textColor="@color/gray_54"
                                     android:textSize="@dimen/sp_14" />
                             </com.google.android.material.textfield.TextInputLayout>
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dp_10">
+                            android:layout_height="@dimen/dp_45"
+                            android:paddingBottom="@dimen/dp_10">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -378,9 +383,10 @@
                                 android:gravity="center_vertical|left"
                                 android:text="@string/chujianleixing"
                                 android:textColor="@color/gray_87"
-                                android:textSize="@dimen/sp_14"/>
+                                android:textSize="@dimen/sp_14" />
 
                             <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/chujiantyperl"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/dp_40">
 
@@ -392,15 +398,14 @@
                                     android:editable="false"
                                     android:gravity="center_vertical|right"
                                     android:textColor="@color/gray_54"
-                                    android:text="@={firstcheck.chujian_type}"
                                     android:textSize="@dimen/sp_14" />
                             </com.google.android.material.textfield.TextInputLayout>
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dp_10">
+                            android:layout_height="@dimen/dp_45"
+                            android:paddingBottom="@dimen/dp_10">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -411,6 +416,7 @@
                                 android:textSize="@dimen/sp_14" />
 
                             <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/jizhongrl"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/dp_40">
 
@@ -421,16 +427,16 @@
                                     android:background="@drawable/edt_search_bg"
                                     android:editable="false"
                                     android:gravity="center_vertical|right"
-                                    android:textColor="@color/gray_54"
                                     android:text="@={firstcheck.machine_type}"
+                                    android:textColor="@color/gray_54"
                                     android:textSize="@dimen/sp_14" />
                             </com.google.android.material.textfield.TextInputLayout>
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dp_10">
+                            android:layout_height="@dimen/dp_45"
+                            android:paddingBottom="@dimen/dp_10">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -451,15 +457,15 @@
                                     android:background="@drawable/edt_search_bg"
                                     android:editable="false"
                                     android:gravity="center_vertical|right"
-                                    android:textColor="@color/gray_54"
                                     android:text="@={firstcheck.note}"
+                                    android:textColor="@color/gray_54"
                                     android:textSize="@dimen/sp_14" />
                             </com.google.android.material.textfield.TextInputLayout>
                         </LinearLayout>
-                    </LinearLayout>
 
 
                 </LinearLayout>
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/commit"
                     android:layout_width="match_parent"
@@ -470,8 +476,7 @@
                     android:background="@color/colorPrimary"
                     android:text="@string/kaishijianyan"
                     android:textColor="@color/FFFFFF"
-                    android:textSize="@dimen/sp_15"
-                    />
+                    android:textSize="@dimen/sp_15" />
             </LinearLayout>
         </ScrollView>
 
