@@ -36,8 +36,8 @@ public interface TableListContract {
         void setSEList(ObservableArrayList<SEObsever> seObservablelList);
 
         //主页显示表单列表
-        void setFirstTableList(ObservableArrayList<HomeTableObsever> tableObseversList);
-        void setInsTableList(ObservableArrayList<HomeTableObsever> tableObseversList);
+        void setTableList(ObservableArrayList<HomeTableObsever> tableObseversList);
+//        void setInsTableList(ObservableArrayList<HomeTableObsever> tableObseversList);
 
     }
 

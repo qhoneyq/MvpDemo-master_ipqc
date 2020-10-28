@@ -4,8 +4,8 @@
     <data>
 
         <variable
-            name="firstcheck"
-            type="youdian.apk.ipqc.obsever.FirstCheckResultObserver" />
+            name="inspection"
+            type="youdian.apk.ipqc.obsever.InsCheckResultObserver" />
 
     </data>
 
@@ -77,7 +77,7 @@
                             android:maxLength="25"
                             android:maxLines="1"
                             android:paddingLeft="@dimen/dp_5"
-                            android:text="@={firstcheck.check_time}"
+                            android:text="@={inspection.check_time}"
                             android:textColor="@color/gray_87"
                             android:textSize="@dimen/sp_14" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -122,7 +122,7 @@
                                 android:background="@drawable/edt_search_bg"
                                 android:gravity="center_vertical|right"
                                 android:hint="@string/line_err"
-                                android:text="@={firstcheck.line_name}"
+                                android:text="@={inspection.line_name}"
                                 android:textColor="@color/gray_54"
                                 android:textSize="@dimen/sp_14" />
                         </com.google.android.material.textfield.TextInputLayout>
@@ -154,7 +154,7 @@
                                 android:layout_height="match_parent"
                                 android:background="@drawable/edt_search_bg"
                                 android:gravity="center_vertical|right"
-                                android:text="@={firstcheck.work_no}"
+                                android:text="@={inspection.work_no}"
                                 android:textColor="@color/gray_54"
                                 android:textSize="@dimen/sp_14" />
                         </com.google.android.material.textfield.TextInputLayout>
@@ -184,7 +184,7 @@
                                 android:layout_height="match_parent"
                                 android:background="@drawable/edt_search_bg"
                                 android:gravity="center_vertical|right"
-                                android:text="@={firstcheck.part_no}"
+                                android:text="@={inspection.part_no}"
                                 android:textColor="@color/gray_54"
                                 android:textSize="@dimen/sp_14" />
                         </com.google.android.material.textfield.TextInputLayout>
@@ -215,7 +215,7 @@
                                 android:background="@drawable/edt_search_bg"
                                 android:editable="false"
                                 android:gravity="center_vertical|right"
-                                android:text="@={firstcheck.edition}"
+                                android:text="@={inspection.edition}"
                                 android:textColor="@color/gray_54"
                                 android:textSize="@dimen/sp_14" />
                         </com.google.android.material.textfield.TextInputLayout>
@@ -247,7 +247,7 @@
                                 android:background="@drawable/edt_search_bg"
                                 android:editable="false"
                                 android:gravity="center_vertical|right"
-                                android:text="@={firstcheck.product_quantity}"
+                                android:text="@={inspection.production_batch}"
                                 android:textColor="@color/gray_54"
                                 android:textSize="@dimen/sp_14" />
                         </com.google.android.material.textfield.TextInputLayout>
@@ -279,7 +279,7 @@
                                 android:layout_height="match_parent"
                                 android:background="@drawable/edt_search_bg"
                                 android:gravity="center_vertical|right"
-                                android:text="@={firstcheck.shift_name}"
+                                android:text="@={inspection.shift_name}"
                                 android:textColor="@color/gray_54"
                                 android:textSize="@dimen/sp_14" />
                         </com.google.android.material.textfield.TextInputLayout>
@@ -310,7 +310,7 @@
                                 android:background="@drawable/edt_search_bg"
                                 android:editable="false"
                                 android:gravity="center_vertical|right"
-                                android:text="@={firstcheck.check_quantity}"
+                                android:text="@={inspection.check_quantity}"
                                 android:textColor="@color/gray_54"
                                 android:textSize="@dimen/sp_14" />
                         </com.google.android.material.textfield.TextInputLayout>
@@ -342,7 +342,7 @@
                                 android:background="@drawable/edt_search_bg"
                                 android:editable="false"
                                 android:gravity="center_vertical|right"
-                                android:text="@={firstcheck.machine_type}"
+                                android:text="@={inspection.machine_type}"
                                 android:textColor="@color/gray_54"
                                 android:textSize="@dimen/sp_14" />
                         </com.google.android.material.textfield.TextInputLayout>
@@ -372,7 +372,7 @@
                                 android:background="@drawable/edt_search_bg"
                                 android:editable="false"
                                 android:gravity="center_vertical|right"
-                                android:text="@={firstcheck.note}"
+                                android:text="@={inspection.note}"
                                 android:textColor="@color/gray_54"
                                 android:textSize="@dimen/sp_14" />
                         </com.google.android.material.textfield.TextInputLayout>
@@ -403,7 +403,7 @@
                                 android:background="@drawable/edt_search_bg"
                                 android:editable="false"
                                 android:gravity="center_vertical|right"
-                                android:text="@={firstcheck.note}"
+                                android:text="@={inspection.frequency}"
                                 android:textColor="@color/gray_54"
                                 android:textSize="@dimen/sp_14" />
                         </com.google.android.material.textfield.TextInputLayout>
@@ -434,7 +434,7 @@
                                 android:background="@drawable/edt_search_bg"
                                 android:editable="false"
                                 android:gravity="center_vertical|right"
-                                android:text="@={firstcheck.note}"
+                                android:text="@={inspection.period}"
                                 android:textColor="@color/gray_54"
                                 android:textSize="@dimen/sp_14" />
                         </com.google.android.material.textfield.TextInputLayout>

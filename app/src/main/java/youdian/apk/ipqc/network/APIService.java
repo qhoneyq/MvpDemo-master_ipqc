@@ -16,6 +16,7 @@ import youdian.apk.ipqc.bean.OptionData;
 import youdian.apk.ipqc.bean.Response;
 import youdian.apk.ipqc.bean.SEData;
 import youdian.apk.ipqc.bean.UserData;
+import youdian.apk.ipqc.obsever.ProgressObserver;
 
 
 public interface APIService {
@@ -73,6 +74,15 @@ public interface APIService {
     @FormUrlEncoded
     @GET("selectinfos/")
     Observable<Response<List<OptionData>>> getSelectInfo(@Field("select_type") String select_type);
+
+    /**
+     * 获取工序表单
+     * @param se_code
+     * @return
+     */
+    @FormUrlEncoded
+    @GET("inschecks/")
+    Observable<Response<List<ProgressObserver>>> getFirstProgressList(@Field("first_checklist_id") String first_checklist_id);
 
 
 }

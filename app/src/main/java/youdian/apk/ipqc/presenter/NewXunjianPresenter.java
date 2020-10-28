@@ -14,6 +14,7 @@ import youdian.apk.ipqc.bean.Lines;
 import youdian.apk.ipqc.bean.OptionData;
 import youdian.apk.ipqc.bean.Response;
 import youdian.apk.ipqc.contract.NewChujianContract;
+import youdian.apk.ipqc.contract.NewXunjianContract;
 import youdian.apk.ipqc.model.NewChujianModel;
 import youdian.apk.ipqc.network.RxScheduler;
 import youdian.apk.ipqc.utils.Constans;
@@ -25,11 +26,11 @@ import youdian.apk.ipqc.utils.Constans;
  * Time: 上午 9:14
  * Function:
  */
-public class NewChujianPresenter extends BasePresenter<NewChujianContract.View> implements NewChujianContract.Presenter {
+public class NewXunjianPresenter extends BasePresenter<NewXunjianContract.View> implements NewXunjianContract.Presenter {
 
     NewChujianContract.IMainModel model;
 
-    public NewChujianPresenter() {
+    public NewXunjianPresenter() {
         model = new NewChujianModel();
     }
 
@@ -74,12 +75,9 @@ public class NewChujianPresenter extends BasePresenter<NewChujianContract.View> 
                 });
     }
 
-    //获取初件类型
+    //获取通用类型
     @Override
     public void getSelectInfo(String selectinfo) {
-        if (!isViewAttached()) {
-            return;
-        }
         model.getSelectInfo(selectinfo)
                 .compose(RxScheduler.Obs_io_main())
                 .to(mView.bindAutoDispose())//解决内存泄漏
@@ -93,7 +91,9 @@ public class NewChujianPresenter extends BasePresenter<NewChujianContract.View> 
                     public void onNext(@NonNull Response<List<OptionData>> listResponse) {
                         checkTypeList = listResponse.getData();
                         if (checkTypeList.size() < 0)
-                            mView.showError(Constans.FLAG_LINE, "初件类型为空");
+                            mView.showError(Constans.FLAG_LINE, "数值为空");
+                        else
+                            mView.showCheckTypeBottomDialog(checkTypeList);
                     }
 
                     @Override
@@ -124,12 +124,7 @@ public class NewChujianPresenter extends BasePresenter<NewChujianContract.View> 
                 else
                     mView.showError(flag, "没有可选线别");
                 break;
-            case Constans.FLAG_CHECKTYPE:
-                if (checkTypeList.size() > 0)
-                    mView.showCheckTypeBottomDialog(checkTypeList);
-                else
-                    mView.showError(flag, "没有可选初件类型");
-                break;
+
         }
 
     }

@@ -3,6 +3,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.view.View;
 
 
 import androidx.annotation.Nullable;
@@ -35,6 +36,19 @@ public class ActivityHome extends BaseActivity {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         }
+        binding.homeChujian.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                firstCheckClick();
+            }
+        });
+
+        binding.homeXunjian.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                insChecksClick();
+            }
+        });
 
 
     }
@@ -50,12 +64,12 @@ public class ActivityHome extends BaseActivity {
     }
 
     public void firstCheckClick(){
-            ChujianTableActivity.startTableListActivity(this, Constans.FirstCheck);
+            TableListActivity.startTableListActivity(this, Constans.FirstCheck);
             finish();
     }
 
     public void insChecksClick(){
-            ChujianTableActivity.startTableListActivity(this, Constans.FirstCheck);
+            TableListActivity.startTableListActivity(this, Constans.FirstCheck);
             finish();
     }
 

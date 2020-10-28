@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <youdian.ipqc.ipqc.utils.CustomHeaderView
+            android:id="@+id/heardview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/heardview"
+            android:background="@color/F1F5F7">
+
+
+            <!--  修改表头  -->
+            <RelativeLayout
+                android:id="@+id/rl_title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_rewritetitle"
+                    android:layout_width="@dimen/dp_70"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:background="@color/colorPrimary"
+                    android:text="@string/xiugaibiaotou"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_13"
+                    app:cornerRadius="@dimen/dp_2" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toLeftOf="@id/btn_rewritetitle"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dp_20">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/snma"
+                        android:textColor="@color/black_87"
+                        android:textSize="@dimen/sp_15" />
+
+                    <TextView
+                        android:id="@+id/tv_sn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/dp_5"
+                        android:paddingRight="@dimen/dp_5"
+                        android:text="XXXXXXXXXXXXXXXXXXX"
+                        android:textColor="@color/black_87"
+                        android:textSize="@dimen/sp_15" />
+
+
+                </LinearLayout>
+
+                <view
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px_1"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/divider" />
+            </RelativeLayout>
+
+            <!-- 暂存、提交 -->
+            <RelativeLayout
+                android:id="@+id/rl_count"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true">
+
+                <LinearLayout
+                    android:id="@+id/ll_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/checkedcount"
+                        android:textColor="@color/black_54"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:id="@+id/tv_checkedcount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_5"
+                        android:gravity="center"
+                        android:scaleX="1.1"
+                        android:text="0"
+                        android:textColor="@color/_5A85FF"
+                        android:textSize="@dimen/sp_20" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_5"
+                        android:gravity="center"
+                        android:scaleX="1.1"
+                        android:text="/"
+                        android:textColor="@color/_5A85FF"
+                        android:textSize="@dimen/sp_20" />
+
+                    <TextView
+                        android:id="@+id/tv_allcount"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:scaleX="1.1"
+                        android:text="5"
+                        android:layout_marginLeft="@dimen/dp_5"
+                        android:textColor="@color/_5A85FF"
+                        android:textSize="@dimen/sp_20" />
+
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_tempstore"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_40"
+                        android:layout_weight="1"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:stateListAnimator="@null"
+                        android:text="@string/restore"
+                        android:textSize="@dimen/sp_15"
+                        android:visibility="gone" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_commit"
+                        android:layout_width="@dimen/dp_110"
+                        android:layout_height="@dimen/dp_40"
+                        android:layout_marginLeft="@dimen/dp_50"
+
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:stateListAnimator="@null"
+                        android:text="@string/commit"
+                        android:textColor="@color/FFFFFF"
+                        android:textSize="@dimen/sp_15" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/rl_count"
+                android:layout_below="@id/rl_title"
+                android:orientation="horizontal">
+                <!-- 工序选择   -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_progress"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dp_20" />
+
+                <!-- 检查项 -->
+                <RelativeLayout
+                    android:id="@+id/rl_action"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@id/rv_progress"
+                    android:layout_weight="2"
+                    android:background="@color/FFFFFF"
+                    android:paddingLeft="@dimen/dp_13"
+                    android:paddingRight="@dimen/dp_13"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tv_progress_note"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/dp_10"
+                        android:paddingTop="@dimen/dp_13"
+                        android:paddingBottom="@dimen/dp_13"
+                        android:text="@string/jianchabianzhun"
+                        android:textColor="@color/black_54"
+                        android:textSize="@dimen/sp_14" />
+
+                    <View
+                        android:id="@+id/diver_split"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_1"
+                        android:layout_below="@id/tv_progress_note"
+                        android:background="@drawable/divider" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_action"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/diver_split"
+                        android:descendantFocusability="afterDescendants"
+                        android:padding="@dimen/dp_10" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_chouyang"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@id/rv_progress"
+                    android:layout_weight="2"
+                    android:background="@color/FFFFFF"
+                    android:paddingLeft="@dimen/dp_13"
+                    android:paddingRight="@dimen/dp_13"
+                    android:visibility="visible">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_scan"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_30"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/dp_13"
+                        android:text="@string/saomiaosn"
+                        android:textColor="@color/colorPrimary"
+                        app:strokeColor="@color/colorPrimary"
+                        android:background="@color/white"
+                        app:strokeWidth="@dimen/dp_1" />
+
+                    <ListView
+                        android:id="@+id/ipqc_recordlist_lv_scan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/btn_scan"
+                        android:layout_marginTop="@dimen/dp_10" />
+                </RelativeLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>

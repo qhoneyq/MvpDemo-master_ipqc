@@ -14,6 +14,7 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -58,11 +59,6 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
 
     private List<String> shiftList;
 
-    private String title, temp_id;
-    private PopupWindow popuList;            //下拉控件
-    String sn, classes, work_order, line_code, part_no, edtion, product_quantity, check_quantity, chujian_type, note, machine_type, se_name, se_id, se_no, table_name, table_no, log_type;
-    boolean isRecover = false;
-    private String table_id;
 
     /**
      * 静态方法跳转到当前页面
@@ -80,6 +76,7 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
 
     @Override
     public void initView() {
+        binding = DataBindingUtil.setContentView(this,getLayoutId());
         Bundle bundle = getIntent().getBundleExtra("param");
         resultObserver = (FirstCheckResultObserver) bundle.getSerializable(FirstCheck);
         binding.setFirstcheck(resultObserver);
@@ -144,6 +141,10 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
         dialog.show();
     }
 
+    /**
+     * 初见类型下拉
+     * @param list
+     */
     @Override
     public void showCheckTypeBottomDialog(List<OptionData> list) {
         if (checktypedialog == null) {
@@ -218,7 +219,7 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
         binding.line.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPresenter.showBottomDialog(Constans.FLAG_CHECKTYPE);
+                mPresenter.getSelectInfo(Constans.CHUJIAN_TYPE);
             }
         });
 
@@ -310,7 +311,7 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
         } else {
             binding.banci.setErrorEnabled(false);
         }
-        if (resultObserver.getProduct_quantity().isEmpty()) {
+        if (resultObserver.getProduction_batch().isEmpty()) {
             binding.shengchanpici.setErrorEnabled(true);
             binding.shengchanpici.setError(getResources().getString(R.string.banci_err));
             return;
@@ -360,6 +361,10 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
             binding.jizhongrl.setErrorEnabled(false);
         }
         //页面跳转
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constans.FirstCheck, resultObserver);
+        CheckDetail_Chujian_Activity.startActivity(this,bundle);
+        finish();
     }
 
 
@@ -409,82 +414,6 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
             showError(FLAG_SN, "请重新扫描");
         }
     }
-//
-//    /**
-//     * 点检动作下拉选择弹窗
-//     */
-//    private void initSelectPopup(final TextView tv, final String[] reference_value) {
-//        View contentView = LayoutInflater.from(this).inflate(R.layout.populist_style, null);
-//        popuList = new PopupWindow(contentView, tv.getWidth(), ViewGroup.LayoutParams.WRAP_CONTENT, true);
-//        popuList.setContentView(contentView);
-////        popuList = new PopupWindow(mTypeLv, tv.getWidth(), ActionBar.LayoutParams.WRAP_CONTENT, true);
-//        popuList.setElevation(30);
-//        popuList.setBackgroundDrawable(new BitmapDrawable());
-//        popuList.setFocusable(true);
-//        popuList.setOutsideTouchable(true);
-//        ListView mTypeLv = contentView.findViewById(R.id.populist_lv);
-//        // 设置适配器
-//        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, reference_value);
-//        mTypeLv.setAdapter(adapter);
-//
-//        // 设置ListView点击事件监听
-//        mTypeLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                // 在这里获取item数据
-//                String value = getResources().getStringArray(R.array.chujian_category)[position];
-//                // 把选择的数据展示对应的TextView上
-//                tv.setText(value);
-//                // 选择完后关闭popup窗口
-//                popuList.dismiss();
-//            }
-//        });
-//
-//        popuList.setOnDismissListener(new PopupWindow.OnDismissListener()
-//
-//        {
-//            @Override
-//            public void onDismiss() {
-//                // 关闭popup窗口
-//                popuList.dismiss();
-//            }
-//        });
-//    }
-//
-//    @Override
-//    public void showLoading() {
-//        waitDialog.show();
-//    }
-//
-//    @Override
-//    public void hideLoading() {
-//        waitDialog.dismiss();
-//    }
-//
-//
-//    @Override
-//    public void hideDialog() {
-//
-//    }
-//
-//    @Override
-//    public boolean isShowingDialog() {
-//        return false;
-//    }
-//
-//    @Override
-//    public void showSfc() {
-//        ipqc_chujian_tabletitle_sn_smg.setVisibility(View.VISIBLE);
-//    }
-//
-//    @Override
-//    public void hideSfc() {
-//        ipqc_chujian_tabletitle_sn_smg.setVisibility(View.GONE);
-//    }
-//
-//    @Override
-//    public void showDialog(Drawable drawable, String contentmsg, String confirm_text, String table_id) {
-//
-//    }
+
 
 }

@@ -71,42 +71,9 @@
     
     <string name="simplified">简体中文</string>
     <string name="traditional">繁體中文</string>
-    <string name="none_record_pandian">当前没有盘点记录</string>
 
-    <array name="array_status_en">
-        <item>Inspected</item>
-        <item>UnCheck</item>
-        <item>Exception</item>
-        <item>InIdle</item>
-        <item>Transfer</item>
-        <item>Scrap</item>
-        <item>Reimbursement</item>
-        <item>LoanOut</item>
-        <item>Maintain</item>
-        <item>InUse</item>
-        <item>HAsset</item>
-        <item>IAsset</item>
-        <item>Model</item>
-        <item>Plant</item>
-        <item>none</item>
-    </array>
-    <array name="array_status_ch">
-        <item>已盘点</item>
-        <item>未盘点</item>
-        <item>盘点异常</item>
-        <item>闲置</item>
-        <item>移转中</item>
-        <item>报废中</item>
-        <item>待报废</item>
-        <item>外借</item>
-        <item>维修</item>
-        <item>使用中</item>
-        <item>有形资产</item>
-        <item>无形资产</item>
-        <item>自制模具</item>
-        <item>厂房工程</item>
-        <item>无</item>
-    </array>
+
+
 
     <string name="CameraError">打开相机出错</string>
     <string name="TooDark">环境太暗，请打开闪光灯</string>
@@ -139,4 +106,8 @@
     <string name="checktype_err">请选择初件类型</string>
     <string name="jianyanpinlv">检验频率</string>
     <string name="shiajianduan">时间段</string>
+
+
+    <string name="checkedcount">已检查项: </string>
+    <string name="commit">提交</string>
 </resources>

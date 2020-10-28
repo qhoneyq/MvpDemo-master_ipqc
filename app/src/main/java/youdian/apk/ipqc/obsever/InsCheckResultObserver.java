@@ -9,14 +9,13 @@ import java.util.List;
 import youdian.apk.ipqc.BR;
 import youdian.apk.ipqc.utils.Constans;
 
-public class FirstCheckResultObserver extends BaseObservable implements Serializable {
-    private String sn;
+public class InsCheckResultObserver extends BaseObservable implements Serializable {
     private String suggestion;
-    private String shift;
-    private String shift_name;
     private String result_status;
     private String se_name;
     private String se_code;
+    private String shift;
+    private String shift_name;
     private String line_name;
     private String line_code;
     private String work_no;
@@ -24,35 +23,17 @@ public class FirstCheckResultObserver extends BaseObservable implements Serializ
     private String edition;
     private String production_batch;
     private String check_quantity;
-    private String chujian_type;
     private String note;
     private String machine_type;
-    private String first_checklist_name;
-    private String first_checklist_code;
+    private String ins_checklist_name;
+    private String ins_checklist_code;
     private String check_person;
     private String check_time;
     private String sign_status;
-    private List<String> first_result_details;
+    private List<String> inspection_result_details;
 
-    @Bindable
-    public String getSn() {
-        return sn;
-    }
-
-    public void setSn(String sn) {
-        this.sn = sn;
-    notifyPropertyChanged(BR.sn);
-    }
-
-    @Bindable
-    public String getSuggestion() {
-        return suggestion;
-    }
-
-    public void setSuggestion(String suggestion) {
-        this.suggestion = suggestion;
-        notifyPropertyChanged(BR.suggestion);
-    }
+    private String frequency;
+    private String period;
 
     @Bindable
     public String getShift() {
@@ -67,7 +48,7 @@ public class FirstCheckResultObserver extends BaseObservable implements Serializ
             setShift_name("晚班");
         notifyPropertyChanged(BR.shift);
     }
-@Bindable
+    @Bindable
     public String getShift_name() {
         return shift_name;
     }
@@ -79,6 +60,17 @@ public class FirstCheckResultObserver extends BaseObservable implements Serializ
         else
             setShift(Constans.Night);
         notifyPropertyChanged(BR.shift_name);
+    }
+
+
+    @Bindable
+    public String getSuggestion() {
+        return suggestion;
+    }
+
+    public void setSuggestion(String suggestion) {
+        this.suggestion = suggestion;
+        notifyPropertyChanged(BR.suggestion);
     }
 
     @Bindable
@@ -161,15 +153,7 @@ public class FirstCheckResultObserver extends BaseObservable implements Serializ
         notifyPropertyChanged(BR.edition);
     }
 
-    @Bindable
-    public String getProduction_batch() {
-        return production_batch;
-    }
 
-    public void setProduction_batch(String production_batch) {
-        this.production_batch = production_batch;
-        notifyPropertyChanged(BR.production_batch);
-    }
 
     @Bindable
     public String getCheck_quantity() {
@@ -179,16 +163,6 @@ public class FirstCheckResultObserver extends BaseObservable implements Serializ
     public void setCheck_quantity(String check_quantity) {
         this.check_quantity = check_quantity;
         notifyPropertyChanged(BR.check_quantity);
-    }
-
-    @Bindable
-    public String getChujian_type() {
-        return chujian_type;
-    }
-
-    public void setChujian_type(String chujian_type) {
-        this.chujian_type = chujian_type;
-        notifyPropertyChanged(BR.chujian_type);
     }
 
     @Bindable
@@ -211,25 +185,6 @@ public class FirstCheckResultObserver extends BaseObservable implements Serializ
         notifyPropertyChanged(BR.machine_type);
     }
 
-    @Bindable
-    public String getFirst_checklist_name() {
-        return first_checklist_name;
-    }
-
-    public void setFirst_checklist_name(String first_checklist_name) {
-        this.first_checklist_name = first_checklist_name;
-        notifyPropertyChanged(BR.first_checklist_name);
-    }
-
-    @Bindable
-    public String getFirst_checklist_code() {
-        return first_checklist_code;
-    }
-
-    public void setFirst_checklist_code(String first_checklist_code) {
-        this.first_checklist_code = first_checklist_code;
-        notifyPropertyChanged(BR.first_checklist_code);
-    }
 
     @Bindable
     public String getCheck_person() {
@@ -262,13 +217,59 @@ public class FirstCheckResultObserver extends BaseObservable implements Serializ
     }
 
     @Bindable
-    public List<String> getFirst_result_details() {
-        return first_result_details;
+    public String getProduction_batch() {
+        return production_batch;
     }
 
-    public void setFirst_result_details(List<String> first_result_details) {
-        this.first_result_details = first_result_details;
-        notifyPropertyChanged(BR.first_result_details);
+    public void setProduction_batch(String production_batch) {
+        this.production_batch = production_batch;
+    notifyPropertyChanged(BR.production_batch);}
+
+    @Bindable
+    public String getIns_checklist_name() {
+        return ins_checklist_name;
     }
 
+    public void setIns_checklist_name(String ins_checklist_name) {
+        this.ins_checklist_name = ins_checklist_name;
+        notifyPropertyChanged(BR.ins_checklist_name);
+}
+
+    @Bindable
+    public String getIns_checklist_code() {
+        return ins_checklist_code;
+    }
+
+
+    public void setIns_checklist_code(String ins_checklist_code) {
+        this.ins_checklist_code = ins_checklist_code;
+        notifyPropertyChanged(BR.inspection_result_details);
+}
+
+    @Bindable
+    public List<String> getInspection_result_details() {
+        return inspection_result_details; }
+
+    public void setInspection_result_details(List<String> inspection_result_details) {
+        this.inspection_result_details = inspection_result_details;
+        notifyPropertyChanged(BR.inspection_result_details);
+        }
+
+   @Bindable
+   public String getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(String frequency) {
+        this.frequency = frequency;
+   notifyPropertyChanged(BR.frequency); }
+
+    @Bindable
+    public String getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(String period) {
+        this.period = period;
+    notifyPropertyChanged(BR.period);}
 }

@@ -1,18 +1,15 @@
 package youdian.apk.ipqc.contract;
 
-import android.database.sqlite.SQLiteDatabase;
 
 
-import com.foxconn.youdian.apk.ipqc.activity.BaseView;
-import com.foxconn.youdian.apk.ipqc.presenter.BasePresenter;
-import com.foxconn.youdian.youdian.bean.CheckAction;
-import com.foxconn.youdian.youdian.bean.Currency;
-import com.foxconn.youdian.youdian.ipqc.model.IpqcAction;
-import com.foxconn.youdian.youdian.sqlite.DBServer;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Observable;
 import okhttp3.Callback;
+import youdian.apk.ipqc.base.BaseView;
+import youdian.apk.ipqc.bean.Response;
+import youdian.apk.ipqc.obsever.ProgressObserver;
 
 /**
  * Created by Android Studio.
@@ -24,29 +21,22 @@ import okhttp3.Callback;
 public interface CheckDetailContract_CHUJIAN {
 
     interface IModel {
-        void getdata(Callback callback);
+        //获取初件工序
+        Observable<Response<List<ProgressObserver>>> getProgress(String first_checklist_id);
     }
 
-    interface View extends BaseView<Presenter> {
+    interface View extends BaseView {
         void showLoading();
         void hideLoading();
-
-        void setGongxuList(List<Currency> data);
-        void setActionNum(String data);
-
-        void setActionList(List<IpqcAction> list, List<CheckAction> list_detail);
+        void setProgress(List<ProgressObserver> list);
 
     }
 
 
     interface Presenter extends BasePresenter {
 
-        void recoverData(SQLiteDatabase sqLiteDatabase, DBServer dbServer, String result_id);
-        void getGongxuList(SQLiteDatabase sqLiteDatabase, String table_id);
-        void getAction(SQLiteDatabase sqLiteDatabase, String process_id);
-//        void tempstore(SQLiteDatabase sqLiteDatabase, DBServer dbServer,String table_id);
-        void commit(SQLiteDatabase sqLiteDatabase, DBServer dbServer, String table_id, String flag);
-        void getCheckAction(Object action_id, String desc, String action_result, String note, String action_cycle,
-                            String action_value, String time, String process_id, String process_name);
+      void getProgress(String first_checklist_id);
+      void getProgress(String first_checklist_id);
+
     }
 }

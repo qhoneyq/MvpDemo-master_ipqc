@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ObservableArrayList;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,29 +20,30 @@ import youdian.apk.ipqc.contract.TableListContract;
 import youdian.apk.ipqc.databinding.IpqcHolderBinding;
 import youdian.apk.ipqc.obsever.FirstCheckResultObserver;
 import youdian.apk.ipqc.obsever.HomeTableObsever;
+import youdian.apk.ipqc.obsever.InsCheckResultObserver;
 import youdian.apk.ipqc.obsever.SEObsever;
 import youdian.apk.ipqc.presenter.TableListPresenter;
 import youdian.apk.ipqc.utils.Constans;
 import youdian.apk.ipqc.utils.UserUtils;
 import youdian.apk.ipqc.utils.Utils;
 
-public class ChujianTableActivity extends BaseMvpActivity<TableListPresenter> implements TableListContract.View {
+public class TableListActivity extends BaseMvpActivity<TableListPresenter> implements TableListContract.View {
 
     private IpqcHolderBinding binding;
     private ZhichengAdapter seAdapter;
     private TableListAdapter tableListAdapter;
     private ObservableArrayList<SEObsever> seObservablelList;
     private ObservableArrayList<HomeTableObsever> tableObseversList;
-    private int flag;//初件 or 巡检
+    private String flag;//初件 or 巡检
 
     private FirstCheckResultObserver firstCheckResult;//初件记录，首页确定se name and code,checklist name and code ,and checkpersion
-    private FirstCheckResultObserver InsCheckResult;//巡检记录，首页确定se name and code,checklist name and code ,and checkpersion
+    private InsCheckResultObserver InsCheckResult;//巡检记录，首页确定se name and code,checklist name and code ,and checkpersion
 
     /**
      * 静态方法跳转到当前页面
      */
     public static void startTableListActivity(Context context, String data) {
-        Intent intent = new Intent(context, ChujianTableActivity.class);
+        Intent intent = new Intent(context, TableListActivity.class);
         intent.putExtra("param", data);
         context.startActivity(intent);
     }
@@ -54,7 +56,13 @@ public class ChujianTableActivity extends BaseMvpActivity<TableListPresenter> im
 
     @Override
     public void initView() {
-        binding.headerview.setTitleText(getResources().getString(R.string.pagetitle_chujian));
+        binding = DataBindingUtil.setContentView(this,getLayoutId());
+        flag = getIntent().getStringExtra("param");
+        if (flag.equals(Constans.FirstCheck)) {
+            binding.headerview.setTitleText(getResources().getString(R.string.pagetitle_chujian));
+        } else
+            binding.headerview.setTitleText(getResources().getString(R.string.pagetitle_xunjain));
+
         binding.headerview.setLeftIcon(R.mipmap.home_icon_return);
         binding.headerview.setLeftClick(new View.OnClickListener() {
             @Override
@@ -87,7 +95,10 @@ public class ChujianTableActivity extends BaseMvpActivity<TableListPresenter> im
         if (seAdapter == null) {
             seAdapter = new ZhichengAdapter();
             seAdapter.setOnItemClickListener(itemZhichengRvBinding -> {
-                mPresenter.getTableList(itemZhichengRvBinding.getSedata().getSe_code(), Constans.FirstCheck);
+                if (flag.equals(Constans.FirstCheck))
+                    mPresenter.getFirstTableList(itemZhichengRvBinding.getSedata().getSe_code());
+                else
+                    mPresenter.getInsTableList(itemZhichengRvBinding.getSedata().getSe_code());
             });
             binding.ipqcMainZhichengRv.setAdapter(seAdapter);
         }
@@ -96,53 +107,44 @@ public class ChujianTableActivity extends BaseMvpActivity<TableListPresenter> im
 
 
     @Override
-    public void setFirstTableList(ObservableArrayList<HomeTableObsever> tableObseversList) {
+    public void setTableList(ObservableArrayList<HomeTableObsever> tableObseversList) {
         binding.ipqcMainTablelistRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         binding.ipqcMainTablelistRv.setItemAnimator(new DefaultItemAnimator());
         if (tableListAdapter == null) {
             tableListAdapter = new TableListAdapter();
             tableListAdapter.setOnItemClickListener(itemHometableRvBinding -> {
-                firstCheckResult = new FirstCheckResultObserver();
-                firstCheckResult.setCheck_person(UserUtils.getInstance().getPnum());
-                firstCheckResult.setSe_name(itemHometableRvBinding.getTableitem().getSe_name());
-                firstCheckResult.setSe_code(itemHometableRvBinding.getTableitem().getSe());
-                firstCheckResult.setFirst_checklist_name(itemHometableRvBinding.getTableitem().getList_name());
-                firstCheckResult.setFirst_checklist_code(itemHometableRvBinding.getTableitem().getList_code());
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("param",  firstCheckResult);
-                //跳转表头
-                NewChujian_Activity.startActivity(this,bundle);
-                finish();
+                if (flag.equals(Constans.FirstCheck)){
+                    firstCheckResult = new FirstCheckResultObserver();
+                    firstCheckResult.setCheck_person(UserUtils.getInstance().getPnum());
+                    firstCheckResult.setSe_name(itemHometableRvBinding.getTableitem().getSe_name());
+                    firstCheckResult.setSe_code(itemHometableRvBinding.getTableitem().getSe());
+                    firstCheckResult.setFirst_checklist_name(itemHometableRvBinding.getTableitem().getList_name());
+                    firstCheckResult.setFirst_checklist_code(itemHometableRvBinding.getTableitem().getList_code());
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(Constans.FirstCheck, firstCheckResult);
+                    //跳转表头
+                    NewChujian_Activity.startActivity(this, bundle);
+                    finish();
+                }else {
+                    InsCheckResult = new InsCheckResultObserver();
+                    InsCheckResult.setCheck_person(UserUtils.getInstance().getPnum());
+                    InsCheckResult.setSe_name(itemHometableRvBinding.getTableitem().getSe_name());
+                    InsCheckResult.setSe_code(itemHometableRvBinding.getTableitem().getSe());
+                    InsCheckResult.setFirst_checklist_name(itemHometableRvBinding.getTableitem().getList_name());
+                    InsCheckResult.setFirst_checklist_code(itemHometableRvBinding.getTableitem().getList_code());
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(Constans.Inspection, InsCheckResult);
+                    //跳转表头
+                    NewChujian_Activity.startActivity(this, bundle);
+                    finish();
+                }
+
             });
             binding.ipqcMainTablelistRv.setAdapter(tableListAdapter);
         }
         tableListAdapter.refresh(tableObseversList);
     }
 
-
-    @Override
-    public void setInsTableList(ObservableArrayList<HomeTableObsever> tableObseversList) {
-        binding.ipqcMainTablelistRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        binding.ipqcMainTablelistRv.setItemAnimator(new DefaultItemAnimator());
-        if (tableListAdapter == null) {
-            tableListAdapter = new TableListAdapter();
-            tableListAdapter.setOnItemClickListener(itemHometableRvBinding -> {
-                firstCheckResult = new FirstCheckResultObserver();
-                firstCheckResult.setCheck_person(UserUtils.getInstance().getPnum());
-                firstCheckResult.setSe_name(itemHometableRvBinding.getTableitem().getSe_name());
-                firstCheckResult.setSe_code(itemHometableRvBinding.getTableitem().getSe());
-                firstCheckResult.setFirst_checklist_name(itemHometableRvBinding.getTableitem().getList_name());
-                firstCheckResult.setFirst_checklist_code(itemHometableRvBinding.getTableitem().getList_code());
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("param",  firstCheckResult);
-                //跳转表头
-                NewChujian_Activity.startActivity(this,bundle);
-                finish();
-            });
-            binding.ipqcMainTablelistRv.setAdapter(tableListAdapter);
-        }
-        tableListAdapter.refresh(tableObseversList);
-    }
 
 
     @Override

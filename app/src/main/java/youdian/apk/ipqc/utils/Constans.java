@@ -25,9 +25,12 @@ public class Constans {
 
     public static String FirstCheck = "FirstCheck";
     public static String Inspection = "Inspection";
+    public static String Shift = "SHIFT";
 
     public static final String Day = "Day";
     public static final String Night = "Night";
+    public static final String CHUJIAN_TYPE = "CHUJIAN_TYPE";
+    public static final String Frequency = "Frequency";
 
 
     //表头页标识位
