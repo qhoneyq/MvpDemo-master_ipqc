@@ -32,7 +32,7 @@ public class FirstCheckResultObserver extends BaseObservable implements Serializ
     private String check_person;
     private String check_time;
     private String sign_status;
-    private List<String> first_result_details;
+    private List<FirstCheckItemObserver> first_result_details;
 
     @Bindable
     public String getSn() {
@@ -262,11 +262,11 @@ public class FirstCheckResultObserver extends BaseObservable implements Serializ
     }
 
     @Bindable
-    public List<String> getFirst_result_details() {
+    public List<FirstCheckItemObserver> getFirst_result_details() {
         return first_result_details;
     }
 
-    public void setFirst_result_details(List<String> first_result_details) {
+    public void setFirst_result_details(List<FirstCheckItemObserver> first_result_details) {
         this.first_result_details = first_result_details;
         notifyPropertyChanged(BR.first_result_details);
     }

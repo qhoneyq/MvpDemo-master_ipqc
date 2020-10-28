@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ct_tv_tip"
+    android:layout_width="@dimen/dp_233"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:elevation="@dimen/dp_10"
+    android:padding="@dimen/dp_20"
+    android:text="1.整箱物料要有原始料号标签，且字迹清晰完整；是否有IQC检验合格标签
+2.零数箱物料，如果没有原始料号，要有零数料号标识单（标识单上的料号，版次，工单号，数量要正确无误）"
+    android:textColor="@color/gray_87"
+    android:textSize="@dimen/sp_13" />

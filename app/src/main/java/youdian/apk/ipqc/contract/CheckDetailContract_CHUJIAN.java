@@ -1,15 +1,21 @@
 package youdian.apk.ipqc.contract;
 
 
+import android.drm.ProcessedData;
 
+import androidx.databinding.ObservableList;
+
+import com.foxconn.youdian.apk.ipqc.bean.ListResponseData;
 
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
-import okhttp3.Callback;
 import youdian.apk.ipqc.base.BaseView;
+import youdian.apk.ipqc.bean.FirstCheckList;
 import youdian.apk.ipqc.bean.Response;
+import youdian.apk.ipqc.obsever.FirstCheckItemObserver;
 import youdian.apk.ipqc.obsever.ProgressObserver;
+
 
 /**
  * Created by Android Studio.
@@ -21,22 +27,27 @@ import youdian.apk.ipqc.obsever.ProgressObserver;
 public interface CheckDetailContract_CHUJIAN {
 
     interface IModel {
-        //获取初件工序
-        Observable<Response<List<ProgressObserver>>> getProgress(String first_checklist_id);
+        //获取初件工序及检验项
+        Observable<Response<FirstCheckList>> getCheckListData(String first_checklist_id);
+
+        Observable<Response<ListResponseData<ProgressObserver>>> getProcess(String first_checklist_id);
     }
 
     interface View extends BaseView {
         void showLoading();
+
         void hideLoading();
-        void setProgress(List<ProgressObserver> list);
+
+        void setCheckListData(ObservableList<FirstCheckItemObserver> list);
+        void setprocess(ObservableList<ProgressObserver> list);
 
     }
 
 
     interface Presenter extends BasePresenter {
 
-      void getProgress(String first_checklist_id);
-      void getProgress(String first_checklist_id);
+        void getProcess(String first_checklist_id);
+        void getCheckListData(String first_checklist_id);
 
     }
 }

@@ -20,6 +20,7 @@ import youdian.apk.ipqc.adapter.ZhichengAdapter;
 import youdian.apk.ipqc.base.BaseMvpActivity;
 import youdian.apk.ipqc.contract.CheckDetailContract_CHUJIAN;
 import youdian.apk.ipqc.databinding.ActivityFirstcheckdetailBinding;
+import youdian.apk.ipqc.obsever.FirstCheckItemObserver;
 import youdian.apk.ipqc.obsever.FirstCheckResultObserver;
 import youdian.apk.ipqc.obsever.ProgressObserver;
 import youdian.apk.ipqc.presenter.CheckDetailPresenter_CHUJIAN;
@@ -109,7 +110,24 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
      * @param list
      */
     @Override
-    public void setProgress(List<ProgressObserver> list) {
+    public void setprocess(ObservableList<ProgressObserver> list) {
+        binding.rvProgress.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        binding.rvProgress.setItemAnimator(new DefaultItemAnimator());
+        if (progressAdapter == null) {
+            progressAdapter = new ProgressAdapter();
+            progressAdapter.setOnItemClickListener(itemProgressRvBinding -> {
+                    mPresenter.getInsTableList(itemProgressRvBinding.getProgressdata().getProcess_code());
+            });
+            binding.rvProgress.setAdapter(progressAdapter);
+        }
+        progressAdapter.refresh((ObservableList<ProgressObserver>) list);
+    }
+/**
+     * 显示检验项列表
+     * @param list
+     */
+    @Override
+    public void setCheckListData(ObservableList<FirstCheckItemObserver> list) {
         binding.rvProgress.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         binding.rvProgress.setItemAnimator(new DefaultItemAnimator());
         if (progressAdapter == null) {
@@ -121,6 +139,7 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
         }
         progressAdapter.refresh((ObservableList<ProgressObserver>) list);
     }
+
 
 }
 

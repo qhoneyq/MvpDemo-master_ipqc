@@ -65,6 +65,8 @@ dependencies {
 
     //JSON解析
     implementation 'com.alibaba:fastjson:1.2.62'
+    implementation 'com.google.code.gson:gson:2.8.4'
+
     //优化adapter
     implementation 'com.github.xiaohaozi9825:adapter_plus:1.9'
 

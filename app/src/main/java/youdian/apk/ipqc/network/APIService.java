@@ -10,6 +10,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import youdian.apk.ipqc.bean.FirstCheckList;
 import youdian.apk.ipqc.bean.HomeTableData;
 import youdian.apk.ipqc.bean.Lines;
 import youdian.apk.ipqc.bean.OptionData;
@@ -76,13 +77,22 @@ public interface APIService {
     Observable<Response<List<OptionData>>> getSelectInfo(@Field("select_type") String select_type);
 
     /**
-     * 获取工序表单
-     * @param se_code
+     * 获取工序
+     * @param first_checklist_id
      * @return
      */
     @FormUrlEncoded
     @GET("inschecks/")
-    Observable<Response<List<ProgressObserver>>> getFirstProgressList(@Field("first_checklist_id") String first_checklist_id);
+    Observable<Response<ListResponseData<ProgressObserver>>> getProcess(@Field("first_checklist_id") String first_checklist_id);
+
+ /**
+     * 获取工序和检验项表单
+     * @param first_checklist_id
+     * @return
+     */
+    @FormUrlEncoded
+    @GET("inschecks/")
+    Observable<Response<FirstCheckList>> getFirstCheckDataList(@Field("first_checklist_id") String first_checklist_id);
 
 
 }

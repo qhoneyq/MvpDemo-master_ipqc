@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="result"
+            type="youdian.apk.ipqc.obsever.FirstCheckItemObserver" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+
+        <RelativeLayout
+            android:id="@+id/ct_item_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:focusable="true"
+            android:orientation="horizontal">
+
+
+            <CheckBox
+                android:id="@+id/img_tip"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/bg_tip"
+                android:button="@null" />
+
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_8"
+                android:layout_marginEnd="@dimen/dp_33"
+                android:gravity="center_vertical"
+                android:text="@{result.item}"
+                android:textColor="@color/gray_54"
+                android:textSize="@dimen/sp_14" />
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/ct_tv_cr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ct_item_ll"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="@string/checkresult"
+            android:textColor="@color/gray_87"
+            android:textSize="@dimen/sp_14" />
+
+        <RelativeLayout
+            android:id="@+id/ct_select"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ct_tv_cr"
+            android:layout_marginTop="@dimen/dp_10">
+
+            <RadioGroup
+                android:id="@+id/ct_rg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/ct_rb_yes"
+                    android:layout_width="@dimen/dp_60"
+                    android:layout_height="@dimen/dp_27"
+                    android:background="@drawable/rb_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="合格"
+                    android:textColor="@color/bg_textcolor_rb"
+                    android:textSize="@dimen/sp_13"
+                    />
+
+                <RadioButton
+                    android:id="@+id/ct_rb_no"
+                    android:layout_width="@dimen/dp_60"
+                    android:layout_height="@dimen/dp_27"
+                    android:layout_marginLeft="@dimen/dp_30"
+                    android:background="@drawable/rb_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="不合格"
+                    android:textColor="@color/bg_textcolor_rb"
+                    android:textSize="@dimen/sp_13" />
+
+                <RadioButton
+                    android:id="@+id/ct_rb_na"
+                    android:layout_width="@dimen/dp_60"
+                    android:layout_height="@dimen/dp_27"
+                    android:layout_marginLeft="@dimen/dp_30"
+                    android:background="@drawable/rb_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="NA"
+                    android:textColor="@color/bg_textcolor_rb"
+                    android:textSize="@dimen/sp_13" />
+            </RadioGroup>
+
+            <EditText
+                android:id="@+id/ct_rg_edt_note"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_53"
+                android:layout_below="@id/ct_rg"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_marginBottom="@dimen/dp_10"
+                    android:background="@drawable/edt_bg"
+                android:editable="true"
+                android:focusable="true"
+                android:hint="@string/input_tip"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_2"
+                android:paddingRight="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_2"
+                android:textCursorDrawable="@null"
+                android:textSize="@dimen/sp_12"
+                android:visibility="gone"
+                android:text="@={result.note}"/>
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/ct_edt"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_30"
+            android:layout_above="@id/ct_select"
+            android:layout_below="@id/ct_tv_cr"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@drawable/edt_bg"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:hint="请输入结果数值"
+            android:paddingLeft="@dimen/dp_6"
+            android:paddingTop="@dimen/dp_2"
+            android:paddingRight="@dimen/dp_6"
+            android:paddingBottom="@dimen/dp_2"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:text="@={result.detail_value}"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/sp_12" />
+
+        <TextView
+            android:id="@+id/ct_dropdown"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_30"
+            android:layout_above="@id/ct_select"
+            android:background="@drawable/edt_bg"
+            android:gravity="center_vertical"
+            android:hint="请下拉选择"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_2"
+            android:paddingRight="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_2"
+            android:drawableEnd="@mipmap/icon_arrow"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/sp_12"
+            android:text="@={result.detail_value}"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_1"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/ct_select"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@color/c5ced3"/>
+    </RelativeLayout>
+</layout>

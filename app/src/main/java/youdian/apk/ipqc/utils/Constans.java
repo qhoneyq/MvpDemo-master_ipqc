@@ -41,4 +41,12 @@ public class Constans {
 
     private static final int REQ_PERM_CAMERA = 100;
 
+
+    //CHECK_STATUS
+    public static final String Normal = "Normal";
+    public static final String Abnormal = "Abnormal";
+    public static final String Shutdown = "Shutdown";
+    public static final String UnChecked = "UnChecked";
+    public static final String NA = "NA";
+
 }

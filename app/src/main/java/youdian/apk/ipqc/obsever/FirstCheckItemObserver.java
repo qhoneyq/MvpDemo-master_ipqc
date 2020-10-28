@@ -6,15 +6,17 @@ import androidx.databinding.Bindable;
 import java.io.Serializable;
 
 import youdian.apk.ipqc.BR;
+import youdian.apk.ipqc.bean.FirstCheckListItem;
+import youdian.apk.ipqc.bean.FirstCheckProcess;
 
 public class FirstCheckItemObserver extends BaseObservable implements Serializable {
 
-    private String process_id;
+    private int process_id;
     private String process_name;
-    private String  process_code;
+    private String process_code;
     private String process_sn;
     private String process_note;
-    private String item_id;
+    private int item_id;
     private String item_sn;
     private String item;
     private String reference_value;
@@ -24,19 +26,32 @@ public class FirstCheckItemObserver extends BaseObservable implements Serializab
     private String detail_value;
     private String detail_status;
     private String note;
-    private String u_detail_value;
-    private String u_detail_status;
-    private String u_note;
-    private String check_time;
-    private String emp_no;
+    private String u_detail_value = "";
+    private String u_detail_status = "";
+    private String u_note = "";
+    private String check_time = "";
+    private String emp_no ="";
 
-
-   @Bindable
-   public String getProcess_id() {
+    public FirstCheckItemObserver(FirstCheckProcess firstCheckProcess, FirstCheckListItem firstCheckListItem) {
+      this.process_id = firstCheckProcess.getId();
+        this.process_code = firstCheckProcess.getProcess_code();
+        this.process_name = firstCheckProcess.getProcess_name();
+        this.process_note = firstCheckProcess.getNote();
+        this.process_sn = firstCheckProcess.getProcess_sn();
+        this.item_id = firstCheckListItem.getId();
+        this.item = firstCheckListItem.getItem();
+        this.item_sn = firstCheckListItem.getItem_sn();
+        this.reference_value = firstCheckListItem.getReference_value();
+        this.method = firstCheckListItem.getMethod();
+        this.control = firstCheckListItem.getControl();
+        this.control_code = firstCheckListItem.getControl_code();
+    }
+    @Bindable
+    public int getProcess_id() {
         return process_id;
     }
 
-    public void setProcess_id(String process_id) {
+    public void setProcess_id(int process_id) {
         this.process_id = process_id;
         notifyPropertyChanged(BR.process_id);
     }
@@ -58,7 +73,7 @@ public class FirstCheckItemObserver extends BaseObservable implements Serializab
 
     public void setProcess_code(String process_code) {
         this.process_code = process_code;
-        notifyPropertyChanged(BR.check_time);
+        notifyPropertyChanged(BR.process_code);
     }
 
     @Bindable
@@ -68,7 +83,7 @@ public class FirstCheckItemObserver extends BaseObservable implements Serializab
 
     public void setProcess_sn(String process_sn) {
         this.process_sn = process_sn;
-        notifyPropertyChanged(BR.check_time);
+        notifyPropertyChanged(BR.process_sn);
     }
 
     @Bindable
@@ -78,7 +93,7 @@ public class FirstCheckItemObserver extends BaseObservable implements Serializab
 
     public void setProcess_note(String process_note) {
         this.process_note = process_note;
-        notifyPropertyChanged(BR.check_time);
+        notifyPropertyChanged(BR.process_note);
     }
 
     @Bindable
@@ -88,7 +103,7 @@ public class FirstCheckItemObserver extends BaseObservable implements Serializab
 
     public void setItem_id(String item_id) {
         this.item_id = item_id;
-        notifyPropertyChanged(BR.check_time);
+        notifyPropertyChanged(BR.item_id);
     }
 
     @Bindable
@@ -98,7 +113,7 @@ public class FirstCheckItemObserver extends BaseObservable implements Serializab
 
     public void setItem_sn(String item_sn) {
         this.item_sn = item_sn;
-        notifyPropertyChanged(BR.check_time);
+        notifyPropertyChanged(BR.item_sn);
     }
 
     @Bindable
@@ -108,7 +123,7 @@ public class FirstCheckItemObserver extends BaseObservable implements Serializab
 
     public void setItem(String item) {
         this.item = item;
-        notifyPropertyChanged(BR.check_time);
+        notifyPropertyChanged(BR.item);
     }
 
     @Bindable
@@ -118,7 +133,7 @@ public class FirstCheckItemObserver extends BaseObservable implements Serializab
 
     public void setReference_value(String reference_value) {
         this.reference_value = reference_value;
-        notifyPropertyChanged(BR.check_time);
+        notifyPropertyChanged(BR.reference_value);
     }
 
     @Bindable
@@ -128,7 +143,7 @@ public class FirstCheckItemObserver extends BaseObservable implements Serializab
 
     public void setMethod(String method) {
         this.method = method;
-        notifyPropertyChanged(BR.check_time);
+        notifyPropertyChanged(BR.method);
     }
 
     @Bindable
@@ -138,7 +153,7 @@ public class FirstCheckItemObserver extends BaseObservable implements Serializab
 
     public void setControl(String control) {
         this.control = control;
-        notifyPropertyChanged(BR.check_time);
+        notifyPropertyChanged(BR.control);
     }
 
     @Bindable
@@ -148,7 +163,7 @@ public class FirstCheckItemObserver extends BaseObservable implements Serializab
 
     public void setControl_code(String control_code) {
         this.control_code = control_code;
-        notifyPropertyChanged(BR.check_time);
+        notifyPropertyChanged(BR.control_code);
     }
 
     @Bindable
@@ -158,7 +173,7 @@ public class FirstCheckItemObserver extends BaseObservable implements Serializab
 
     public void setDetail_value(String detail_value) {
         this.detail_value = detail_value;
-        notifyPropertyChanged(BR.check_time);
+        notifyPropertyChanged(BR.detail_value);
     }
 
     @Bindable
@@ -168,7 +183,7 @@ public class FirstCheckItemObserver extends BaseObservable implements Serializab
 
     public void setDetail_status(String detail_status) {
         this.detail_status = detail_status;
-        notifyPropertyChanged(BR.check_time);
+        notifyPropertyChanged(BR.detail_status);
     }
 
     @Bindable
@@ -178,7 +193,7 @@ public class FirstCheckItemObserver extends BaseObservable implements Serializab
 
     public void setNote(String note) {
         this.note = note;
-        notifyPropertyChanged(BR.check_time);
+        notifyPropertyChanged(BR.note);
     }
 
     @Bindable
@@ -188,7 +203,7 @@ public class FirstCheckItemObserver extends BaseObservable implements Serializab
 
     public void setU_detail_value(String u_detail_value) {
         this.u_detail_value = u_detail_value;
-        notifyPropertyChanged(BR.check_time);
+        notifyPropertyChanged(BR.u_detail_value);
     }
 
     @Bindable
@@ -198,7 +213,7 @@ public class FirstCheckItemObserver extends BaseObservable implements Serializab
 
     public void setU_detail_status(String u_detail_status) {
         this.u_detail_status = u_detail_status;
-        notifyPropertyChanged(BR.check_time);
+        notifyPropertyChanged(BR.u_detail_status);
     }
 
     @Bindable
@@ -208,7 +223,7 @@ public class FirstCheckItemObserver extends BaseObservable implements Serializab
 
     public void setU_note(String u_note) {
         this.u_note = u_note;
-        notifyPropertyChanged(BR.check_time);
+        notifyPropertyChanged(BR.u_note);
     }
 
     @Bindable
