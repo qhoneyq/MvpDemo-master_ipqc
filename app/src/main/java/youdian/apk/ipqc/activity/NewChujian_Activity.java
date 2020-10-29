@@ -34,6 +34,7 @@ import youdian.apk.ipqc.bean.OptionData;
 import youdian.apk.ipqc.contract.NewChujianContract;
 import youdian.apk.ipqc.databinding.ActivityIpqcTabletitleChujianBinding;
 import youdian.apk.ipqc.obsever.FirstCheckResultObserver;
+import youdian.apk.ipqc.presenter.LoginPresenter;
 import youdian.apk.ipqc.presenter.NewChujianPresenter;
 import youdian.apk.ipqc.utils.Constans;
 
@@ -89,6 +90,9 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
                 finish();
             }
         });
+
+        mPresenter = new NewChujianPresenter();
+        mPresenter.attachView(this);
         dealData();
     }
 
@@ -194,6 +198,7 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 resultObserver.setShift_name(shiftList.get(i));
+                dialogshift.hide();
             }
         });
 

@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil;
 import youdian.apk.ipqc.R;
 import youdian.apk.ipqc.base.BaseActivity;
 import youdian.apk.ipqc.databinding.ActivityHomeBinding;
+import youdian.apk.ipqc.obsever.FirstCheckResultObserver;
 import youdian.apk.ipqc.utils.Constans;
 import youdian.apk.ipqc.utils.UserUtils;
 
@@ -38,10 +39,10 @@ public class ActivityHome extends BaseActivity {
     @Override
     public void initView() {
         binding = DataBindingUtil.setContentView(this,getLayoutId());
-        if (!UserUtils.getInstance().isLogin()){
-            startActivity(new Intent(this, LoginActivity.class));
-            finish();
-        }
+//        if (!UserUtils.getInstance().isLogin()){
+//            startActivity(new Intent(this, LoginActivity.class));
+//            finish();
+//        }
 
         binding.homeChujian.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +62,16 @@ public class ActivityHome extends BaseActivity {
     }
 
     public void firstCheckClick(){
-            TableListActivity.startTableListActivity(this, Constans.FirstCheck);
+        Bundle bundle =new Bundle();
+        FirstCheckResultObserver observer = new FirstCheckResultObserver();
+        observer.setCheck_person("admin");
+        observer.setFirst_checklist_code("code");
+        observer.setFirst_checklist_name("name");
+        observer.setSe_code("secode");
+        observer.setSe_name("sename");
+        bundle.putSerializable(Constans.FirstCheck,observer);
+            NewChujian_Activity.startActivity(this, bundle);
+//            TableListActivity.startTableListActivity(this, Constans.FirstCheck);
             finish();
     }
 

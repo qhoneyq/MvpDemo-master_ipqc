@@ -75,11 +75,7 @@ public class FirstCheckResultObserver extends BaseObservable implements Serializ
 
     public void setShift_name(String shift_name) {
         this.shift_name = shift_name;
-        if (shift_name.equals("白班"))
-            setShift(Constans.Day);
-        else
-            setShift(Constans.Night);
-        notifyPropertyChanged(BR.shift_name);
+          notifyPropertyChanged(BR.shift_name);
     }
 
     @Bindable
