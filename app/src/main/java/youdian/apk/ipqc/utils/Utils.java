@@ -16,6 +16,7 @@ public class Utils {
     private static Utils instance = null;
 
     private Utils() {
+
     }
 
     public static Utils getInstance() {
@@ -45,6 +46,7 @@ public class Utils {
      */
     public Context getAppContext() {
         if (context == null) {
+
             throw new RuntimeException("Utils未在Application中初始化");
         }
         return context;

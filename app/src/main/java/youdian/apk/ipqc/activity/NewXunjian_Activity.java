@@ -252,25 +252,25 @@ public class NewXunjian_Activity extends BaseMvpActivity<NewXunjianPresenter> im
             binding.gonglingrl.setErrorEnabled(false);
         }
         if (resultObserver.getShift().isEmpty()) {
-            binding.liaohao.setErrorEnabled(true);
-            binding.liaohao.setError(getResources().getString(R.string.shift_err));
+            binding.liaohaotl.setErrorEnabled(true);
+            binding.liaohaotl.setError(getResources().getString(R.string.shift_err));
             return;
         } else {
-            binding.liaohao.setErrorEnabled(false);
+            binding.liaohaotl.setErrorEnabled(false);
         }
         if (resultObserver.getEdition().isEmpty()) {
-            binding.banci.setErrorEnabled(true);
+            binding.bancitl.setErrorEnabled(true);
             binding.banci.setError(getResources().getString(R.string.banci_err));
             return;
         } else {
-            binding.banci.setErrorEnabled(false);
+            binding.bancitl.setErrorEnabled(false);
         }
         if (resultObserver.getProduction_batch().isEmpty()) {
-            binding.shengchanpici.setErrorEnabled(true);
+            binding.shengchanpicitl.setErrorEnabled(true);
             binding.shengchanpici.setError(getResources().getString(R.string.shengchanpici));
             return;
         } else {
-            binding.shengchanpici.setErrorEnabled(false);
+            binding.shengchanpicitl.setErrorEnabled(false);
         }
         if (resultObserver.getLine_code().isEmpty()||resultObserver.getLine_name().isEmpty()) {
             binding.linerl.setErrorEnabled(true);

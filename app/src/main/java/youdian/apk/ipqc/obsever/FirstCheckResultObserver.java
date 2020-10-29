@@ -6,6 +6,7 @@ import androidx.databinding.Bindable;
 import java.io.Serializable;
 import java.util.List;
 
+
 import youdian.apk.ipqc.BR;
 import youdian.apk.ipqc.utils.Constans;
 

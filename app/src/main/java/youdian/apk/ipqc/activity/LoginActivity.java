@@ -93,13 +93,11 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
                 return;
             }
         }
-        if (TextUtils.isEmpty(DeviceUtils.getDeviceId(this))) {
-            showSomeMsg(R.string.empty_dev);
-
-            mPresenter.login(DeviceUtils.getDeviceId(this), binding.edtLoginPnum.getText().toString(), binding.edtLoginPass.getText().toString(),
+        if (!devId.equals("")) {
+            mPresenter.login(devId, binding.edtLoginPnum.getText().toString(), binding.edtLoginPass.getText().toString(),
                     gid, method);
         } else {
-            MyUtils.MyToast(this, getResources().getString(R.string.complate));
+            showSomeMsg(R.string.empty_dev);
         }
         gid = "";
         isOnShowing = false;
@@ -314,6 +312,6 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
 
     @Override
     public void onError(String errMessage) {
-
+        showSomeMsg(errMessage);
     }
 }

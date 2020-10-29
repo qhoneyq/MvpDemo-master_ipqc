@@ -51,7 +51,7 @@ public class TableListPresenter extends BasePresenter<TableListContract.View> im
         }
         model.getSEData(org_code)
                 .compose(RxScheduler.Obs_io_main())
-                .to(mView.bindAutoDispose())//解决内存泄漏
+//                .to(mView.bindAutoDispose())//解决内存泄漏
                 .subscribe(new Observer<Response<ListResponseData<SEData>>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
@@ -96,7 +96,7 @@ public class TableListPresenter extends BasePresenter<TableListContract.View> im
     public void getFirstTableList(String se_code) {
         model.getFirstHomeTableData(se_code)
                 .compose(RxScheduler.Obs_io_main())
-                .to(mView.bindAutoDispose())//解决内存泄漏
+//                .to(mView.bindAutoDispose())//解决内存泄漏
                 .subscribe(new Observer<Response<ListResponseData<HomeTableData>>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
@@ -110,7 +110,7 @@ public class TableListPresenter extends BasePresenter<TableListContract.View> im
                             firstTableObseversList = new ObservableArrayList<>();
                             if (tableDataList!=null&&tableDataList.size()>0){
                                 for (HomeTableData tableData:tableDataList){
-                                    tableObseversList.add(new HomeTableObsever(tableData));
+                                    firstTableObseversList.add(new HomeTableObsever(tableData));
                                 }
                             }
                             mView.setTableList(firstTableObseversList);
@@ -141,7 +141,7 @@ public class TableListPresenter extends BasePresenter<TableListContract.View> im
     public void getInsTableList(String se_code) {
         model.getInstHomeTableData(se_code)
                 .compose(RxScheduler.Obs_io_main())
-                .to(mView.bindAutoDispose())//解决内存泄漏
+//                .to(mView.bindAutoDispose())//解决内存泄漏
                 .subscribe(new Observer<Response<ListResponseData<HomeTableData>>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
@@ -155,7 +155,7 @@ public class TableListPresenter extends BasePresenter<TableListContract.View> im
                             insTableObseversList = new ObservableArrayList<>();
                             if (tableDataList!=null&&tableDataList.size()>0){
                                 for (HomeTableData tableData:tableDataList){
-                                    tableObseversList.add(new HomeTableObsever(tableData));
+                                    insTableObseversList.add(new HomeTableObsever(tableData));
                                 }
                             }
                             mView.setTableList(insTableObseversList);

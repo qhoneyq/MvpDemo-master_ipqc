@@ -3,9 +3,6 @@ package youdian.apk.ipqc.network;
 
 import androidx.annotation.NonNull;
 
-
-import com.example.azheng.rxjavamvpdemo.BuildConfig;
-
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -16,15 +13,20 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import youdian.apk.ipqc.BuildConfig;
+import youdian.apk.ipqc.api.client.ClientFactory;
+import youdian.apk.ipqc.api.converter.CheckGsonConverterFactory;
+import youdian.apk.ipqc.api.remote.APIService;
 import youdian.apk.ipqc.utils.Constans;
-import youdian.apk.ipqc.utils.UserUtils;
 
 
 public class RetrofitClient {
 
     private static volatile RetrofitClient instance;
     private APIService apiService;
+    private APIService apiServiceLogin;
     private String baseUrl = Constans.BASEURL;
+    private String baseUrl_login = Constans.BASEURLLogin;
     private Retrofit retrofit;
     private OkHttpClient okHttpClient;
 
@@ -55,8 +57,12 @@ public class RetrofitClient {
                 Request.Builder requestBuilder = original.newBuilder();
                 //添加Token
 //                        .header("token", "");
-                Request request = requestBuilder.addHeader(Constans.AUTHORIZATION, UserUtils.getInstance().getToken())
-                        .build();
+                Request request;
+//                if (UserUtils.getInstance().isLogin())
+//                     request = requestBuilder.addHeader(Constans.AUTHORIZATION, UserUtils.getInstance().getToken())
+//                            .build();
+//                else
+                request = requestBuilder.build();
                 return chain.proceed(request);
             }
         };
@@ -102,9 +108,39 @@ public class RetrofitClient {
     public APIService getApi() {
         //初始化一个client,不然retrofit会自己默认添加一个
         if (retrofit == null) {
+//            retrofit = new Retrofit.Builder()
+//                    //设置网络请求的Url地址
+//                    .baseUrl(baseUrl)
+//                    //设置数据解析器
+//                    .addConverterFactory(GsonConverterFactory.create())
+//                    //设置网络请求适配器，使其支持RxJava与RxAndroid
+//                    .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+//                    .client(getOkHttpClient())
+//                    .build();
             retrofit = new Retrofit.Builder()
                     //设置网络请求的Url地址
                     .baseUrl(baseUrl)
+                    //设置数据解析器
+                    .addConverterFactory(CheckGsonConverterFactory.create())
+                    //设置网络请求适配器，使其支持RxJava与RxAndroid
+                    .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+                    .client(ClientFactory.getInstance().getOkHttpClient())
+                    .build();
+        }
+        //创建—— 网络请求接口—— 实例
+        if (apiService == null) {
+            apiService = retrofit.create(APIService.class);
+        }
+
+        return apiService;
+    }
+
+    public APIService getLoginApi() {
+        //初始化一个client,不然retrofit会自己默认添加一个
+        if (retrofit == null) {
+            retrofit = new Retrofit.Builder()
+                    //设置网络请求的Url地址
+                    .baseUrl(baseUrl_login)
                     //设置数据解析器
                     .addConverterFactory(GsonConverterFactory.create())
                     //设置网络请求适配器，使其支持RxJava与RxAndroid
@@ -113,11 +149,11 @@ public class RetrofitClient {
                     .build();
         }
         //创建—— 网络请求接口—— 实例
-        if (apiService==null){
-            apiService = retrofit.create(APIService.class);
+        if (apiServiceLogin == null) {
+            apiServiceLogin = retrofit.create(APIService.class);
         }
 
-        return apiService;
+        return apiServiceLogin;
     }
 
 

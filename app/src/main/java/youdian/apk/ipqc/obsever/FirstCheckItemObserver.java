@@ -1,5 +1,6 @@
 package youdian.apk.ipqc.obsever;
 
+
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
@@ -8,6 +9,7 @@ import java.io.Serializable;
 import youdian.apk.ipqc.BR;
 import youdian.apk.ipqc.bean.FirstCheckListItem;
 import youdian.apk.ipqc.bean.FirstCheckProcess;
+
 
 public class FirstCheckItemObserver extends BaseObservable implements Serializable {
 
@@ -30,10 +32,11 @@ public class FirstCheckItemObserver extends BaseObservable implements Serializab
     private String u_detail_status = "";
     private String u_note = "";
     private String check_time = "";
-    private String emp_no ="";
+    private String emp_no = "";
+    private boolean isvisiable=false;
 
     public FirstCheckItemObserver(FirstCheckProcess firstCheckProcess, FirstCheckListItem firstCheckListItem) {
-      this.process_id = firstCheckProcess.getId();
+        this.process_id = firstCheckProcess.getId();
         this.process_code = firstCheckProcess.getProcess_code();
         this.process_name = firstCheckProcess.getProcess_name();
         this.process_note = firstCheckProcess.getNote();
@@ -46,6 +49,7 @@ public class FirstCheckItemObserver extends BaseObservable implements Serializab
         this.control = firstCheckListItem.getControl();
         this.control_code = firstCheckListItem.getControl_code();
     }
+
     @Bindable
     public int getProcess_id() {
         return process_id;
@@ -73,7 +77,7 @@ public class FirstCheckItemObserver extends BaseObservable implements Serializab
 
     public void setProcess_code(String process_code) {
         this.process_code = process_code;
-        notifyPropertyChanged(BR.process_code);
+
     }
 
     @Bindable
@@ -97,11 +101,11 @@ public class FirstCheckItemObserver extends BaseObservable implements Serializab
     }
 
     @Bindable
-    public String getItem_id() {
+    public int getItem_id() {
         return item_id;
     }
 
-    public void setItem_id(String item_id) {
+    public void setItem_id(int item_id) {
         this.item_id = item_id;
         notifyPropertyChanged(BR.item_id);
     }
@@ -244,5 +248,15 @@ public class FirstCheckItemObserver extends BaseObservable implements Serializab
     public void setEmp_no(String emp_no) {
         this.emp_no = emp_no;
         notifyPropertyChanged(BR.emp_no);
+    }
+
+    @Bindable
+    public boolean isIsvisiable() {
+        return isvisiable;
+    }
+
+    public void setIsvisiable(boolean isvisiable) {
+        this.isvisiable = isvisiable;
+        notifyPropertyChanged(BR.isvisiable);
     }
 }

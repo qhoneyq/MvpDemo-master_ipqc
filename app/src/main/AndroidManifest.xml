@@ -2,9 +2,27 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="youdian.apk.ipqc">
 
+
+    <!-- 联网权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.PREVENT_POWER_KEY" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.NFC" />
+
+
+    <uses-feature android:name="android.hardware.camera.autofocus" /> <!-- 自动聚焦权限 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
 
     <application
+        android:name=".base.Baseapplicton"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -20,6 +38,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.LoginActivity"/>
+        <activity android:name=".activity.CheckDetail_Chujian_Activity"/>
+        <activity android:name=".activity.NewChujian_Activity"/>
+        <activity android:name=".activity.NewXunjian_Activity"/>
+        <activity android:name=".activity.SmallCaptureActivity"/>
+        <activity android:name=".activity.TableListActivity"/>
     </application>
 
 </manifest>

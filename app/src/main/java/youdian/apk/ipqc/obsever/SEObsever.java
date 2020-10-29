@@ -4,10 +4,10 @@ package youdian.apk.ipqc.obsever;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
-import com.example.azheng.rxjavamvpdemo.BR;
 
 import java.io.Serializable;
 
+import youdian.apk.ipqc.BR;
 import youdian.apk.ipqc.bean.SEData;
 
 /**
@@ -40,6 +40,7 @@ public class SEObsever extends BaseObservable implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+        notifyPropertyChanged(BR.id);
     }
 
     @Bindable
@@ -50,6 +51,7 @@ public class SEObsever extends BaseObservable implements Serializable {
 
     public void setSe_name(String se_name) {
         this.se_name = se_name;
+        notifyPropertyChanged(BR.se_name);
     }
 
     @Bindable
@@ -59,6 +61,7 @@ public class SEObsever extends BaseObservable implements Serializable {
 
     public void setSe_code(String se_code) {
         this.se_code = se_code;
+        notifyPropertyChanged(BR.se_code);
     }
 
     @Bindable
@@ -68,6 +71,7 @@ public class SEObsever extends BaseObservable implements Serializable {
 
     public void setOrganization(String organization) {
         this.organization = organization;
+        notifyPropertyChanged(BR.organization);
     }
 
     @Bindable
@@ -77,6 +81,7 @@ public class SEObsever extends BaseObservable implements Serializable {
 
     public void setOrg_name(String org_name) {
         this.org_name = org_name;
+        notifyPropertyChanged(BR.org_name);
     }
 
     @Bindable
@@ -86,6 +91,7 @@ public class SEObsever extends BaseObservable implements Serializable {
 
     public void setSe_category(String se_category) {
         this.se_category = se_category;
+        notifyPropertyChanged(BR.se_category);
     }
 
     @Bindable

@@ -14,6 +14,8 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -38,7 +40,6 @@ import youdian.apk.ipqc.utils.Constans;
 import static youdian.apk.ipqc.utils.Constans.FLAG_LINE;
 import static youdian.apk.ipqc.utils.Constans.FLAG_SN;
 import static youdian.apk.ipqc.utils.Constans.FirstCheck;
-import static youdian.apk.ipqc.utils.Constans.REQ_PERM_CAMERA;
 
 
 /**
@@ -298,25 +299,25 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
             binding.gonglingrl.setErrorEnabled(false);
         }
         if (resultObserver.getWork_no().isEmpty()) {
-            binding.liaohao.setErrorEnabled(true);
-            binding.liaohao.setError(getResources().getString(R.string.workno_err));
+            binding.liaohaotl.setErrorEnabled(true);
+            binding.liaohaotl.setError(getResources().getString(R.string.workno_err));
             return;
         } else {
-            binding.liaohao.setErrorEnabled(false);
+            binding.liaohaotl.setErrorEnabled(false);
         }
         if (resultObserver.getEdition().isEmpty()) {
-            binding.banci.setErrorEnabled(true);
-            binding.banci.setError(getResources().getString(R.string.banci_err));
+            binding.bancitl.setErrorEnabled(true);
+            binding.bancitl.setError(getResources().getString(R.string.banci_err));
             return;
         } else {
-            binding.banci.setErrorEnabled(false);
+            binding.bancitl.setErrorEnabled(false);
         }
         if (resultObserver.getProduction_batch().isEmpty()) {
-            binding.shengchanpici.setErrorEnabled(true);
-            binding.shengchanpici.setError(getResources().getString(R.string.banci_err));
+            binding.shengchanpicitl.setErrorEnabled(true);
+            binding.shengchanpicitl.setError(getResources().getString(R.string.banci_err));
             return;
         } else {
-            binding.shengchanpici.setErrorEnabled(false);
+            binding.shengchanpicitl.setErrorEnabled(false);
         }
         if (resultObserver.getLine_code().isEmpty()||resultObserver.getLine_name().isEmpty()) {
             binding.linerl.setErrorEnabled(true);
@@ -372,7 +373,7 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
     private void startQrCode() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             // 申请权限
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQ_PERM_CAMERA);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, Constans.REQ_PERM_CAMERA);
             return;
         }
         // 二维码扫码

@@ -33,4 +33,11 @@
         <attr name="showLeftIcon" format="boolean"/>
     </declare-styleable>
 
+    <declare-styleable name="LineDraw">
+        <attr name="hint" format="string" />
+        <attr name="name" format="string" />
+        <attr name="explain" format="string" />
+        <attr name="textcolor" format="color" />
+    </declare-styleable>
+
 </resources>

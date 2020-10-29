@@ -28,15 +28,13 @@
                 android:layout_height="wrap_content"
                 android:imeOptions="actionNext"
                 app:counterEnabled="true"
-                app:counterMaxLength="32"
-                app:hintTextAppearance="@style/login_hintAppearance">
+                app:counterMaxLength="32">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_username_login"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/login_et_selector_bg"
-                    android:hint="@string/login_text_hint_username"
                     android:inputType="text"
                     android:lines="1"
                     android:maxLength="32"
@@ -49,7 +47,6 @@
                 android:id="@+id/textlayout_password_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:hintTextAppearance="@style/login_hintAppearance"
                 app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -57,7 +54,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/login_et_selector_bg"
-                    android:hint="@string/login_text_hint_password"
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
                     android:lines="1"
@@ -73,8 +69,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@color/color_login_btn_bg"
-            android:text="@string/login_btn_text"
             android:textAllCaps="false"
             android:textColor="#fff"
             android:textSize="16sp" />

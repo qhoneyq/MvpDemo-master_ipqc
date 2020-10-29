@@ -11,16 +11,17 @@ import java.util.List;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
+import youdian.apk.ipqc.adapter.ActionDetailAdapter;
 import youdian.apk.ipqc.base.BasePresenter;
 import youdian.apk.ipqc.bean.FirstCheckList;
 import youdian.apk.ipqc.bean.FirstCheckListItem;
 import youdian.apk.ipqc.bean.FirstCheckProcess;
 import youdian.apk.ipqc.bean.Response;
 import youdian.apk.ipqc.contract.CheckDetailContract_CHUJIAN;
+import youdian.apk.ipqc.obsever.CountModel;
 import youdian.apk.ipqc.model.Model_Chujian_CheckDetail;
 import youdian.apk.ipqc.network.RxScheduler;
 import youdian.apk.ipqc.obsever.FirstCheckItemObserver;
-import youdian.apk.ipqc.obsever.FirstCheckResultObserver;
 import youdian.apk.ipqc.obsever.ProgressObserver;
 
 /**
@@ -30,19 +31,25 @@ import youdian.apk.ipqc.obsever.ProgressObserver;
  * Time: 下午 6:55
  * Function:
  */
-public class CheckDetailPresenter_CHUJIAN extends BasePresenter<CheckDetailContract_CHUJIAN.View> implements CheckDetailContract_CHUJIAN.Presenter {
+public class CheckDetailPresenter_CHUJIAN extends BasePresenter<CheckDetailContract_CHUJIAN.View> implements CheckDetailContract_CHUJIAN.Presenter, ActionDetailAdapter.onCountChangeListener {
 
     private CheckDetailContract_CHUJIAN.IModel model;
 
     private List<FirstCheckProcess> firstCheckLists;
-    private ObservableList<FirstCheckItemObserver> checkItemObservers;
+    private ObservableList<FirstCheckItemObserver> checkItemObservers;//全部检验项
+    private ObservableList<FirstCheckItemObserver> onCheckItemList;//单个工序检验项
     private ObservableList<ProgressObserver> progressObserverList;
+    private CountModel countModel = new CountModel();
 
     public CheckDetailPresenter_CHUJIAN() {
         this.model = new Model_Chujian_CheckDetail();
     }
 
 
+    /**
+     * 获取全部检验项
+     * @param first_checklist_id
+     */
     @Override
     public void getCheckListData(String first_checklist_id) {
         if (!isViewAttached()) {
@@ -50,7 +57,7 @@ public class CheckDetailPresenter_CHUJIAN extends BasePresenter<CheckDetailContr
         }
         model.getCheckListData(first_checklist_id)
                 .compose(RxScheduler.Obs_io_main())
-                .to(mView.bindAutoDispose())//解决内存泄漏
+//                .to(mView.bindAutoDispose())//解决内存泄漏
                 .subscribe(new Observer<Response<FirstCheckList>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
@@ -62,7 +69,6 @@ public class CheckDetailPresenter_CHUJIAN extends BasePresenter<CheckDetailContr
                         firstCheckLists = listResponse.getData().getFirst_checklist_processes();
                         //pipeishuju
                         dealCheckData(firstCheckLists);
-
                     }
 
                     @Override
@@ -96,7 +102,7 @@ public class CheckDetailPresenter_CHUJIAN extends BasePresenter<CheckDetailContr
         }
         model.getProcess(first_checklist_id)
                 .compose(RxScheduler.Obs_io_main())
-                .to(mView.bindAutoDispose())//解决内存泄漏
+//                .to(mView.bindAutoDispose())//解决内存泄漏
                 .subscribe(new Observer<Response<ListResponseData<ProgressObserver>>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
@@ -105,9 +111,9 @@ public class CheckDetailPresenter_CHUJIAN extends BasePresenter<CheckDetailContr
 
                     @Override
                     public void onNext(@NonNull Response<ListResponseData<ProgressObserver>> listResponse) {
-                        progressObserverList = listResponse.getData().getFirst_checklist_processes();
+                        progressObserverList = (ObservableList<ProgressObserver>) listResponse.getData().getResults();
 
-                        mView.setProgress(progressObserverList);
+                        mView.setprocess(progressObserverList);
                     }
 
                     @Override
@@ -120,5 +126,15 @@ public class CheckDetailPresenter_CHUJIAN extends BasePresenter<CheckDetailContr
                         mView.hideLoading();
                     }
                 });
+    }
+
+    @Override
+    public void getCheckedCount(int s) {
+
+    }
+
+    @Override
+    public void getCheckDetail(FirstCheckItemObserver checkItemObserver) {
+
     }
 }

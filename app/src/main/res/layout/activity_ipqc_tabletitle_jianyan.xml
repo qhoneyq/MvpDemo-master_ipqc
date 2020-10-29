@@ -175,6 +175,7 @@
                             android:textSize="@dimen/sp_14" />
 
                         <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/liaohaotl"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dp_40">
 
@@ -205,6 +206,7 @@
                             android:textSize="@dimen/sp_14" />
 
                         <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/bancitl"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dp_40">
 
@@ -237,6 +239,7 @@
                             android:textSize="@dimen/sp_14" />
 
                         <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/shengchanpicitl"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dp_40">
 

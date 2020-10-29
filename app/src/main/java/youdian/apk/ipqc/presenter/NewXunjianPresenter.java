@@ -49,7 +49,7 @@ public class NewXunjianPresenter extends BasePresenter<NewXunjianContract.View> 
         }
         model.getLines(se_code)
                 .compose(RxScheduler.Obs_io_main())
-                .to(mView.bindAutoDispose())//解决内存泄漏
+//                .to(mView.bindAutoDispose())//解决内存泄漏
                 .subscribe(new Observer<Response<ListResponseData<Lines>>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
@@ -80,7 +80,7 @@ public class NewXunjianPresenter extends BasePresenter<NewXunjianContract.View> 
     public void getSelectInfo(String selectinfo) {
         model.getSelectInfo(selectinfo)
                 .compose(RxScheduler.Obs_io_main())
-                .to(mView.bindAutoDispose())//解决内存泄漏
+//                .to(mView.bindAutoDispose())//解决内存泄漏
                 .subscribe(new Observer<Response<List<OptionData>>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {

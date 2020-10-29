@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_hint"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/tv_hint"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical|right"
+                android:background="@null"
+                android:text="hint"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:textColor="@color/gray_30"
+                android:textSize="@dimen/sp_15" />
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_normal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:visibility="visible">
+
+            <EditText
+                android:id="@+id/tn_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right|center_vertical"
+                android:textSize="@dimen/sp_15"
+                android:text="text"
+                android:textColor="@color/black_54" />
+
+            <TextView
+                android:id="@+id/tv_err"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="err"
+                android:gravity="center"
+                android:textColor="@color/red_abnomal"
+                android:textSize="@dimen/sp_12" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>

@@ -22,15 +22,7 @@ import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
 
-import rxhttp.wrapper.param.RxHttp;
-import rxhttp.wrapper.parse.SimpleParser;
-import youdian.apk.dianjian.base.bean.CategoryTreeData;
-import youdian.apk.dianjian.base.bean.ListDataResponse;
-import youdian.apk.dianjian.base.bean.Response;
-import youdian.apk.dianjian.http.Urls;
 
 
 /**
@@ -147,28 +139,28 @@ public class CommonUtils {
     }
 
 
-    /**
-     * 判断信息是否为空
-     *
-     * @param data 查询数据
-     * @return
-     */
-    public boolean isInfoNonNull(Object data) {
-        if (data.equals(null) || data.equals("")) return false;
-        return true;
-    }
-
-
-    public static class NullStringToEmptyAdapterFactory<T> implements TypeAdapterFactory {
-        @SuppressWarnings("unchecked")
-        public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-            Class<T> rawType = (Class<T>) type.getRawType();
-            if (rawType != String.class) {
-                return null;
-            }
-            return (TypeAdapter<T>) new StringNullAdapter();
-        }
-    }
+//    /**
+//     * 判断信息是否为空
+//     *
+//     * @param data 查询数据
+//     * @return
+//     */
+//    public boolean isInfoNonNull(Object data) {
+//        if (data.equals(null) || data.equals("")) return false;
+//        return true;
+//    }
+//
+//
+//    public static class NullStringToEmptyAdapterFactory<T> implements TypeAdapterFactory {
+//        @SuppressWarnings("unchecked")
+//        public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+//            Class<T> rawType = (Class<T>) type.getRawType();
+//            if (rawType != String.class) {
+//                return null;
+//            }
+//            return (TypeAdapter<T>) new StringNullAdapter();
+//        }
+//    }
 
     @NonNull
     protected static String HexStringToTen(String s) {

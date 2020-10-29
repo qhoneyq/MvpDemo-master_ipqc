@@ -7,19 +7,20 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableList;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import java.util.List;
-
 import autodispose2.AutoDisposeConverter;
+import youdian.apk.dianjian.utils.DatetimeUtil;
 import youdian.apk.ipqc.R;
+import youdian.apk.ipqc.adapter.ActionDetailAdapter;
 import youdian.apk.ipqc.adapter.ProgressAdapter;
-import youdian.apk.ipqc.adapter.ZhichengAdapter;
 import youdian.apk.ipqc.base.BaseMvpActivity;
 import youdian.apk.ipqc.contract.CheckDetailContract_CHUJIAN;
 import youdian.apk.ipqc.databinding.ActivityFirstcheckdetailBinding;
+import youdian.apk.ipqc.obsever.CountModel;
 import youdian.apk.ipqc.obsever.FirstCheckItemObserver;
 import youdian.apk.ipqc.obsever.FirstCheckResultObserver;
 import youdian.apk.ipqc.obsever.ProgressObserver;
@@ -35,11 +36,15 @@ import static youdian.apk.ipqc.utils.Constans.FirstCheck;
  * Time: 上午 11:39
  * Function:1. 判断是否需要恢复暂存记录
  */
-public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPresenter_CHUJIAN> implements CheckDetailContract_CHUJIAN.View {
+public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPresenter_CHUJIAN> implements CheckDetailContract_CHUJIAN.View, ActionDetailAdapter.onCountChangeListener {
 
     ActivityFirstcheckdetailBinding binding;
     private ProgressAdapter progressAdapter;
+    private ActionDetailAdapter checkDetailAdapter;
     private FirstCheckResultObserver resultObserver;//检验记录表头
+    ObservableList<FirstCheckItemObserver> allCheckItemList;//全部检验项
+    private int process_id;
+    private CountModel countModel = new CountModel();
 
 
     /**
@@ -64,8 +69,8 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
         binding = DataBindingUtil.setContentView(this, getLayoutId());
         binding.tvSn.setText(resultObserver.getSn());
         binding.heardview.setTitleText(resultObserver.getFirst_checklist_name());
-        binding.headview.setLeftIcon(R.mipmap.home_icon_return);
-        binding.headview.setLeftClick(new View.OnClickListener() {
+        binding.heardview.setLeftIcon(R.mipmap.home_icon_return);
+        binding.heardview.setLeftClick(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -81,7 +86,7 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
                 finish();
             }
         });
-        mPresenter.getProgress(resultObserver.getFirst_checklist_code());
+        mPresenter.getProcess(resultObserver.getFirst_checklist_code());
 
     }
 
@@ -107,6 +112,7 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
 
     /**
      * 显示工序列表
+     *
      * @param list
      */
     @Override
@@ -116,30 +122,69 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
         if (progressAdapter == null) {
             progressAdapter = new ProgressAdapter();
             progressAdapter.setOnItemClickListener(itemProgressRvBinding -> {
-                    mPresenter.getInsTableList(itemProgressRvBinding.getProgressdata().getProcess_code());
+                process_id = itemProgressRvBinding.getProgressdata().getId();
+                //获取单个工序检验项
+                showCheckItemByProcess(process_id);
             });
             binding.rvProgress.setAdapter(progressAdapter);
+            process_id = list.get(0).getId();
         }
         progressAdapter.refresh((ObservableList<ProgressObserver>) list);
     }
-/**
-     * 显示检验项列表
+
+    /**
+     * 获取全部检验项列表
+     *
      * @param list
      */
     @Override
     public void setCheckListData(ObservableList<FirstCheckItemObserver> list) {
-        binding.rvProgress.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        binding.rvProgress.setItemAnimator(new DefaultItemAnimator());
-        if (progressAdapter == null) {
-            progressAdapter = new ProgressAdapter();
-            progressAdapter.setOnItemClickListener(itemZhichengRvBinding -> {
-                    mPresenter.getInsTableList(itemZhichengRvBinding.getSedata().getSe_code());
-            });
-            binding.rvProgress.setAdapter(progressAdapter);
+        allCheckItemList = new ObservableArrayList<>();
+        allCheckItemList.addAll(list);
+        binding.rvAction.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        binding.rvAction.setItemAnimator(new DefaultItemAnimator());
+        if (checkDetailAdapter == null) {
+            checkDetailAdapter = new ActionDetailAdapter(this, allCheckItemList, this);
+            binding.rvAction.setAdapter(checkDetailAdapter);
+
         }
-        progressAdapter.refresh((ObservableList<ProgressObserver>) list);
+        showCheckItemByProcess(process_id);
+        checkDetailAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 显示单个工序检验项
+     * @param p_id
+     */
+    public void showCheckItemByProcess(int p_id) {
+        for (FirstCheckItemObserver checkItemObserver:allCheckItemList){
+            if (checkItemObserver.getProcess_id() == p_id){
+                checkItemObserver.setIsvisiable(true);
+            }else
+                checkItemObserver.setIsvisiable(false);
+        }
+        checkDetailAdapter.notifyDataSetChanged();
     }
 
 
+    @Override
+    public void getCheckedCount(int s) {
+        countModel.setCount_ed(s + "");
+    }
+
+    @Override
+    public void getCheckDetail(FirstCheckItemObserver checkItemObserver) {
+        checkItemObserver.setCheck_time(DatetimeUtil.INSTANCE.getNows_ss());
+        for (int i = 0; i < allCheckItemList.size(); i++) {
+            FirstCheckItemObserver check = allCheckItemList.get(i);
+            if (checkItemObserver.getItem().equals(check.getItem())) {
+                check.setNote(checkItemObserver.getNote());
+                check.setCheck_time(DatetimeUtil.INSTANCE.getNows_ss());
+                check.setDetail_value(checkItemObserver.getDetail_value());
+                check.setDetail_status(checkItemObserver.getDetail_status());
+                break;
+            }
+        }
+    }
 }
 

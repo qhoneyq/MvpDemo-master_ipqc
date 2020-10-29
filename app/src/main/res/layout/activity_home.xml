@@ -5,10 +5,6 @@
     >
 
     <data>
-        <variable
-            name=""
-            type="" />
-
 
     </data>
 
@@ -63,7 +59,7 @@
             android:id="@+id/chujian_temp"
             android:layout_width="@dimen/dp_130"
             android:layout_height="@dimen/dp_40"
-            android:background="@drawable/bg_btn_logout"
+            android:background="@drawable/bg_ipqc_category_click"
             android:gravity="center">
 
             <ImageView
@@ -84,7 +80,7 @@
             android:layout_width="@dimen/dp_130"
             android:layout_height="@dimen/dp_40"
             android:layout_marginLeft="@dimen/dp_20"
-            android:background="@drawable/bg_btn_logout"
+            android:background="@drawable/bg_ipqc_category_click"
             android:gravity="center">
 
             <ImageView
@@ -139,7 +135,7 @@
                 android:id="@+id/xunjian_temp"
                 android:layout_width="@dimen/dp_130"
                 android:layout_height="@dimen/dp_40"
-                android:background="@drawable/bg_btn_logout"
+                android:background="@drawable/bg_ipqc_category_click"
                 android:gravity="center">
 
                 <ImageView
@@ -160,7 +156,7 @@
                 android:layout_width="@dimen/dp_130"
                 android:layout_height="@dimen/dp_40"
                 android:layout_marginLeft="@dimen/dp_20"
-                android:background="@drawable/bg_btn_logout"
+                android:background="@drawable/bg_ipqc_category_click"
                 android:gravity="center">
 
                 <ImageView

@@ -38,16 +38,22 @@ public interface CheckDetailContract_CHUJIAN {
 
         void hideLoading();
 
-        void setCheckListData(ObservableList<FirstCheckItemObserver> list);
+        void setCheckListData(ObservableList<FirstCheckItemObserver> list);//获取全部检验项
+
+//        void showCheckItemByProcess(int process_id);//获取单个工序检验项
+
         void setprocess(ObservableList<ProgressObserver> list);
 
     }
 
 
-    interface Presenter extends BasePresenter {
+    interface Presenter {
 
         void getProcess(String first_checklist_id);
+
         void getCheckListData(String first_checklist_id);
+
+//        void getCheckItemByProcess(int process_id);
 
     }
 }

@@ -16,7 +16,7 @@ public class ProgressAdapter extends SingleTypeAdapter<ItemProgressRvBinding, Pr
     protected void onBindViewHolder(ProgresstHolder ProgresstHolder,
                                     int position, ItemProgressRvBinding itemProgressRvBinding,
                                     ProgressObserver progressObserver) {
-        itemProgressRvBinding.setSedata(progressObserver);
+        itemProgressRvBinding.setProgressdata(progressObserver);
     }
 
 

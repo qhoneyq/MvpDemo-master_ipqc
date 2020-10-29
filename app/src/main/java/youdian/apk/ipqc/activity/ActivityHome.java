@@ -7,6 +7,7 @@ import android.view.View;
 
 
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 
 
 import youdian.apk.ipqc.R;
@@ -30,12 +31,18 @@ public class ActivityHome extends BaseActivity {
 
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    public int getLayoutId() {
+        return R.layout.activity_home;
+    }
+
+    @Override
+    public void initView() {
+        binding = DataBindingUtil.setContentView(this,getLayoutId());
         if (!UserUtils.getInstance().isLogin()){
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         }
+
         binding.homeChujian.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,18 +56,8 @@ public class ActivityHome extends BaseActivity {
                 insChecksClick();
             }
         });
-
-
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_home;
-    }
-
-    @Override
-    public void initView() {
         binding.homeHeaderview.setTitleText(getResources().getString(R.string.title));
+
     }
 
     public void firstCheckClick(){

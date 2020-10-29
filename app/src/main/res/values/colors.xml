@@ -55,6 +55,7 @@
 
     <drawable name="color_user_item_normal">#FFFFFFFF</drawable>
     <drawable name="color_user_item_pressed">#FFDDDDDD</drawable>
+    <color name="red_abnomal">#fd8787</color>
 
     <color name="F56A55">#F56A55</color>
     <color name="_2EC27B">#2EC27B</color>
@@ -95,4 +96,5 @@
     <color name="black_54">#8A000000</color>
     <color name="gray_87">#de010101</color>
     <color name="gray_54">#dc010101</color>
+    <color name="gray_30">#4d010101</color>
 </resources>

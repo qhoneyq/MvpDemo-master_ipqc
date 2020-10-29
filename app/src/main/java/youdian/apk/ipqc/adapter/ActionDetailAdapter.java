@@ -1,5 +1,6 @@
 package youdian.apk.ipqc.adapter;
 
+
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
@@ -21,18 +22,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ObservableArrayList;
+import androidx.databinding.ObservableList;
 import androidx.recyclerview.widget.RecyclerView;
 
 import youdian.apk.dianjian.utils.DatetimeUtil;
 import youdian.apk.ipqc.R;
-import youdian.apk.ipqc.databinding.ItemCheckactionBinding;
 import youdian.apk.ipqc.obsever.FirstCheckItemObserver;
+import youdian.apk.ipqc.databinding.ItemCheckactionBinding;
+import youdian.apk.ipqc.utils.CommonUtils;
 import youdian.apk.ipqc.utils.Constans;
-
 
 public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapter.MyHolder> {
 
-    ObservableArrayList<FirstCheckItemObserver> list_action;
+
+    ObservableList<FirstCheckItemObserver> list_action;
     Context context;
     private PopupWindow mPopWindow;          //动作规范弹窗
     private PopupWindow popuList;            //点检动作下拉控件
@@ -41,7 +44,7 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
     private boolean[] ischeck;
 
     //    onClick onclick;
-    public ActionDetailAdapter(Context context, ObservableArrayList<FirstCheckItemObserver> list_action, ActionDetailAdapter.onCountChangeListener listener) {
+    public ActionDetailAdapter(Context context, ObservableList<FirstCheckItemObserver> list_action, ActionDetailAdapter.onCountChangeListener listener) {
         this.list_action = list_action;
         this.context = context;
         this.onCountChangeListener = listener;
@@ -54,20 +57,15 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
     public interface onCountChangeListener {
         public void getCheckedCount(int s);
 
-        public void getCheckDetail(FirstCheckItemObserver checkDetailObsever);
-//public void getCheckDetail(String item, String method,String reference_value, String control, String control_code,  String check_time,
-//                                   Object detail_value, String detail_status, String note);
+        public void getCheckDetail(FirstCheckItemObserver checkItemObserver);
 
     }
+
 
     @NonNull
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemCheckactionBinding selectBinding = DataBindingUtil.inflate(
-                LayoutInflater.from(parent.getContext()),
-                R.layout.item_checkaction, parent,
-                false
-        );
+        ItemCheckactionBinding selectBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_checkaction, parent, false);
         return new MyHolder(selectBinding);
     }
 
@@ -85,7 +83,7 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
         }
 
         public void bindData(FirstCheckItemObserver item) {
-            binding.setAction(item);
+            binding.setFirstResult(item);
         }
 
 
@@ -93,38 +91,37 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
 
     @Override
     public void onBindViewHolder(@NonNull MyHolder viewHolder, int p) {
-        if (viewHolder instanceof MyHolder) {
+        if (viewHolder instanceof ActionDetailAdapter.MyHolder) {
 
-            FirstCheckItemObserver checkDetail = list_action.get(p);
-            checkDetail.setNote("");
-            viewHolder.binding.setResult(checkDetail);
-
+            FirstCheckItemObserver actionDetail = list_action.get(p);
+            actionDetail.setNote("");
+            viewHolder.bindData(actionDetail);
             //检查标准tip
             viewHolder.binding.imgTip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked)
-                        showPopupWindow(viewHolder.binding.imgTip, checkDetail.getMethod());
+                        showPopupWindow(viewHolder.binding.imgTip, actionDetail.getMethod());
                 }
             });
 
             //根据check_control_id确定所显示控件 --------- 1:radiogroup;2:number(100-200);3:下拉列表;其他：文本框
             //除了数字输入，其他都有radio选择
-            if (checkDetail.getControl_code().equals("Radio")) {
+            if (actionDetail.getControl_code().equals(Constans.Radio)) {
                 viewHolder.binding.ctEdt.setVisibility(View.GONE);
                 viewHolder.binding.ctDropdown.setVisibility(View.GONE);
                 viewHolder.binding.ctSelect.setVisibility(View.VISIBLE);
-            } else if (checkDetail.getControl_code().equals("Number")) {
+            } else if (actionDetail.getControl_code().equals(Constans.Number)) {
                 viewHolder.binding.ctEdt.setVisibility(View.VISIBLE);
                 viewHolder.binding.ctDropdown.setVisibility(View.GONE);
                 viewHolder.binding.ctSelect.setVisibility(View.GONE);
                 viewHolder.binding.ctEdt.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
-            } else if (checkDetail.getControl_code().equals("Check")) {//下拉
+            } else if (actionDetail.getControl_code().equals(Constans.Check)) {//下拉
                 viewHolder.binding.ctEdt.setVisibility(View.GONE);
                 viewHolder.binding.ctDropdown.setVisibility(View.VISIBLE);
                 viewHolder.binding.ctSelect.setVisibility(View.VISIBLE);
-                String droptext[] = checkDetail.getReference_value().split(",");
+                String droptext[] = actionDetail.getReference_value().split(",");
                 viewHolder.binding.ctDropdown.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -151,35 +148,38 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
             viewHolder.binding.ctRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    if (!ischeck[viewHolder.getBindingAdapterPosition()]) {
-                        ischeck[viewHolder.getBindingAdapterPosition()] = true;
-                        Count = getCount();
-                        onCountChangeListener.getCheckedCount(Count);
-                    }
-                    checkDetail.setCheck_time(DatetimeUtil.INSTANCE.getNows_ss());
+//                    if (!ischeck[viewHolder.getBindingAdapterPosition()]) {
+//                        ischeck[viewHolder.getBindingAdapterPosition()] = true;
+//                        Count = getCount();
+//                        onCountChangeListener.getCheckedCount(Count);
+//                    }
+                    actionDetail.setCheck_time(DatetimeUtil.INSTANCE.getNows_ss());
                     if (checkedId == R.id.ct_rb_no) {
                         viewHolder.binding.ctRgEdtNote.setVisibility(View.VISIBLE);
-                        checkDetail.setDetail_status(Constans.Abnormal);
-                        if (checkDetail.getControl_code().equals("Radio")) {
-                            checkDetail.setDetail_value("False");
+                        actionDetail.setDetail_status(Constans.Abnormal);
+                        if (actionDetail.getControl_code().equals("Radio")) {
+                            actionDetail.setDetail_value("False");
                         }
                     } else {
                         viewHolder.binding.ctRgEdtNote.setVisibility(View.GONE);
                         viewHolder.binding.ctRgEdtNote.setText("");
                         if (checkedId == R.id.ct_rb_yes) {
-                            checkDetail.setDetail_status(Constans.Normal);
-                            if (checkDetail.getControl_code().equals("Radio")) {
-                                checkDetail.setDetail_value("True");
+                            actionDetail.setDetail_status(Constans.Normal);
+                            actionDetail.setNote("");
+                            if (actionDetail.getControl_code().equals("Radio")) {
+                                actionDetail.setDetail_value("True");
                             }
                         } else {
-                            checkDetail.setDetail_status(Constans.NA);
-                            if (checkDetail.getControl_code().equals("Radio")) {
-                                checkDetail.setDetail_value("NA");
+                            actionDetail.setDetail_status(Constans.NA);
+                            actionDetail.setNote("");
+                            if (actionDetail.getControl_code().equals("Radio")) {
+                                actionDetail.setDetail_value("NA");
                             }
+
                         }
                     }
-
-                    onCountChangeListener.getCheckDetail(checkDetail);
+                    summary(actionDetail, viewHolder.getBindingAdapterPosition());
+//                    onCountChangeListener.getCheckDetail(actionDetail);
                 }
             });
             viewHolder.binding.ctEdt.addTextChangedListener(new TextWatcher() {
@@ -191,29 +191,17 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                    if (s.toString().length() != 0) {//文本框有输入
-                        if (!ischeck[viewHolder.getBindingAdapterPosition()]) {
-                            ischeck[viewHolder.getBindingAdapterPosition()] = true;
-                            Count = getCount();
-                            onCountChangeListener.getCheckedCount(Count);
-                        }
-                    } else {//无输入
-//                        ischeck.put(position, false);
-                        ischeck[viewHolder.getBindingAdapterPosition()] = false;
-                        Count = getCount();
-                        onCountChangeListener.getCheckedCount(Count);
-                    }
                 }
 
                 @Override
                 public void afterTextChanged(Editable s) {
                     if (s.length() > 0) {
 
-                        if (checkDetail.getControl_code().equals("Number")) {//数字监听
+                        if (actionDetail.getControl_code().equals("Number")) {//数字监听
                             double value1 = 0;
                             double value2 = 0;
                             try {
-                                String reference_value = list_action.get(viewHolder.getAdapterPosition()).getReference_value();
+                                String reference_value = list_action.get(viewHolder.getBindingAdapterPosition()).getReference_value();
                                 String value[] = reference_value.split(",");
                                 value1 = Double.valueOf(value[0]);
                                 value2 = Double.valueOf(value[1]);
@@ -221,11 +209,13 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
                                 try {
                                     d = Double.valueOf(s.toString());
                                     if (d >= value1 && d <= value2) {
-                                        checkDetail.setDetail_status(Constans.Normal);
+                                        actionDetail.setDetail_status(Constans.Normal);
                                     } else
-                                        checkDetail.setDetail_status(Constans.Abnormal);
-                                    checkDetail.setDetail_value(s.toString());
-                                    onCountChangeListener.getCheckDetail(checkDetail);
+                                        actionDetail.setDetail_status(Constans.Abnormal);
+                                    actionDetail.setDetail_value(s.toString());
+//                                    onCountChangeListener.getCheckDetail(actionDetail);
+                                    summary(actionDetail, viewHolder.getBindingAdapterPosition());
+
                                 } catch (NumberFormatException e) {
                                     e.printStackTrace();
                                     CommonUtils.showMsg(context, context.getString(R.string.referencecomparevalue_err));
@@ -239,7 +229,10 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
                             }
                         } else {
                             //文本监听
-                            onCountChangeListener.getCheckDetail(checkDetail);
+                            actionDetail.setDetail_value(s.toString());
+                            summary(actionDetail, viewHolder.getBindingAdapterPosition());
+
+//                            onCountChangeListener.getCheckDetail(actionDetail);
 
                         }
                     }
@@ -253,8 +246,11 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    checkDetail.setNote(s.toString());
-                    onCountChangeListener.getCheckDetail(checkDetail);
+                    actionDetail.setNote(s.toString());
+//                    if (actionDetail.getControl_code().equals(Radio)) {
+//                        onCountChangeListener.getCheckDetail(actionDetail);
+                    summary(actionDetail, viewHolder.getBindingAdapterPosition());
+//                    }
                 }
 
                 @Override
@@ -278,12 +274,15 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    if (!ischeck[viewHolder.getBindingAdapterPosition()]) {
-                        ischeck[viewHolder.getBindingAdapterPosition()] = true;
-                        Count = getCount();
-                        onCountChangeListener.getCheckedCount(Count);
-                    }
-                    onCountChangeListener.getCheckDetail(checkDetail);
+//                    if (!ischeck[viewHolder.getBindingAdapterPosition()]) {
+//                        ischeck[viewHolder.getBindingAdapterPosition()] = true;
+//                        Count = getCount();
+//                        onCountChangeListener.getCheckedCount(Count);
+//                    }
+//                    onCountChangeListener.getCheckDetail(actionDetail);
+                    actionDetail.setDetail_value(s.toString());
+                    summary(actionDetail, viewHolder.getBindingAdapterPosition());
+
                 }
             });
 
@@ -395,4 +394,74 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
         return list_action.size();
     }
 
+    private void summary(FirstCheckItemObserver actionDetail, int position) {
+        if (actionDetail.getControl_code().equals(Constans.Radio)) {
+            //单选情况下，false时必须填备注
+            if (actionDetail.getDetail_status() != null && actionDetail.getDetail_value() != null) {
+                if (actionDetail.getDetail_status().equals("Abnormal") && actionDetail.getNote().equals("")) {
+                    if (ischeck[position] == true) {//检验变未检验
+                        ischeck[position] = false;
+                        Count = getCount();
+                        onCountChangeListener.getCheckedCount(Count);
+                    } else {
+                        ischeck[position] = true;
+                        Count = getCount();
+                        onCountChangeListener.getCheckedCount(Count);
+                    }
+                } else {
+                    ischeck[position] = true;
+                    Count = getCount();
+                    onCountChangeListener.getCheckedCount(Count);
+                }
+            } else {
+                if (ischeck[position] == true) {//检验变未检验
+                    ischeck[position] = false;
+                    Count = getCount();
+                    onCountChangeListener.getCheckedCount(Count);
+                }
+            }
+            onCountChangeListener.getCheckDetail(actionDetail);
+
+        } else if (actionDetail.getControl_code().equals(Constans.Check) || actionDetail.getControl_code().equals(Constans.Text)) {
+            if (actionDetail.getDetail_status() != null && actionDetail.getDetail_value() != null) {//存在检验值和检验结果
+                if (actionDetail.getDetail_status().equals("Abnormal") && actionDetail.getNote().equals("")) {//false情况检验备注
+                    if (ischeck[position] == true) {//检验变未检验
+                        ischeck[position] = false;
+                        Count = getCount();
+                        onCountChangeListener.getCheckedCount(Count);
+                    } else {
+                        ischeck[position] = true;
+                        Count = getCount();
+                        onCountChangeListener.getCheckedCount(Count);
+                    }
+                } else {
+                    ischeck[position] = true;
+                    Count = getCount();
+                    onCountChangeListener.getCheckedCount(Count);
+                }
+            } else {
+                if (ischeck[position] == true) {//检验变未检验
+                    ischeck[position] = false;
+                    Count = getCount();
+                    onCountChangeListener.getCheckedCount(Count);
+                }
+            }
+            onCountChangeListener.getCheckDetail(actionDetail);
+        } else {
+            if (actionDetail.getDetail_status() != null &&
+                    actionDetail.getDetail_value() != null) {
+                ischeck[position] = true;
+                Count = getCount();
+                onCountChangeListener.getCheckedCount(Count);
+            } else {
+                if (ischeck[position] == true) {//检验变未检验
+                    ischeck[position] = false;
+                    Count = getCount();
+                    onCountChangeListener.getCheckedCount(Count);
+                }
+            }
+            onCountChangeListener.getCheckDetail(actionDetail);
+
+        }
+    }
 }

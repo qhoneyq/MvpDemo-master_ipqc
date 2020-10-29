@@ -8,7 +8,6 @@
     android:background="@color/fff177"
     android:padding="@dimen/dp_16"
     android:gravity="center"
-    android:text="@string/abnormal_reason"
     android:textColor="@color/DD000000">
 
     </TextView>

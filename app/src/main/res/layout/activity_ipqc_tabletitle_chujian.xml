@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -64,7 +65,10 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/bg_rg_ipqc_tv">
+                        app:counterEnabled="true"
+                        app:errorEnabled="true"
+                        android:hint="请选择日期"
+                        >
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/time"
@@ -73,7 +77,6 @@
                             android:editable="false"
                             android:focusableInTouchMode="true"
                             android:gravity="right|center_vertical"
-                            android:hint="请选择日期"
                             android:maxLength="25"
                             android:maxLines="1"
                             android:paddingLeft="@dimen/dp_5"
@@ -110,8 +113,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="3"
-                        android:background="@drawable/bg_rg_ipqc_tv"
-                        android:gravity="center_vertical">
+android:gravity="center_vertical">
 
                         <com.google.android.material.textfield.TextInputEditText
 
@@ -134,7 +136,6 @@
                         android:layout_width="@dimen/dp_60"
                         android:layout_height="match_parent"
                         android:layout_marginTop="@dimen/dp_10"
-                        android:background="@color/colorPrimary"
                         android:text="@string/saomiaosn"
                         android:textColor="@color/FFFFFF"
                         android:textSize="@dimen/sp_14" />
@@ -231,6 +232,7 @@
                             android:textSize="@dimen/sp_14" />
 
                         <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/liaohaotl"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dp_40">
 
@@ -261,6 +263,7 @@
                             android:textSize="@dimen/sp_14" />
 
                         <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/bancitl"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dp_40">
 
@@ -293,6 +296,7 @@
                             android:textSize="@dimen/sp_14" />
 
                         <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/shengchanpicitl"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dp_40">
 
@@ -311,157 +315,157 @@
 
                     </LinearLayout>
 
-                        <LinearLayout
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_45"
+                        android:paddingBottom="@dimen/dp_10">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical|left"
+                            android:text="@string/banbie"
+                            android:textColor="@color/gray_87"
+                            android:textSize="@dimen/sp_14" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/shiftrl"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_45"
-                            android:paddingBottom="@dimen/dp_10">
+                            android:layout_height="@dimen/dp_40">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical|left"
-                                android:text="@string/banbie"
-                                android:textColor="@color/gray_87"
-                                android:textSize="@dimen/sp_14" />
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:id="@+id/shiftrl"
+                            <EditText
+                                android:id="@+id/banbie"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/dp_40">
+                                android:layout_height="match_parent"
+                                android:background="@drawable/edt_search_bg"
+                                android:gravity="center_vertical|right"
+                                android:text="@={firstcheck.shift_name}"
+                                android:textColor="@color/gray_54"
+                                android:textSize="@dimen/sp_14" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
 
-                                <EditText
-                                    android:id="@+id/banbie"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@drawable/edt_search_bg"
-                                    android:gravity="center_vertical|right"
-                                    android:text="@={firstcheck.shift_name}"
-                                    android:textColor="@color/gray_54"
-                                    android:textSize="@dimen/sp_14" />
-                            </com.google.android.material.textfield.TextInputLayout>
-                        </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_45"
+                        android:paddingBottom="@dimen/dp_10">
 
-                        <LinearLayout
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp_30"
+                            android:gravity="center_vertical|left"
+                            android:text="@string/jianyanshuliang"
+                            android:textColor="@color/gray_87"
+                            android:textSize="@dimen/sp_14" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/checkrl"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_45"
-                            android:paddingBottom="@dimen/dp_10">
+                            android:layout_height="@dimen/dp_40">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/dp_30"
-                                android:gravity="center_vertical|left"
-                                android:text="@string/jianyanshuliang"
-                                android:textColor="@color/gray_87"
-                                android:textSize="@dimen/sp_14" />
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:id="@+id/checkrl"
+                            <EditText
+                                android:id="@+id/jianyanshuliang"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/dp_40">
+                                android:layout_height="match_parent"
+                                android:background="@drawable/edt_search_bg"
+                                android:editable="false"
+                                android:gravity="center_vertical|right"
+                                android:text="@={firstcheck.check_quantity}"
+                                android:textColor="@color/gray_54"
+                                android:textSize="@dimen/sp_14" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
 
-                                <EditText
-                                    android:id="@+id/jianyanshuliang"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@drawable/edt_search_bg"
-                                    android:editable="false"
-                                    android:gravity="center_vertical|right"
-                                    android:text="@={firstcheck.check_quantity}"
-                                    android:textColor="@color/gray_54"
-                                    android:textSize="@dimen/sp_14" />
-                            </com.google.android.material.textfield.TextInputLayout>
-                        </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_45"
+                        android:paddingBottom="@dimen/dp_10">
 
-                        <LinearLayout
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp_30"
+                            android:gravity="center_vertical|left"
+                            android:text="@string/chujianleixing"
+                            android:textColor="@color/gray_87"
+                            android:textSize="@dimen/sp_14" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/chujiantyperl"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_45"
-                            android:paddingBottom="@dimen/dp_10">
+                            android:layout_height="@dimen/dp_40">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/dp_30"
-                                android:gravity="center_vertical|left"
-                                android:text="@string/chujianleixing"
-                                android:textColor="@color/gray_87"
-                                android:textSize="@dimen/sp_14" />
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:id="@+id/chujiantyperl"
+                            <EditText
+                                android:id="@+id/chujianleixing"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/dp_40">
+                                android:layout_height="match_parent"
+                                android:background="@drawable/edt_search_bg"
+                                android:editable="false"
+                                android:gravity="center_vertical|right"
+                                android:textColor="@color/gray_54"
+                                android:textSize="@dimen/sp_14" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
 
-                                <EditText
-                                    android:id="@+id/chujianleixing"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@drawable/edt_search_bg"
-                                    android:editable="false"
-                                    android:gravity="center_vertical|right"
-                                    android:textColor="@color/gray_54"
-                                    android:textSize="@dimen/sp_14" />
-                            </com.google.android.material.textfield.TextInputLayout>
-                        </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_45"
+                        android:paddingBottom="@dimen/dp_10">
 
-                        <LinearLayout
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp_30"
+                            android:gravity="center_vertical|left"
+                            android:text="@string/jizhong"
+                            android:textColor="@color/gray_87"
+                            android:textSize="@dimen/sp_14" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/jizhongrl"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_45"
-                            android:paddingBottom="@dimen/dp_10">
+                            android:layout_height="@dimen/dp_40">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/dp_30"
-                                android:gravity="center_vertical|left"
-                                android:text="@string/jizhong"
-                                android:textColor="@color/gray_87"
-                                android:textSize="@dimen/sp_14" />
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:id="@+id/jizhongrl"
+                            <EditText
+                                android:id="@+id/jizhong"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/dp_40">
+                                android:layout_height="match_parent"
+                                android:background="@drawable/edt_search_bg"
+                                android:editable="false"
+                                android:gravity="center_vertical|right"
+                                android:text="@={firstcheck.machine_type}"
+                                android:textColor="@color/gray_54"
+                                android:textSize="@dimen/sp_14" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
 
-                                <EditText
-                                    android:id="@+id/jizhong"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@drawable/edt_search_bg"
-                                    android:editable="false"
-                                    android:gravity="center_vertical|right"
-                                    android:text="@={firstcheck.machine_type}"
-                                    android:textColor="@color/gray_54"
-                                    android:textSize="@dimen/sp_14" />
-                            </com.google.android.material.textfield.TextInputLayout>
-                        </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_45"
+                        android:paddingBottom="@dimen/dp_10">
 
-                        <LinearLayout
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp_30"
+                            android:gravity="center_vertical|left"
+                            android:text="@string/beizhu"
+                            android:textColor="@color/gray_87"
+                            android:textSize="@dimen/sp_14" />
+
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_45"
-                            android:paddingBottom="@dimen/dp_10">
+                            android:layout_height="@dimen/dp_40">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/dp_30"
-                                android:gravity="center_vertical|left"
-                                android:text="@string/beizhu"
-                                android:textColor="@color/gray_87"
-                                android:textSize="@dimen/sp_14" />
-
-                            <com.google.android.material.textfield.TextInputLayout
+                            <EditText
+                                android:id="@+id/beizhu"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/dp_40">
-
-                                <EditText
-                                    android:id="@+id/beizhu"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@drawable/edt_search_bg"
-                                    android:editable="false"
-                                    android:gravity="center_vertical|right"
-                                    android:text="@={firstcheck.note}"
-                                    android:textColor="@color/gray_54"
-                                    android:textSize="@dimen/sp_14" />
-                            </com.google.android.material.textfield.TextInputLayout>
-                        </LinearLayout>
+                                android:layout_height="match_parent"
+                                android:background="@drawable/edt_search_bg"
+                                android:editable="false"
+                                android:gravity="center_vertical|right"
+                                android:text="@={firstcheck.note}"
+                                android:textColor="@color/gray_54"
+                                android:textSize="@dimen/sp_14" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
 
 
                 </LinearLayout>
@@ -473,7 +477,6 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
                     android:layout_marginTop="@dimen/dp_10"
-                    android:background="@color/colorPrimary"
                     android:text="@string/kaishijianyan"
                     android:textColor="@color/FFFFFF"
                     android:textSize="@dimen/sp_15" />

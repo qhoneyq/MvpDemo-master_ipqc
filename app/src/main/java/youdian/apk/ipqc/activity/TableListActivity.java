@@ -130,8 +130,8 @@ public class TableListActivity extends BaseMvpActivity<TableListPresenter> imple
                     InsCheckResult.setCheck_person(UserUtils.getInstance().getPnum());
                     InsCheckResult.setSe_name(itemHometableRvBinding.getTableitem().getSe_name());
                     InsCheckResult.setSe_code(itemHometableRvBinding.getTableitem().getSe());
-                    InsCheckResult.setFirst_checklist_name(itemHometableRvBinding.getTableitem().getList_name());
-                    InsCheckResult.setFirst_checklist_code(itemHometableRvBinding.getTableitem().getList_code());
+//                    InsCheckResult.setFirst_checklist_name(itemHometableRvBinding.getTableitem().getList_name());
+//                    InsCheckResult.setFirst_checklist_code(itemHometableRvBinding.getTableitem().getList_code());
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(Constans.Inspection, InsCheckResult);
                     //跳转表头

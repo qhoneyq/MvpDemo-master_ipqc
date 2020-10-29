@@ -51,7 +51,7 @@ open class CustomHeaderView : RelativeLayout {
         val rightIcon = mTypedArray.getResourceId(R.styleable.CustomHeaderView_left_icon, R.mipmap.icon_scan)
         showLeftIcon = mTypedArray.getBoolean(R.styleable.CustomHeaderView_showLeftIcon, true)
         val titleText = mTypedArray.getString(R.styleable.CustomHeaderView_title_text)
-        val titleTextSize = mTypedArray.getDimension(R.styleable.CustomHeaderView_title_text_size, resources.getDimension(R.dimen.sp_8))
+        val titleTextSize = mTypedArray.getDimension(R.styleable.CustomHeaderView_title_text_size, resources.getDimension(R.dimen.sp_6))
         val titleTextColor = mTypedArray.getColor(R.styleable.CustomHeaderView_title_text_color, Color.WHITE)
         mTypedArray.recycle()
         headerView.setBackgroundResource(titleBackground)
