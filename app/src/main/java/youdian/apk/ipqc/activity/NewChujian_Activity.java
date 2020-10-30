@@ -237,7 +237,6 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
      */
     public void dealData() {
         //TIME
-
         binding.time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

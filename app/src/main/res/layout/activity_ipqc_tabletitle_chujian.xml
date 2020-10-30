@@ -214,7 +214,7 @@
                                 android:layout_height="match_parent"
                                 android:background="@drawable/edt_search_bg"
                                 android:gravity="center_vertical|right"
-                                android:hint="@string/line_err"
+                                android:hint="@string/partno_err"
                                 android:text="@={firstcheck.part_no}"
                                 android:textColor="@color/gray_54"
                                 android:textSize="@dimen/sp_14" />

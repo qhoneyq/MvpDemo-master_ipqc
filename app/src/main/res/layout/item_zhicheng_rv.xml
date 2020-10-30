@@ -3,28 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-<variable
-    name="sedata"
-    type="youdian.apk.ipqc.obsever.SEObsever" />
+
+        <variable
+            name="sedata"
+            type="youdian.apk.ipqc.obsever.SEObsever" />
     </data>
 
     <youdian.apk.ipqc.wedige.CheckableLinearLayout
         android:layout_width="@dimen/dp_120"
         android:layout_height="@dimen/dp_45"
-        android:background="@drawable/bg_item_zhicheng"
-        android:layout_margin="@dimen/px_1">
+        android:layout_margin="@dimen/px_1"
+        android:background="@drawable/bg_item_zhicheng">
 
         <TextView
             android:id="@+id/item_ipqc_zhicheng_tv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:autoSizeMinTextSize="@dimen/sp_10"
             android:button="@null"
+            android:ellipsize="middle"
             android:gravity="center"
             android:padding="@dimen/dp_2"
+            android:singleLine="true"
             android:text="@={sedata.se_name}"
-            android:ellipsize="middle"
-            android:autoSizeMinTextSize="@dimen/sp_10"
-            android:textColor="@color/bg_textcolor_rb"
-            android:singleLine="true" />
+            android:textColor="@color/bg_textcolor_rb" />
     </youdian.apk.ipqc.wedige.CheckableLinearLayout>
 </layout>

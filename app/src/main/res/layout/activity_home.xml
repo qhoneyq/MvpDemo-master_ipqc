@@ -25,12 +25,11 @@
             android:layout_width="@dimen/dp_280"
             android:layout_height="@dimen/dp_83"
             android:layout_marginTop="@dimen/dp_60"
-            android:background="@drawable/bg_trans"
             android:gravity="center_vertical"
-            android:onClick="@{}"
             android:orientation="horizontal"
-
-            android:padding="@dimen/dp_1">
+            android:elevation="@dimen/dp_7"
+            android:background="@drawable/bg_tran_home"
+            android:padding="@dimen/dp_7">
 
             <ImageView
                 android:layout_width="@dimen/dp_60"
@@ -104,10 +103,11 @@
             android:layout_width="@dimen/dp_280"
             android:layout_height="@dimen/dp_83"
             android:layout_marginTop="@dimen/dp_65"
-            android:background="@drawable/bg_trans"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="@dimen/dp_1">
+            android:elevation="@dimen/dp_7"
+            android:background="@drawable/bg_tran_home"
+            android:padding="@dimen/dp_7">
 
             <ImageView
                 android:layout_width="@dimen/dp_60"

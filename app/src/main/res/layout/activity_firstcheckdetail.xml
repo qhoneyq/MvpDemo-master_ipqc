@@ -229,15 +229,18 @@
                     android:visibility="visible">
 
                     <com.google.android.material.button.MaterialButton
+                        android:theme="@style/Theme.MaterialComponents.Light"
                         android:id="@+id/btn_scan"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_30"
+                        android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/dp_13"
+                        android:layout_marginTop="@dimen/dp_7"
                         android:text="@string/saomiaosn"
+                        app:backgroundTint="@color/white"
                         android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/sp_13"
                         app:strokeColor="@color/colorPrimary"
-                        android:background="@color/white"
+                        android:includeFontPadding="false"
                         app:strokeWidth="@dimen/dp_1" />
 
                     <ListView
@@ -245,7 +248,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/btn_scan"
-                        android:layout_marginTop="@dimen/dp_10" />
+                        android:layout_marginTop="@dimen/dp_5" />
                 </RelativeLayout>
 
             </LinearLayout>

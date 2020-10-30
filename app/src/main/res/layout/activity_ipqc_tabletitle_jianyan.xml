@@ -48,41 +48,34 @@
                     android:layout_height="@dimen/dp_50"
                     android:background="@color/white"
                     android:orientation="horizontal"
-                    android:paddingRight="@dimen/dp_20"
-                    android:paddingBottom="@dimen/dp_10">
+                    android:paddingRight="@dimen/dp_20">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/dp_10"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/dp_20"
                         android:text="@string/time"
                         android:textColor="@color/gray_87"
                         android:textSize="@dimen/sp_14" />
 
-                    <com.google.android.material.textfield.TextInputLayout
+
+                    <TextView
+                        android:id="@+id/time"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/bg_rg_ipqc_tv">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/time"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:editable="false"
-                            android:focusableInTouchMode="true"
-                            android:gravity="right|center_vertical"
-                            android:hint="请选择日期"
-                            android:maxLength="25"
-                            android:maxLines="1"
-                            android:paddingLeft="@dimen/dp_5"
-                            android:text="@={inspection.check_time}"
-                            android:textColor="@color/gray_87"
-                            android:textSize="@dimen/sp_14" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                        android:focusableInTouchMode="true"
+                        android:gravity="right|center_vertical"
+                        android:hint="请选择日期"
+                        android:maxLength="25"
+                        android:maxLines="1"
+                        android:paddingLeft="@dimen/dp_5"
+                        android:textColor="@color/gray_87"
+                        android:textSize="@dimen/sp_14"
+                        android:text="@={inspection.check_time}"/>
 
                 </LinearLayout>
+
 
 
                 <LinearLayout
@@ -99,364 +92,317 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_45"
-                        android:paddingBottom="@dimen/dp_10">
+                        android:background="@drawable/divider">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginTop="@dimen/dp_10"
                             android:gravity="center_vertical|left"
                             android:text="@string/xinabie"
                             android:textColor="@color/gray_87"
                             android:textSize="@dimen/sp_14" />
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/linerl"
+                        <TextView
+                            android:id="@+id/line"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_35">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/line"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/edt_search_bg"
-                                android:gravity="center_vertical|right"
-                                android:hint="@string/line_err"
-                                android:text="@={inspection.line_name}"
-                                android:textColor="@color/gray_54"
-                                android:textSize="@dimen/sp_14" />
-                        </com.google.android.material.textfield.TextInputLayout>
+                            android:layout_height="match_parent"
+                            android:background="@drawable/edt_search_bg"
+                            android:hint="@string/line_err"
+                            android:gravity="center_vertical|right"
+                            android:text="@={inspection.line_name}"
+                            android:textColor="@color/gray_54"
+                            android:textSize="@dimen/sp_14" />
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_45"
-                        android:paddingBottom="@dimen/dp_10">
+                        android:layout_height="@dimen/dp_45">
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
+                            android:layout_height="match_parent"
                             android:gravity="center_vertical|left"
                             android:text="@string/gongling"
                             android:textColor="@color/gray_87"
                             android:textSize="@dimen/sp_14" />
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/gonglingrl"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_40">
 
-                            <EditText
-                                android:id="@+id/gongling"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/edt_search_bg"
-                                android:gravity="center_vertical|right"
-                                android:text="@={inspection.work_no}"
-                                android:textColor="@color/gray_54"
-                                android:textSize="@dimen/sp_14" />
-                        </com.google.android.material.textfield.TextInputLayout>
+                        <EditText
+
+                            android:hint="@string/workno_err"
+                            android:id="@+id/gongling"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/edt_search_bg"
+                            android:gravity="center_vertical|right"
+                            android:text="@={inspection.work_no}"
+                            android:textColor="@color/gray_54"
+                            android:textSize="@dimen/sp_14"/>
                     </LinearLayout>
 
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_45"
-                        android:paddingBottom="@dimen/dp_10">
+                        android:layout_height="@dimen/dp_45">
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:gravity="center_vertical|left"
                             android:text="@string/liaohao"
                             android:textColor="@color/gray_87"
                             android:textSize="@dimen/sp_14" />
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/liaohaotl"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_40">
 
-                            <EditText
-                                android:id="@+id/liaohao"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/edt_search_bg"
-                                android:gravity="center_vertical|right"
-                                android:text="@={inspection.part_no}"
-                                android:textColor="@color/gray_54"
-                                android:textSize="@dimen/sp_14" />
-                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <EditText
+                            android:id="@+id/liaohao"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/edt_search_bg"
+                            android:gravity="center_vertical|right"
+                            android:hint="@string/partno_err"
+                            android:text="@={inspection.part_no}"
+                            android:textColor="@color/gray_54"
+                            android:textSize="@dimen/sp_14" />
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_45"
-                        android:paddingBottom="@dimen/dp_10">
+                        >
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:gravity="center_vertical|left"
                             android:text="@string/banci"
                             android:textColor="@color/gray_87"
                             android:textSize="@dimen/sp_14" />
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/bancitl"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_40">
 
-                            <EditText
-                                android:id="@+id/banci"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/edt_search_bg"
-                                android:editable="false"
-                                android:gravity="center_vertical|right"
-                                android:text="@={inspection.edition}"
-                                android:textColor="@color/gray_54"
-                                android:textSize="@dimen/sp_14" />
-                        </com.google.android.material.textfield.TextInputLayout>
+                        <EditText
+                            android:id="@+id/banci"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/bg_edit"
+                            android:gravity="center_vertical|right"
+                            android:hint="@string/banci_err"
+                            android:text="@={inspection.edition}"
+                            android:textColor="@color/gray_54"
+                            android:textSize="@dimen/sp_14" />
 
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_45"
-                        android:paddingBottom="@dimen/dp_10">
+                        android:layout_height="@dimen/dp_45">
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:gravity="center_vertical|left"
                             android:text="@string/shengchanpici"
                             android:textColor="@color/gray_87"
                             android:textSize="@dimen/sp_14" />
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/shengchanpicitl"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_40">
 
-                            <EditText
-                                android:id="@+id/shengchanpici"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/edt_search_bg"
-                                android:editable="false"
-                                android:gravity="center_vertical|right"
-                                android:text="@={inspection.production_batch}"
-                                android:textColor="@color/gray_54"
-                                android:textSize="@dimen/sp_14" />
-                        </com.google.android.material.textfield.TextInputLayout>
+                        <EditText
+                            android:id="@+id/shengchanpici"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/edt_search_bg"
+                            android:gravity="center_vertical|right"
+                            android:text="@={inspection.production_batch}"
+                            android:textColor="@color/gray_54"
+                            android:hint="@string/product_err"
+                            android:textSize="@dimen/sp_14" />
 
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_45"
-                        android:paddingBottom="@dimen/dp_10">
+                        android:layout_height="@dimen/dp_45">
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:gravity="center_vertical|left"
                             android:text="@string/banbie"
                             android:textColor="@color/gray_87"
                             android:textSize="@dimen/sp_14" />
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/shiftrl"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_40">
 
-                            <EditText
-                                android:id="@+id/banbie"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/edt_search_bg"
-                                android:gravity="center_vertical|right"
-                                android:text="@={inspection.shift_name}"
-                                android:textColor="@color/gray_54"
-                                android:textSize="@dimen/sp_14" />
-                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <EditText
+                            android:id="@+id/banbie"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/edt_search_bg"
+                            android:editable="false"
+                            android:gravity="center_vertical|right"
+                            android:text="@={inspection.shift_name}"
+                            android:textColor="@color/gray_54"
+                            android:hint="@string/shift_err"
+                            android:textSize="@dimen/sp_14" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_45"
-                        android:paddingBottom="@dimen/dp_10">
+                        android:layout_height="@dimen/dp_45">
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:layout_height="@dimen/dp_30"
+                            android:layout_height="match_parent"
                             android:gravity="center_vertical|left"
                             android:text="@string/jianyanshuliang"
                             android:textColor="@color/gray_87"
                             android:textSize="@dimen/sp_14" />
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/checkrl"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_40">
 
-                            <EditText
-                                android:id="@+id/jianyanshuliang"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/edt_search_bg"
-                                android:editable="false"
-                                android:gravity="center_vertical|right"
-                                android:text="@={inspection.check_quantity}"
-                                android:textColor="@color/gray_54"
-                                android:textSize="@dimen/sp_14" />
-                        </com.google.android.material.textfield.TextInputLayout>
+                        <EditText
+                            android:id="@+id/jianyanshuliang"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/edt_search_bg"
+                            android:gravity="center_vertical|right"
+                            android:text="@={inspection.check_quantity}"
+                            android:hint="@string/checkno_err"
+                            android:textColor="@color/gray_54"
+                            android:textSize="@dimen/sp_14" />
+
                     </LinearLayout>
 
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_45"
-                        android:paddingBottom="@dimen/dp_10">
+                        android:layout_height="@dimen/dp_45">
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:layout_height="@dimen/dp_30"
+                            android:layout_height="match_parent"
                             android:gravity="center_vertical|left"
                             android:text="@string/jizhong"
                             android:textColor="@color/gray_87"
                             android:textSize="@dimen/sp_14" />
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/jizhongrl"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_40">
 
-                            <EditText
-                                android:id="@+id/jizhong"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/edt_search_bg"
-                                android:editable="false"
-                                android:gravity="center_vertical|right"
-                                android:text="@={inspection.machine_type}"
-                                android:textColor="@color/gray_54"
-                                android:textSize="@dimen/sp_14" />
-                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <EditText
+                            android:id="@+id/jizhong"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/edt_search_bg"
+                            android:gravity="center_vertical|right"
+                            android:text="@={inspection.machine_type}"
+                            android:hint="@string/jizhong_err"
+                            android:textColor="@color/gray_54"
+                            android:textSize="@dimen/sp_14" />
+
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_45"
-                        android:paddingBottom="@dimen/dp_10">
+                        android:layout_height="@dimen/dp_45">
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:layout_height="@dimen/dp_30"
+                            android:layout_height="match_parent"
                             android:gravity="center_vertical|left"
                             android:text="@string/beizhu"
                             android:textColor="@color/gray_87"
                             android:textSize="@dimen/sp_14" />
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_40">
 
-                            <EditText
-                                android:id="@+id/beizhu"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/edt_search_bg"
-                                android:editable="false"
-                                android:gravity="center_vertical|right"
-                                android:text="@={inspection.note}"
-                                android:textColor="@color/gray_54"
-                                android:textSize="@dimen/sp_14" />
-                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <EditText
+                            android:id="@+id/beizhu"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/edt_search_bg"
+                            android:gravity="center_vertical|right"
+                            android:text="@={inspection.note}"
+                            android:textColor="@color/gray_54"
+                            android:textSize="@dimen/sp_14" />
+
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_45"
-                        android:paddingBottom="@dimen/dp_10">
+                        android:layout_height="@dimen/dp_45">
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:layout_height="@dimen/dp_30"
+                            android:layout_height="match_parent"
                             android:gravity="center_vertical|left"
                             android:text="@string/jianyanpinlv"
                             android:textColor="@color/gray_87"
                             android:textSize="@dimen/sp_14" />
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/jianyanpinlvrl"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_40">
 
-                            <EditText
-                                android:id="@+id/jianyanpinlv"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/edt_search_bg"
-                                android:editable="false"
-                                android:gravity="center_vertical|right"
-                                android:text="@={inspection.frequency}"
-                                android:textColor="@color/gray_54"
-                                android:textSize="@dimen/sp_14" />
-                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <EditText
+                            android:id="@+id/jianyanpinlv"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="@string/frequency_err"
+                            android:background="@drawable/edt_search_bg"
+                            android:gravity="center_vertical|right"
+                            android:text="@={inspection.frequency}"
+                            android:textColor="@color/gray_54"
+                            android:textSize="@dimen/sp_14" />
+
                     </LinearLayout>
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_45"
-                        android:paddingBottom="@dimen/dp_10">
+                        android:layout_height="@dimen/dp_45">
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:layout_height="@dimen/dp_30"
+                            android:layout_height="match_parent"
                             android:gravity="center_vertical|left"
                             android:text="@string/shiajianduan"
                             android:textColor="@color/gray_87"
                             android:textSize="@dimen/sp_14" />
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/shijianduanrl"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_40">
 
-                            <EditText
-                                android:id="@+id/shijianduan"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/edt_search_bg"
-                                android:editable="false"
-                                android:gravity="center_vertical|right"
-                                android:text="@={inspection.period}"
-                                android:textColor="@color/gray_54"
-                                android:textSize="@dimen/sp_14" />
-                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <EditText
+                            android:id="@+id/shijianduan"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="@string/shijianduan_err"
+                            android:background="@drawable/edt_search_bg"
+                            android:gravity="center_vertical|right"
+                            android:text="@={inspection.period}"
+                            android:textColor="@color/gray_54"
+                            android:textSize="@dimen/sp_14" />
+
                     </LinearLayout>
+
+
 
 
                 </LinearLayout>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/commit"
+                    android:theme="@style/Theme.MaterialComponents.Light"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_36"
+                    android:layout_height="@dimen/dp_46"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
                     android:layout_marginTop="@dimen/dp_10"
-                    android:background="@color/colorPrimary"
+                    android:backgroundTint="@color/colorPrimary"
                     android:text="@string/kaishijianyan"
                     android:textColor="@color/FFFFFF"
-                    android:textSize="@dimen/sp_15" />
+                    android:textSize="@dimen/sp_15"
+                    android:includeFontPadding="false"/>
             </LinearLayout>
         </ScrollView>
 

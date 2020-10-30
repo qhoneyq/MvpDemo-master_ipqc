@@ -1,5 +1,7 @@
 package youdian.apk.ipqc.activity;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,14 +9,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.databinding.DataBindingUtil;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
+import youdian.apk.dianjian.utils.DatetimeUtil;
 import youdian.apk.ipqc.R;
 import youdian.apk.ipqc.adapter.BottomSheetAdapter;
 import youdian.apk.ipqc.adapter.OptionBottomSheetAdapter;
@@ -24,6 +32,7 @@ import youdian.apk.ipqc.bean.OptionData;
 import youdian.apk.ipqc.contract.NewXunjianContract;
 import youdian.apk.ipqc.databinding.ActivityIpqcTabletitleJianyanBinding;
 import youdian.apk.ipqc.obsever.InsCheckResultObserver;
+import youdian.apk.ipqc.presenter.NewChujianPresenter;
 import youdian.apk.ipqc.presenter.NewXunjianPresenter;
 import youdian.apk.ipqc.utils.Constans;
 
@@ -71,6 +80,8 @@ public class NewXunjian_Activity extends BaseMvpActivity<NewXunjianPresenter> im
         binding = DataBindingUtil.setContentView(this,getLayoutId());
         Bundle bundle = getIntent().getBundleExtra("param");
         resultObserver = (InsCheckResultObserver) bundle.getSerializable(Inspection);
+        String time= DatetimeUtil.INSTANCE.getNows_s();
+        resultObserver.setCheck_time(time);
         binding.setInspection(resultObserver);
         binding.headview.setTitleText(getResources().getString(R.string.biaotouxinxi));
         binding.headview.setLeftIcon(R.mipmap.home_icon_return);
@@ -80,6 +91,8 @@ public class NewXunjian_Activity extends BaseMvpActivity<NewXunjianPresenter> im
                 finish();
             }
         });
+        mPresenter = new NewXunjianPresenter();
+        mPresenter.attachView(this);
         dealData();
     }
 
@@ -160,6 +173,7 @@ public class NewXunjian_Activity extends BaseMvpActivity<NewXunjianPresenter> im
                     resultObserver.setPeriod(list.get(i).getOption_value());
                     binding.shijianduan.setText(list.get(i).getOption_name());
                 }
+                bottomSheetDialog.dismiss();
             }
         });
 
@@ -167,10 +181,46 @@ public class NewXunjian_Activity extends BaseMvpActivity<NewXunjianPresenter> im
         bottomSheetDialog.show();
     }
 
+    @Override
+    public void showSomeMsg(String msg) {
+        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 选择时间
+     */
+    public void showDateDialog() {
+        Calendar d = Calendar.getInstance(Locale.CHINA);        // 创建一个日历引用d，通过静态方法getInstance() 从指定时区 Locale.CHINA 获得一个日期实例
+        Date myDate = new Date();        // 创建一个Date实例
+        d.setTime(myDate);        // 设置日历的时间，把一个新建Date实例myDate传入
+        int year = d.get(Calendar.YEAR);
+        int month = d.get(Calendar.MONTH);
+        int day = d.get(Calendar.DAY_OF_MONTH);        //初始化默认日期year, month, day
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT, new DatePickerDialog.OnDateSetListener() {
+            /**
+             * 点击确定后，在这个方法中获取年月日
+             */
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                String date = "" + year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+                binding.time.setText(date);
+            }
+        }, year, month, day);
+        datePickerDialog.show();
+    }
+
+
     /**
      * 获取准备数据
      */
     public void dealData() {
+        //TIME
+        binding.time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDateDialog();
+            }
+        });
         //LINE
         mPresenter.getLines(resultObserver.getSe_code());
         binding.line.setOnClickListener(new View.OnClickListener() {
@@ -194,7 +244,8 @@ public class NewXunjian_Activity extends BaseMvpActivity<NewXunjianPresenter> im
                 flag = binding.jianyanpinlv.getText().toString();
                 if (!flag.equals("")){
                     mPresenter.getSelectInfo(flag);
-                }
+                }else
+                     showSomeMsg(getResources().getString(R.string.frequency_err));
             }
         });
 
@@ -244,64 +295,61 @@ public class NewXunjian_Activity extends BaseMvpActivity<NewXunjianPresenter> im
      */
     private void commit() {
 
-        if (resultObserver.getWork_no().isEmpty()) {
-            binding.gonglingrl.setErrorEnabled(true);
-            binding.gonglingrl.setError(getResources().getString(R.string.workno_err));
-            return;
-        } else {
-            binding.gonglingrl.setErrorEnabled(false);
-        }
+
         if (resultObserver.getShift().isEmpty()) {
-            binding.liaohaotl.setErrorEnabled(true);
-            binding.liaohaotl.setError(getResources().getString(R.string.shift_err));
+            binding.banbie.setError(getResources().getString(R.string.shift_err));
             return;
         } else {
-            binding.liaohaotl.setErrorEnabled(false);
+            binding.banbie.setError(null);
+        }
+        if (resultObserver.getWork_no().isEmpty()) {
+            binding.gongling.setError(getResources().getString(R.string.workno_err));
+            return;
+        } else {
+            binding.gongling.setError(null);
+        }
+        if (resultObserver.getWork_no().isEmpty()) {
+            binding.liaohao.setError(getResources().getString(R.string.workno_err));
+            return;
+        } else {
+            binding.liaohao.setError(null);
         }
         if (resultObserver.getEdition().isEmpty()) {
-            binding.bancitl.setErrorEnabled(true);
             binding.banci.setError(getResources().getString(R.string.banci_err));
             return;
         } else {
-            binding.bancitl.setErrorEnabled(false);
+            binding.banci.setError(null);
         }
         if (resultObserver.getProduction_batch().isEmpty()) {
-            binding.shengchanpicitl.setErrorEnabled(true);
-            binding.shengchanpici.setError(getResources().getString(R.string.shengchanpici));
+            binding.shengchanpici.setError(getResources().getString(R.string.product_err));
             return;
         } else {
-            binding.shengchanpicitl.setErrorEnabled(false);
+            binding.shengchanpici.setError(null);
         }
         if (resultObserver.getLine_code().isEmpty()||resultObserver.getLine_name().isEmpty()) {
-            binding.linerl.setErrorEnabled(true);
-            binding.linerl.setError(getResources().getString(R.string.line_err));
+            binding.line.setError(getResources().getString(R.string.line_err));
             return;
         } else {
-            binding.linerl.setErrorEnabled(false);
+            binding.line.setError(null);
         }
         if (resultObserver.getCheck_quantity().isEmpty()) {
-            binding.checkrl.setErrorEnabled(true);
-            binding.checkrl.setError(getResources().getString(R.string.checkno_err));
+            binding.jianyanshuliang.setError(getResources().getString(R.string.checkno_err));
             return;
         } else {
-            binding.checkrl.setErrorEnabled(false);
-        }
-        if (resultObserver.getPart_no().isEmpty()) {
-            binding.checkrl.setErrorEnabled(true);
-            binding.checkrl.setError(getResources().getString(R.string.partno_err));
-            return;
-        } else {
-            binding.checkrl.setErrorEnabled(false);
+            binding.jianyanshuliang.setError(null);
         }
 
         if (resultObserver.getMachine_type().isEmpty()) {
-            binding.jizhongrl.setErrorEnabled(true);
-            binding.jizhongrl.setError(getResources().getString(R.string.jizhong_err));
+            binding.jizhong.setError(getResources().getString(R.string.jizhong_err));
             return;
         } else {
-            binding.jizhongrl.setErrorEnabled(false);
+            binding.jizhong.setError(null);
         }
         //页面跳转
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constans.FirstCheck, resultObserver);
+        CheckDetail_Chujian_Activity.startActivity(this,bundle);
+        finish();
     }
 
 }

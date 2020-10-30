@@ -40,6 +40,7 @@ public interface NewXunjianContract {
 
         void showCheckTypeBottomDialog(List<OptionData> list);
 
+        void  showSomeMsg(String msg);
 
         void hideDialog();
 

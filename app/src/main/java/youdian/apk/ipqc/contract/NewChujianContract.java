@@ -34,6 +34,7 @@ public interface NewChujianContract {
 
         void showError(int flag, String msg);
 
+
         void setLines(List<Lines> list);
 
         void showLineBottomDialog(List<Lines> list);
