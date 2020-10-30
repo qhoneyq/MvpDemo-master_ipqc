@@ -21,6 +21,7 @@ public class SEObsever extends BaseObservable implements Serializable {
     private String org_name;
     private String se_category;
     private String se_category_name;
+    private boolean isCheck = false;
 
     public SEObsever(SEData seData) {
         this.id = seData.getId();
@@ -102,5 +103,15 @@ public class SEObsever extends BaseObservable implements Serializable {
     public void setSe_category_name(String se_category_name) {
         this.se_category_name = se_category_name;
         notifyPropertyChanged(BR.se_category_name);
+    }
+
+    @Bindable
+    public boolean isCheck() {
+        return isCheck;
+    }
+
+    public void setCheck(boolean check) {
+        isCheck = check;
+        notifyPropertyChanged(BR.check);
     }
 }

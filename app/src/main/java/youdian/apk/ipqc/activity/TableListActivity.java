@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ObservableArrayList;
@@ -33,12 +34,12 @@ public class TableListActivity extends BaseMvpActivity<TableListPresenter> imple
     private IpqcHolderBinding binding;
     private ZhichengAdapter seAdapter;
     private TableListAdapter tableListAdapter;
-    private ObservableArrayList<SEObsever> seObservablelList;
+    private ObservableArrayList<SEObsever> seList;
     private ObservableArrayList<HomeTableObsever> tableObseversList;
     private String flag;//初件 or 巡检
 
     private FirstCheckResultObserver firstCheckResult;//初件记录，首页确定se name and code,checklist name and code ,and checkpersion
-    private InsCheckResultObserver InsCheckResult;//巡检记录，首页确定se name and code,checklist name and code ,and checkpersion
+    private InsCheckResultObserver InsCheckResult;//巡检记录，首页确定se name and code,checklis  t name and code ,and checkpersion
 
     /**
      * 静态方法跳转到当前页面
@@ -57,7 +58,7 @@ public class TableListActivity extends BaseMvpActivity<TableListPresenter> imple
 
     @Override
     public void initView() {
-        binding = DataBindingUtil.setContentView(this,getLayoutId());
+        binding = DataBindingUtil.setContentView(this, getLayoutId());
         flag = getIntent().getStringExtra("param");
         if (flag.equals(Constans.FirstCheck)) {
             binding.headerview.setTitleText(getResources().getString(R.string.pagetitle_chujian));
@@ -91,18 +92,27 @@ public class TableListActivity extends BaseMvpActivity<TableListPresenter> imple
 
     @Override
     public void setSEList(ObservableArrayList<SEObsever> seObservablelList) {
+        this.seList = seObservablelList;
 
         if (seAdapter == null) {
-            seAdapter = new ZhichengAdapter(this,seObservablelList);
+            seAdapter = new ZhichengAdapter(this, seList);
             binding.ipqcMainZhichengRv.setAdapter(seAdapter);
         }
-        seAdapter.sei(itemZhichengRvBinding -> {
-            if (flag.equals(Constans.FirstCheck))
-                mPresenter.getFirstTableList(itemZhichengRvBinding.getSedata().getSe_code());
-            else
-                mPresenter.getInsTableList(itemZhichengRvBinding.getSedata().getSe_code());
+        seAdapter.notifyDataSetChanged();
+        binding.ipqcMainZhichengRv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                for (SEObsever se : seList) {
+                    se.setCheck(false);
+                }
+                seList.get(i).setCheck(true);
+                seAdapter.notifyDataSetChanged();
+                if (flag.equals(Constans.FirstCheck))
+                    mPresenter.getFirstTableList(seList.get(i).getSe_code());
+                else
+                    mPresenter.getInsTableList(seList.get(i).getSe_code());
+            }
         });
-        seAdapter.refresh(seObservablelList);
     }
 
 
@@ -113,7 +123,7 @@ public class TableListActivity extends BaseMvpActivity<TableListPresenter> imple
         if (tableListAdapter == null) {
             tableListAdapter = new TableListAdapter();
             tableListAdapter.setOnItemClickListener(itemHometableRvBinding -> {
-                if (flag.equals(Constans.FirstCheck)){
+                if (flag.equals(Constans.FirstCheck)) {
                     firstCheckResult = new FirstCheckResultObserver();
                     firstCheckResult.setCheck_person(UserUtils.getInstance().getPnum());
                     firstCheckResult.setSe_name(itemHometableRvBinding.getTableitem().getSe_name());
@@ -124,7 +134,7 @@ public class TableListActivity extends BaseMvpActivity<TableListPresenter> imple
                     bundle.putSerializable(Constans.FirstCheck, firstCheckResult);
                     //跳转表头
                     NewChujian_Activity.startActivity(this, bundle);
-                }else {
+                } else {
                     InsCheckResult = new InsCheckResultObserver();
                     InsCheckResult.setCheck_person(UserUtils.getInstance().getPnum());
                     InsCheckResult.setSe_name(itemHometableRvBinding.getTableitem().getSe_name());
@@ -142,7 +152,6 @@ public class TableListActivity extends BaseMvpActivity<TableListPresenter> imple
         }
         tableListAdapter.refresh(tableObseversList);
     }
-
 
 
     @Override
