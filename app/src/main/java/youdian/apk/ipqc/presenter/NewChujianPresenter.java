@@ -35,6 +35,7 @@ public class NewChujianPresenter extends BasePresenter<NewChujianContract.View> 
 
     List<Lines> linesList = new ArrayList<>();//line
     List<OptionData> checkTypeList = new ArrayList<>();//初见类型
+    List<OptionData> shiftList = new ArrayList<>();//shift类型
 
     /**
      * 获取线别
@@ -91,9 +92,15 @@ public class NewChujianPresenter extends BasePresenter<NewChujianContract.View> 
 
                     @Override
                     public void onNext(@NonNull Response<List<OptionData>> listResponse) {
-                        checkTypeList = listResponse.getData();
-                        if (checkTypeList.size() < 0)
-                            mView.showError(Constans.FLAG_LINE, "初件类型为空");
+                        if (selectinfo.equals(Constans.CHUJIAN_TYPE)) {
+                            checkTypeList = listResponse.getData();
+                            if (checkTypeList.size() < 0)
+                                mView.showError(Constans.FLAG_LINE, "初件类型为空");
+                        } else if (selectinfo.equals(Constans.Shift)) {
+                            shiftList = listResponse.getData();
+                            if (shiftList.size() < 0)
+                                mView.showError(Constans.FLAG_LINE, "班别为空");
+                        }
                     }
 
                     @Override
@@ -129,6 +136,12 @@ public class NewChujianPresenter extends BasePresenter<NewChujianContract.View> 
                     mView.showCheckTypeBottomDialog(checkTypeList);
                 else
                     mView.showError(flag, "没有可选初件类型");
+                break;
+            case Constans.FLAG_SHIFT:
+                if (shiftList.size() > 0)
+                    mView.showShiftBottomDialog(shiftList);
+                else
+                    mView.showError(flag, "没有可选班别");
                 break;
         }
 

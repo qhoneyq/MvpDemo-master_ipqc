@@ -4,6 +4,7 @@ import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -11,29 +12,29 @@ import youdian.apk.ipqc.BR;
 import youdian.apk.ipqc.utils.Constans;
 
 public class FirstCheckResultObserver extends BaseObservable implements Serializable {
-    private String sn;
-    private String suggestion;
-    private String shift;
-    private String shift_name;
-    private String result_status;
-    private String se_name;
-    private String se_code;
-    private String line_name;
-    private String line_code;
-    private String work_no;
-    private String part_no;
-    private String edition;
-    private String production_batch;
-    private String check_quantity;
-    private String chujian_type;
-    private String note;
-    private String machine_type;
-    private String first_checklist_name;
-    private String first_checklist_code;
-    private String check_person;
-    private String check_time;
-    private String sign_status;
-    private List<FirstCheckItemObserver> first_result_details;
+    private String sn = "";
+    private String suggestion ="";
+    private String shift ="";
+    private String shift_name ="";
+    private String result_status ="";
+    private String se_name ="";
+    private String se_code ="";
+    private String line_name ="";
+    private String line_code ="";
+    private String work_no ="";
+    private String part_no ="";
+    private String edition ="";
+    private String production_batch ="";
+    private String check_quantity ="";
+    private String chujian_type ="";
+    private String note ="";
+    private String machine_type ="";
+    private String first_checklist_name ="";
+    private String first_checklist_code ="";
+    private String check_person ="";
+    private String check_time ="";
+    private String sign_status ="";
+    private List<FirstCheckItemObserver> first_result_details = new ArrayList<>();
 
     @Bindable
     public String getSn() {
@@ -62,10 +63,6 @@ public class FirstCheckResultObserver extends BaseObservable implements Serializ
 
     public void setShift(String shift) {
         this.shift = shift;
-        if (shift.equals(Constans.Day))
-            setShift_name("白班");
-        else
-            setShift_name("晚班");
         notifyPropertyChanged(BR.shift);
     }
 @Bindable

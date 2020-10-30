@@ -3,6 +3,7 @@ package youdian.apk.ipqc.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 
@@ -90,18 +91,17 @@ public class TableListActivity extends BaseMvpActivity<TableListPresenter> imple
 
     @Override
     public void setSEList(ObservableArrayList<SEObsever> seObservablelList) {
-        binding.ipqcMainZhichengRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        binding.ipqcMainZhichengRv.setItemAnimator(new DefaultItemAnimator());
+
         if (seAdapter == null) {
-            seAdapter = new ZhichengAdapter();
-            seAdapter.setOnItemClickListener(itemZhichengRvBinding -> {
-                if (flag.equals(Constans.FirstCheck))
-                    mPresenter.getFirstTableList(itemZhichengRvBinding.getSedata().getSe_code());
-                else
-                    mPresenter.getInsTableList(itemZhichengRvBinding.getSedata().getSe_code());
-            });
+            seAdapter = new ZhichengAdapter(this,seObservablelList);
             binding.ipqcMainZhichengRv.setAdapter(seAdapter);
         }
+        seAdapter.sei(itemZhichengRvBinding -> {
+            if (flag.equals(Constans.FirstCheck))
+                mPresenter.getFirstTableList(itemZhichengRvBinding.getSedata().getSe_code());
+            else
+                mPresenter.getInsTableList(itemZhichengRvBinding.getSedata().getSe_code());
+        });
         seAdapter.refresh(seObservablelList);
     }
 
@@ -124,7 +124,6 @@ public class TableListActivity extends BaseMvpActivity<TableListPresenter> imple
                     bundle.putSerializable(Constans.FirstCheck, firstCheckResult);
                     //跳转表头
                     NewChujian_Activity.startActivity(this, bundle);
-                    finish();
                 }else {
                     InsCheckResult = new InsCheckResultObserver();
                     InsCheckResult.setCheck_person(UserUtils.getInstance().getPnum());
@@ -136,7 +135,6 @@ public class TableListActivity extends BaseMvpActivity<TableListPresenter> imple
                     bundle.putSerializable(Constans.Inspection, InsCheckResult);
                     //跳转表头
                     NewChujian_Activity.startActivity(this, bundle);
-                    finish();
                 }
 
             });

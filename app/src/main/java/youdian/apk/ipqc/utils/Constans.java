@@ -45,7 +45,7 @@ public class Constans {
     public static final int FLAG_LINE = 1;
     public static final int FLAG_SN = 2;
     public static final int FLAG_CHECKTYPE = 3;
-    public static final int FLAG_CHUJIANLEIXING = 2;
+    public static final int FLAG_SHIFT = 4;
 
 
 

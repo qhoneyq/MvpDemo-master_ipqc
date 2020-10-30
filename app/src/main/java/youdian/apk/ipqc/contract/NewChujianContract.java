@@ -39,6 +39,7 @@ public interface NewChujianContract {
         void showLineBottomDialog(List<Lines> list);
 
         void showCheckTypeBottomDialog(List<OptionData> list);
+        void showShiftBottomDialog(List<OptionData> list);
 
 
         void hideDialog();

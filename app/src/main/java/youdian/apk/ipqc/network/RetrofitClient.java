@@ -28,6 +28,7 @@ public class RetrofitClient {
     private String baseUrl = Constans.BASEURL;
     private String baseUrl_login = Constans.BASEURLLogin;
     private Retrofit retrofit;
+    private Retrofit retrofitLogin;
     private OkHttpClient okHttpClient;
 
     private RetrofitClient() {
@@ -137,8 +138,8 @@ public class RetrofitClient {
 
     public APIService getLoginApi() {
         //初始化一个client,不然retrofit会自己默认添加一个
-        if (retrofit == null) {
-            retrofit = new Retrofit.Builder()
+        if (retrofitLogin == null) {
+            retrofitLogin = new Retrofit.Builder()
                     //设置网络请求的Url地址
                     .baseUrl(baseUrl_login)
                     //设置数据解析器
@@ -150,7 +151,7 @@ public class RetrofitClient {
         }
         //创建—— 网络请求接口—— 实例
         if (apiServiceLogin == null) {
-            apiServiceLogin = retrofit.create(APIService.class);
+            apiServiceLogin = retrofitLogin.create(APIService.class);
         }
 
         return apiServiceLogin;

@@ -1,14 +1,22 @@
 package youdian.apk.ipqc.activity;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
@@ -23,8 +31,12 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
+import youdian.apk.dianjian.utils.DatetimeUtil;
 import youdian.apk.ipqc.R;
 import youdian.apk.ipqc.adapter.BottomSheetAdapter;
 import youdian.apk.ipqc.adapter.OptionBottomSheetAdapter;
@@ -39,6 +51,7 @@ import youdian.apk.ipqc.presenter.NewChujianPresenter;
 import youdian.apk.ipqc.utils.Constans;
 
 import static youdian.apk.ipqc.utils.Constans.FLAG_LINE;
+import static youdian.apk.ipqc.utils.Constans.FLAG_SHIFT;
 import static youdian.apk.ipqc.utils.Constans.FLAG_SN;
 import static youdian.apk.ipqc.utils.Constans.FirstCheck;
 
@@ -59,7 +72,6 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
     private BottomSheetDialog checktypedialog;
     private BottomSheetDialog dialogshift;
 
-    private List<String> shiftList;
 
 
     /**
@@ -81,6 +93,8 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
         binding = DataBindingUtil.setContentView(this,getLayoutId());
         Bundle bundle = getIntent().getBundleExtra("param");
         resultObserver = (FirstCheckResultObserver) bundle.getSerializable(FirstCheck);
+        String time= DatetimeUtil.INSTANCE.getNows_s();
+        resultObserver.setCheck_time(time);
         binding.setFirstcheck(resultObserver);
         binding.headview.setTitleText(getResources().getString(R.string.biaotouxinxi));
         binding.headview.setLeftIcon(R.mipmap.home_icon_return);
@@ -93,6 +107,11 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
 
         mPresenter = new NewChujianPresenter();
         mPresenter.attachView(this);
+        int width = 50;
+        Drawable drawable = getResources().getDrawable(R.drawable.divider);
+        binding.llAll.setDividerDrawable(drawable);
+        binding.llAll.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
+
         dealData();
     }
 
@@ -139,6 +158,8 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 resultObserver.setLine_code(list.get(i).getLine_code());
                 resultObserver.setLine_name(list.get(i).getLine_name());
+                dialog.dismiss();
+
             }
         });
 
@@ -169,6 +190,7 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 resultObserver.setChujian_type(list.get(i).getOption_value());
                 binding.chujianleixing.setText(list.get(i).getOption_name());
+                checktypedialog.dismiss();
             }
         });
 
@@ -176,10 +198,13 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
         checktypedialog.show();
     }
 
+
+
     /**
      * 显示白晚班下拉选项
      */
-    public void showShiftBottomDialog() {
+    @Override
+    public void showShiftBottomDialog(List<OptionData> list) {
         if (dialogshift == null) {
             dialogshift = new BottomSheetDialog(this);
             dialogshift = new BottomSheetDialog(this);
@@ -191,14 +216,14 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
         dialogshift.setCanceledOnTouchOutside(true);
         View view = LayoutInflater.from(NewChujian_Activity.this).inflate(R.layout.bottom_dialog, null);
         ListView bottom_lv = view.findViewById(R.id.bottom_lv);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                NewChujian_Activity.this, R.layout.bottom_lv_item, shiftList);
+        OptionBottomSheetAdapter adapter = new OptionBottomSheetAdapter(list, this);
         bottom_lv.setAdapter(adapter);
         bottom_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                resultObserver.setShift_name(shiftList.get(i));
-                dialogshift.hide();
+                resultObserver.setShift(list.get(i).getOption_value());
+                binding.banbie.setText(list.get(i).getOption_name());
+                dialogshift.dismiss();
             }
         });
 
@@ -211,6 +236,14 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
      * 获取准备数据
      */
     public void dealData() {
+        //TIME
+
+        binding.time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDateDialog();
+            }
+        });
         //LINE
         mPresenter.getLines(resultObserver.getSe_code());
         binding.line.setOnClickListener(new View.OnClickListener() {
@@ -222,21 +255,20 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
 
         //CHECKTYPE
         mPresenter.getSelectInfo("CHUJIAN_TYPE");
-        binding.line.setOnClickListener(new View.OnClickListener() {
+        binding.chujianleixing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPresenter.getSelectInfo(Constans.CHUJIAN_TYPE);
+                mPresenter.showBottomDialog(Constans.FLAG_CHECKTYPE);
             }
         });
 
         //SHIFT
-        shiftList = new ArrayList<>();
-        shiftList.add("白班");
-        shiftList.add("晚班");
+        mPresenter.getSelectInfo("SHIFT");
+
         binding.banbie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showShiftBottomDialog();
+                mPresenter.showBottomDialog(FLAG_SHIFT);
             }
         });
 
@@ -256,6 +288,30 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
         });
 
     }
+
+    /**
+     * 选择时间
+     */
+    public void showDateDialog() {
+        Calendar d = Calendar.getInstance(Locale.CHINA);        // 创建一个日历引用d，通过静态方法getInstance() 从指定时区 Locale.CHINA 获得一个日期实例
+        Date myDate = new Date();        // 创建一个Date实例
+        d.setTime(myDate);        // 设置日历的时间，把一个新建Date实例myDate传入
+        int year = d.get(Calendar.YEAR);
+        int month = d.get(Calendar.MONTH);
+        int day = d.get(Calendar.DAY_OF_MONTH);        //初始化默认日期year, month, day
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,AlertDialog.THEME_DEVICE_DEFAULT_LIGHT, new DatePickerDialog.OnDateSetListener() {
+            /**
+             * 点击确定后，在这个方法中获取年月日
+             */
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                String date = "" + year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+                binding.time.setText(date);
+            }
+        }, year, month, day);
+        datePickerDialog.show();
+    }
+
 
     @Override
     public void hideDialog() {
@@ -283,88 +339,66 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
      */
     private void commit() {
         if (resultObserver.getSn().isEmpty()) {
-            binding.snTl.setErrorEnabled(true);
-            binding.snTl.setError(getResources().getString(R.string.sn_err));
+            binding.snTv.setError(getResources().getString(R.string.sn_err));
             return;
-        } else {
-            binding.snTl.setErrorEnabled(false);
+        }else{
+            binding.snTv.setError(null);
         }
         if (resultObserver.getShift().isEmpty()) {
-            binding.shiftrl.setErrorEnabled(true);
-            binding.shiftrl.setError(getResources().getString(R.string.shift_err));
+            binding.banbie.setError(getResources().getString(R.string.shift_err));
             return;
         } else {
-            binding.shiftrl.setErrorEnabled(false);
+            binding.banbie.setError(null);
         }
         if (resultObserver.getWork_no().isEmpty()) {
-            binding.gonglingrl.setErrorEnabled(true);
-            binding.gonglingrl.setError(getResources().getString(R.string.workno_err));
+            binding.gongling.setError(getResources().getString(R.string.workno_err));
             return;
         } else {
-            binding.gonglingrl.setErrorEnabled(false);
+            binding.gongling.setError(null);
         }
         if (resultObserver.getWork_no().isEmpty()) {
-            binding.liaohaotl.setErrorEnabled(true);
-            binding.liaohaotl.setError(getResources().getString(R.string.workno_err));
+            binding.liaohao.setError(getResources().getString(R.string.workno_err));
             return;
         } else {
-            binding.liaohaotl.setErrorEnabled(false);
+            binding.liaohao.setError(null);
         }
         if (resultObserver.getEdition().isEmpty()) {
-            binding.bancitl.setErrorEnabled(true);
-            binding.bancitl.setError(getResources().getString(R.string.banci_err));
+            binding.banci.setError(getResources().getString(R.string.banci_err));
             return;
         } else {
-            binding.bancitl.setErrorEnabled(false);
+            binding.banci.setError(null);
         }
         if (resultObserver.getProduction_batch().isEmpty()) {
-            binding.shengchanpicitl.setErrorEnabled(true);
-            binding.shengchanpicitl.setError(getResources().getString(R.string.banci_err));
+            binding.shengchanpici.setError(getResources().getString(R.string.banci_err));
             return;
         } else {
-            binding.shengchanpicitl.setErrorEnabled(false);
+            binding.shengchanpici.setError(null);
         }
         if (resultObserver.getLine_code().isEmpty()||resultObserver.getLine_name().isEmpty()) {
-            binding.linerl.setErrorEnabled(true);
-            binding.linerl.setError(getResources().getString(R.string.line_err));
+            binding.line.setError(getResources().getString(R.string.line_err));
             return;
         } else {
-            binding.linerl.setErrorEnabled(false);
+            binding.line.setError(null);
         }
         if (resultObserver.getCheck_quantity().isEmpty()) {
-            binding.checkrl.setErrorEnabled(true);
-            binding.checkrl.setError(getResources().getString(R.string.checkno_err));
+            binding.jianyanshuliang.setError(getResources().getString(R.string.checkno_err));
             return;
         } else {
-            binding.checkrl.setErrorEnabled(false);
+            binding.jianyanshuliang.setError(null);
         }
-        if (resultObserver.getCheck_quantity().isEmpty()) {
-            binding.checkrl.setErrorEnabled(true);
-            binding.checkrl.setError(getResources().getString(R.string.checkno_err));
-            return;
-        } else {
-            binding.checkrl.setErrorEnabled(false);
-        }
+
+
         if (resultObserver.getChujian_type().isEmpty()) {
-            binding.chujiantyperl.setErrorEnabled(true);
-            binding.chujiantyperl.setError(getResources().getString(R.string.chujianleixing));
+            binding.chujianleixing.setError(getResources().getString(R.string.checktype_err));
             return;
         } else {
-            binding.chujiantyperl.setErrorEnabled(false);
-        }
-        if (resultObserver.getChujian_type().isEmpty()) {
-            binding.chujiantyperl.setErrorEnabled(true);
-            binding.chujiantyperl.setError(getResources().getString(R.string.checktype_err));
-            return;
-        } else {
-            binding.chujiantyperl.setErrorEnabled(false);
+            binding.chujianleixing.setError(null);
         }
         if (resultObserver.getMachine_type().isEmpty()) {
-            binding.jizhongrl.setErrorEnabled(true);
-            binding.jizhongrl.setError(getResources().getString(R.string.jizhong_err));
+            binding.jizhong.setError(getResources().getString(R.string.jizhong_err));
             return;
         } else {
-            binding.jizhongrl.setErrorEnabled(false);
+            binding.jizhong.setError(null);
         }
         //页面跳转
         Bundle bundle = new Bundle();

@@ -7,10 +7,10 @@
     type="youdian.apk.ipqc.obsever.SEObsever" />
     </data>
 
-    <RelativeLayout
+    <youdian.apk.ipqc.wedige.CheckableLinearLayout
         android:layout_width="@dimen/dp_120"
         android:layout_height="@dimen/dp_45"
-        android:background="@drawable/bg_ipqc_se"
+        android:background="@drawable/bg_item_zhicheng"
         android:layout_margin="@dimen/px_1">
 
         <TextView
@@ -25,5 +25,5 @@
             android:autoSizeMinTextSize="@dimen/sp_10"
             android:textColor="@color/bg_textcolor_rb"
             android:singleLine="true" />
-    </RelativeLayout>
+    </youdian.apk.ipqc.wedige.CheckableLinearLayout>
 </layout>
