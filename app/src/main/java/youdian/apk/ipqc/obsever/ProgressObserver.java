@@ -12,8 +12,8 @@ public class ProgressObserver extends BaseObservable implements Serializable {
     int id;
     String process_name;
     String process_code;
-    String progress_sn;
-    String note;
+    String progress_sn ="";
+    String note = "";
 
     @Bindable
     public int getId() {

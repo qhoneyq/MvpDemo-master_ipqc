@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RadioGroup;
@@ -24,6 +25,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableList;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.Collection;
+import java.util.HashMap;
 
 import youdian.apk.dianjian.utils.DatetimeUtil;
 import youdian.apk.ipqc.R;
@@ -52,6 +56,7 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
         for (int i = 0; i < list_action.size(); i++) {
             ischeck[i] = false;
         }
+
     }
 
     public interface onCountChangeListener {
@@ -82,11 +87,23 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
             this.binding = binding;
         }
 
-        public void bindData(FirstCheckItemObserver item) {
-            binding.setFirstResult(item);
-        }
-
-
+//        public void bindData(FirstCheckItemObserver item) {
+//            binding.setFirstResult(item);
+//        }
+//
+//        public void setVisibility(boolean isVisible) {
+//            RecyclerView.LayoutParams param = (RecyclerView.LayoutParams) binding.getRoot().getLayoutParams();
+//            if (isVisible) {
+//                param.height = LinearLayout.LayoutParams.WRAP_CONTENT;
+//                param.width = LinearLayout.LayoutParams.MATCH_PARENT;
+//                itemView.setVisibility(View.VISIBLE);
+//            } else {
+//                itemView.setVisibility(View.GONE);
+//                param.height = 1;
+//                param.width = 1;
+//            }
+//            itemView.setLayoutParams(param);
+//        }
     }
 
     @Override
@@ -94,200 +111,205 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
         if (viewHolder instanceof ActionDetailAdapter.MyHolder) {
 
             FirstCheckItemObserver actionDetail = list_action.get(p);
-            actionDetail.setNote("");
-            viewHolder.bindData(actionDetail);
-            //检查标准tip
-            viewHolder.binding.imgTip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked)
-                        showPopupWindow(viewHolder.binding.imgTip, actionDetail.getMethod());
-                }
-            });
+//            if (actionDetail.isIsvisiable()) {
+                actionDetail.setNote("");
+                viewHolder.binding.setFirstResult(actionDetail);
+//                viewHolder.setVisibility(actionDetail.isIsvisiable());
 
-            //根据check_control_id确定所显示控件 --------- 1:radiogroup;2:number(100-200);3:下拉列表;其他：文本框
-            //除了数字输入，其他都有radio选择
-            if (actionDetail.getControl_code().equals(Constans.Radio)) {
-                viewHolder.binding.ctEdt.setVisibility(View.GONE);
-                viewHolder.binding.ctDropdown.setVisibility(View.GONE);
-                viewHolder.binding.ctSelect.setVisibility(View.VISIBLE);
-            } else if (actionDetail.getControl_code().equals(Constans.Number)) {
-                viewHolder.binding.ctEdt.setVisibility(View.VISIBLE);
-                viewHolder.binding.ctDropdown.setVisibility(View.GONE);
-                viewHolder.binding.ctSelect.setVisibility(View.GONE);
-                viewHolder.binding.ctEdt.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-
-            } else if (actionDetail.getControl_code().equals(Constans.Check)) {//下拉
-                viewHolder.binding.ctEdt.setVisibility(View.GONE);
-                viewHolder.binding.ctDropdown.setVisibility(View.VISIBLE);
-                viewHolder.binding.ctSelect.setVisibility(View.VISIBLE);
-                String droptext[] = actionDetail.getReference_value().split(",");
-                viewHolder.binding.ctDropdown.setOnClickListener(new View.OnClickListener() {
+                //检查标准tip
+                viewHolder.binding.imgTip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
-                    public void onClick(View v) {
-                        // 点击控件后显示popup窗口
-                        initSelectPopup(viewHolder.binding.ctDropdown, droptext);
-                        // 使用isShowing()检查popup窗口是否在显示状态
-                        if (popuList != null && !popuList.isShowing()) {
-                            popuList.showAsDropDown(viewHolder.binding.ctDropdown, 0, 10);
-                        }
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked)
+                            showPopupWindow(viewHolder.binding.imgTip, actionDetail.getMethod());
                     }
                 });
 
+                //根据check_control_id确定所显示控件 --------- 1:radiogroup;2:number(100-200);3:下拉列表;其他：文本框
+                //除了数字输入，其他都有radio选择
+                if (actionDetail.getControl_code().equals(Constans.Radio)) {
+                    viewHolder.binding.ctEdt.setVisibility(View.GONE);
+                    viewHolder.binding.ctDropdown.setVisibility(View.GONE);
+                    viewHolder.binding.ctSelect.setVisibility(View.VISIBLE);
+                } else if (actionDetail.getControl_code().equals(Constans.Number)) {
+                    viewHolder.binding.ctEdt.setVisibility(View.VISIBLE);
+                    viewHolder.binding.ctDropdown.setVisibility(View.GONE);
+                    viewHolder.binding.ctSelect.setVisibility(View.GONE);
+                    viewHolder.binding.ctEdt.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+
+                } else if (actionDetail.getControl_code().equals(Constans.Check)) {//下拉
+                    viewHolder.binding.ctEdt.setVisibility(View.GONE);
+                    viewHolder.binding.ctDropdown.setVisibility(View.VISIBLE);
+                    viewHolder.binding.ctSelect.setVisibility(View.VISIBLE);
+                    String droptext[] = actionDetail.getReference_value().split(",");
+                    viewHolder.binding.ctDropdown.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // 点击控件后显示popup窗口
+                            initSelectPopup(viewHolder.binding.ctDropdown, droptext);
+                            // 使用isShowing()检查popup窗口是否在显示状态
+                            if (popuList != null && !popuList.isShowing()) {
+                                popuList.showAsDropDown(viewHolder.binding.ctDropdown, 0, 10);
+                            }
+                        }
+                    });
+
 //        } else if (actionDetail.getControl_code().equals("Text")) {
-            } else {//文本
-                viewHolder.binding.ctEdt.setVisibility(View.VISIBLE);
-                viewHolder.binding.ctDropdown.setVisibility(View.GONE);
-                viewHolder.binding.ctSelect.setVisibility(View.VISIBLE);
-            }
+                } else {//文本
+                    viewHolder.binding.ctEdt.setVisibility(View.VISIBLE);
+                    viewHolder.binding.ctDropdown.setVisibility(View.GONE);
+                    viewHolder.binding.ctSelect.setVisibility(View.VISIBLE);
+                }
 
 
-            /******************************************** 各种监听 ****************************************************/
+                /******************************************** 各种监听 ****************************************************/
 
-            //radiogroup控件选择监听
-            viewHolder.binding.ctRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                //radiogroup控件选择监听
+                viewHolder.binding.ctRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, int checkedId) {
 //                    if (!ischeck[viewHolder.getBindingAdapterPosition()]) {
 //                        ischeck[viewHolder.getBindingAdapterPosition()] = true;
 //                        Count = getCount();
 //                        onCountChangeListener.getCheckedCount(Count);
 //                    }
-                    actionDetail.setCheck_time(DatetimeUtil.INSTANCE.getNows_ss());
-                    if (checkedId == R.id.ct_rb_no) {
-                        viewHolder.binding.ctRgEdtNote.setVisibility(View.VISIBLE);
-                        actionDetail.setDetail_status(Constans.Abnormal);
-                        if (actionDetail.getControl_code().equals("Radio")) {
-                            actionDetail.setDetail_value("False");
-                        }
-                    } else {
-                        viewHolder.binding.ctRgEdtNote.setVisibility(View.GONE);
-                        viewHolder.binding.ctRgEdtNote.setText("");
-                        if (checkedId == R.id.ct_rb_yes) {
-                            actionDetail.setDetail_status(Constans.Normal);
-                            actionDetail.setNote("");
+                        actionDetail.setCheck_time(DatetimeUtil.INSTANCE.getNows_ss());
+                        if (checkedId == R.id.ct_rb_no) {
+                            viewHolder.binding.ctRgEdtNote.setVisibility(View.VISIBLE);
+                            actionDetail.setDetail_status(Constans.Abnormal);
                             if (actionDetail.getControl_code().equals("Radio")) {
-                                actionDetail.setDetail_value("True");
+                                actionDetail.setDetail_value("False");
                             }
                         } else {
-                            actionDetail.setDetail_status(Constans.NA);
-                            actionDetail.setNote("");
-                            if (actionDetail.getControl_code().equals("Radio")) {
-                                actionDetail.setDetail_value("NA");
+                            viewHolder.binding.ctRgEdtNote.setVisibility(View.GONE);
+                            viewHolder.binding.ctRgEdtNote.setText("");
+                            if (checkedId == R.id.ct_rb_yes) {
+                                actionDetail.setDetail_status(Constans.Normal);
+                                actionDetail.setNote("");
+                                if (actionDetail.getControl_code().equals("Radio")) {
+                                    actionDetail.setDetail_value("True");
+                                }
+                            } else {
+                                actionDetail.setDetail_status(Constans.NA);
+                                actionDetail.setNote("");
+                                if (actionDetail.getControl_code().equals("Radio")) {
+                                    actionDetail.setDetail_value("NA");
+                                }
+
                             }
-
                         }
+                        summary(actionDetail, p);
+//                        summary(actionDetail, viewHolder.getBindingAdapterPosition());
                     }
-                    summary(actionDetail, viewHolder.getBindingAdapterPosition());
-//                    onCountChangeListener.getCheckDetail(actionDetail);
-                }
-            });
-            viewHolder.binding.ctEdt.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                });
+                viewHolder.binding.ctEdt.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                }
+                    }
 
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                }
+                    }
 
-                @Override
-                public void afterTextChanged(Editable s) {
-                    if (s.length() > 0) {
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        if (s.length() > 0) {
 
-                        if (actionDetail.getControl_code().equals("Number")) {//数字监听
-                            double value1 = 0;
-                            double value2 = 0;
-                            try {
-                                String reference_value = list_action.get(viewHolder.getBindingAdapterPosition()).getReference_value();
-                                String value[] = reference_value.split(",");
-                                value1 = Double.valueOf(value[0]);
-                                value2 = Double.valueOf(value[1]);
-                                double d = 0;
+                            if (actionDetail.getControl_code().equals("Number")) {//数字监听
+                                double value1 = 0;
+                                double value2 = 0;
                                 try {
-                                    d = Double.valueOf(s.toString());
-                                    if (d >= value1 && d <= value2) {
-                                        actionDetail.setDetail_status(Constans.Normal);
-                                    } else
-                                        actionDetail.setDetail_status(Constans.Abnormal);
-                                    actionDetail.setDetail_value(s.toString());
+                                    String reference_value = list_action.get(p).getReference_value();
+                                    String value[] = reference_value.split(",");
+                                    value1 = Double.valueOf(value[0]);
+                                    value2 = Double.valueOf(value[1]);
+                                    double d = 0;
+                                    try {
+                                        d = Double.valueOf(s.toString());
+                                        if (d >= value1 && d <= value2) {
+                                            actionDetail.setDetail_status(Constans.Normal);
+                                        } else
+                                            actionDetail.setDetail_status(Constans.Abnormal);
+                                        actionDetail.setDetail_value(s.toString());
 //                                    onCountChangeListener.getCheckDetail(actionDetail);
-                                    summary(actionDetail, viewHolder.getBindingAdapterPosition());
+                                        summary(actionDetail, p);
+
+                                    } catch (NumberFormatException e) {
+                                        e.printStackTrace();
+                                        CommonUtils.showMsg(context, context.getString(R.string.referencecomparevalue_err));
+
+                                    }
 
                                 } catch (NumberFormatException e) {
                                     e.printStackTrace();
-                                    CommonUtils.showMsg(context, context.getString(R.string.referencecomparevalue_err));
-
+                                    CommonUtils.showMsg(context, context.getString(R.string.referencevalue_err));
+                                    return;
                                 }
-
-                            } catch (NumberFormatException e) {
-                                e.printStackTrace();
-                                CommonUtils.showMsg(context, context.getString(R.string.referencevalue_err));
-                                return;
-                            }
-                        } else {
-                            //文本监听
-                            actionDetail.setDetail_value(s.toString());
-                            summary(actionDetail, viewHolder.getBindingAdapterPosition());
+                            } else {
+                                //文本监听
+                                actionDetail.setDetail_value(s.toString());
+                                summary(actionDetail, p);
 
 //                            onCountChangeListener.getCheckDetail(actionDetail);
 
+                            }
                         }
                     }
-                }
-            });
-            viewHolder.binding.ctRgEdtNote.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                });
+                viewHolder.binding.ctRgEdtNote.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                }
+                    }
 
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    actionDetail.setNote(s.toString());
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        actionDetail.setNote(s.toString());
 //                    if (actionDetail.getControl_code().equals(Radio)) {
 //                        onCountChangeListener.getCheckDetail(actionDetail);
-                    summary(actionDetail, viewHolder.getBindingAdapterPosition());
+                        summary(actionDetail, p);
 //                    }
-                }
+                    }
 
-                @Override
-                public void afterTextChanged(Editable s) {
+                    @Override
+                    public void afterTextChanged(Editable s) {
 
-                }
-            });
+                    }
+                });
 
 
-            //下拉控件监听
-            viewHolder.binding.ctDropdown.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //下拉控件监听
+                viewHolder.binding.ctDropdown.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                }
+                    }
 
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                }
+                    }
 
-                @Override
-                public void afterTextChanged(Editable s) {
+                    @Override
+                    public void afterTextChanged(Editable s) {
 //                    if (!ischeck[viewHolder.getBindingAdapterPosition()]) {
 //                        ischeck[viewHolder.getBindingAdapterPosition()] = true;
 //                        Count = getCount();
 //                        onCountChangeListener.getCheckedCount(Count);
 //                    }
 //                    onCountChangeListener.getCheckDetail(actionDetail);
-                    actionDetail.setDetail_value(s.toString());
-                    summary(actionDetail, viewHolder.getBindingAdapterPosition());
+                        actionDetail.setDetail_value(s.toString());
+                        summary(actionDetail, p);
 
-                }
-            });
+                    }
+                });
 
+//            }else {
+////                viewHolder.setVisibility(false);
+//            }
         }
-
     }
 
     @Override
@@ -464,4 +486,6 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
 
         }
     }
+
+
 }

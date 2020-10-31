@@ -27,7 +27,8 @@
             <ListView
                 android:id="@+id/ipqc_main_zhicheng_rv"
                 android:layout_width="@dimen/dp_120"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:divider="@null"/>
 
             <View
                 android:layout_width="@dimen/px_1"

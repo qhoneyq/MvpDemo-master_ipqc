@@ -29,12 +29,23 @@ public class FirstCheckResultObserver extends BaseObservable implements Serializ
     private String chujian_type ="";
     private String note ="";
     private String machine_type ="";
+    private int first_checklist_id ;
     private String first_checklist_name ="";
     private String first_checklist_code ="";
     private String check_person ="";
     private String check_time ="";
     private String sign_status ="";
     private List<FirstCheckItemObserver> first_result_details = new ArrayList<>();
+
+    @Bindable
+    public int getFirst_checklist_id() {
+        return first_checklist_id;
+    }
+
+    public void setFirst_checklist_id(int first_checklist_id) {
+        this.first_checklist_id = first_checklist_id;
+        notifyPropertyChanged(BR.first_checklist_id);
+    }
 
     @Bindable
     public String getSn() {

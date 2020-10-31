@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="suggest"
+            type="youdian.apk.ipqc.obsever.OptionObserver" />
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:descendantFocusability="blocksDescendants"
+        android:paddingTop="@dimen/dp_10">
+
+        <CheckBox
+            android:id="@+id/cb_item"
+            android:layout_width="@dimen/dp_13"
+            android:layout_height="@dimen/dp_13"
+            android:layout_alignParentStart="true"
+            android:checked="@={suggest.check}"
+            android:focusable="false"
+            android:layout_margin="@dimen/dp_5"
+            android:button="@null"
+            android:background="@drawable/checkbox"
+            android:layout_centerVertical="true" />
+
+
+        <TextView
+            android:id="@+id/tv_item_suggest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@={suggest.option_name}"
+            android:layout_centerVertical="true"
+            android:textColor="@color/black_54"
+            android:layout_toRightOf="@id/cb_item"
+            android:layout_marginLeft="@dimen/dp_7"
+            android:textSize="@dimen/sp_12"
+            />
+    </RelativeLayout>
+</layout>

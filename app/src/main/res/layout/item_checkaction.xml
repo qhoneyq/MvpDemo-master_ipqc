@@ -45,7 +45,7 @@
                 android:gravity="center_vertical"
                 android:text="@{FirstResult.item}"
                 android:textColor="@color/gray_87"
-                android:textSize="@dimen/sp_14"
+                android:textSize="@dimen/sp_13"
                 android:textStyle="bold" />
         </RelativeLayout>
 
@@ -59,7 +59,7 @@
             android:layout_marginBottom="@dimen/dp_10"
             android:text="@string/checkresult"
             android:textColor="@color/gray_54"
-            android:textSize="@dimen/sp_14" />
+            android:textSize="@dimen/sp_13" />
 
 
         <EditText
@@ -78,7 +78,7 @@
             android:paddingBottom="@dimen/dp_2"
             android:text="@={FirstResult.detail_value}"
             android:textCursorDrawable="@null"
-            android:textSize="@dimen/sp_14" />
+            android:textSize="@dimen/sp_12" />
 
         <TextView
             android:id="@+id/ct_dropdown"
@@ -91,11 +91,11 @@
             android:hint="请下拉选择"
             android:paddingLeft="@dimen/dp_10"
             android:paddingTop="@dimen/dp_2"
-            android:paddingRight="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_20"
             android:paddingBottom="@dimen/dp_2"
             android:text="@={FirstResult.detail_value}"
             android:textCursorDrawable="@null"
-            android:textSize="@dimen/sp_14" />
+            android:textSize="@dimen/sp_12" />
 
         <RelativeLayout
             android:id="@+id/ct_select"
@@ -107,45 +107,46 @@
                 android:id="@+id/ct_rg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:overScrollMode="ifContentScrolls">
 
                 <RadioButton
                     android:id="@+id/ct_rb_yes"
-                    android:layout_width="@dimen/dp_60"
+                    android:layout_width="@dimen/dp_50"
                     android:layout_height="@dimen/dp_27"
                     android:background="@drawable/rb_bg"
                     android:button="@null"
                     android:checked="false"
                     android:gravity="center"
                     android:text="合格"
-                    android:textColor="@color/bg_textcolor_rb"
-                    android:textSize="@dimen/sp_14" />
+                    android:textColor="@color/bg_textcolor_action"
+                    android:textSize="@dimen/sp_12"/>
 
                 <RadioButton
                     android:id="@+id/ct_rb_no"
-                    android:layout_width="@dimen/dp_60"
+                    android:layout_width="@dimen/dp_50"
                     android:layout_height="@dimen/dp_27"
-                    android:layout_marginLeft="@dimen/dp_30"
+                    android:layout_marginLeft="@dimen/dp_20"
                     android:background="@drawable/rb_bg"
                     android:button="@null"
                     android:checked="false"
                     android:gravity="center"
                     android:text="不合格"
-                    android:textColor="@color/bg_textcolor_rb"
-                    android:textSize="@dimen/sp_14" />
+                    android:textColor="@color/bg_textcolor_action"
+                    android:textSize="@dimen/sp_12" />
 
                 <RadioButton
                     android:id="@+id/ct_rb_na"
-                    android:layout_width="@dimen/dp_60"
+                    android:layout_width="@dimen/dp_50"
                     android:layout_height="@dimen/dp_27"
-                    android:layout_marginLeft="@dimen/dp_30"
+                    android:layout_marginLeft="@dimen/dp_20"
                     android:background="@drawable/rb_bg"
                     android:button="@null"
                     android:checked="false"
                     android:gravity="center"
                     android:text="NA"
-                    android:textColor="@color/bg_textcolor_rb"
-                    android:textSize="@dimen/sp_14" />
+                    android:textColor="@color/bg_textcolor_action"
+                    android:textSize="@dimen/sp_12" />
             </RadioGroup>
 
             <EditText
@@ -166,7 +167,7 @@
                 android:paddingBottom="@dimen/dp_2"
                 android:text="@={FirstResult.note}"
                 android:textCursorDrawable="@null"
-                android:textSize="@dimen/sp_14"
+                android:textSize="@dimen/sp_12"
                 android:visibility="gone" />
         </RelativeLayout>
 

@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -95,7 +96,16 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
         resultObserver = (FirstCheckResultObserver) bundle.getSerializable(FirstCheck);
         String time= DatetimeUtil.INSTANCE.getNows_s();
         resultObserver.setCheck_time(time);
+        resultObserver.setSn("12345sn");
+        resultObserver.setCheck_quantity("Check_quantity");
+        resultObserver.setWork_no("Work_no");
+        resultObserver.setPart_no("part_no");
+        resultObserver.setEdition("edition");
+        resultObserver.setProduction_batch("Production_batch");
+        resultObserver.setCheck_quantity("123");
+        resultObserver.setMachine_type("Machine_type");
         binding.setFirstcheck(resultObserver);
+        binding.jianyanshuliang.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         binding.headview.setTitleText(getResources().getString(R.string.biaotouxinxi));
         binding.headview.setLeftIcon(R.mipmap.home_icon_return);
         binding.headview.setLeftClick(new View.OnClickListener() {
@@ -143,7 +153,6 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
     public void showLineBottomDialog(List<Lines> list) {
         if (dialog == null) {
             dialog = new BottomSheetDialog(this);
-            dialog = new BottomSheetDialog(this);
         }
         if (dialog.isShowing())
             dialog.dismiss();
@@ -175,7 +184,6 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
     public void showCheckTypeBottomDialog(List<OptionData> list) {
         if (checktypedialog == null) {
             checktypedialog = new BottomSheetDialog(this);
-            checktypedialog = new BottomSheetDialog(this);
         }
         if (checktypedialog.isShowing())
             checktypedialog.dismiss();
@@ -206,7 +214,6 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
     @Override
     public void showShiftBottomDialog(List<OptionData> list) {
         if (dialogshift == null) {
-            dialogshift = new BottomSheetDialog(this);
             dialogshift = new BottomSheetDialog(this);
         }
         if (dialogshift.isShowing())

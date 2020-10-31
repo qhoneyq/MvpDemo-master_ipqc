@@ -9,11 +9,10 @@
             type="youdian.apk.ipqc.obsever.SEObsever" />
     </data>
 
-    <youdian.apk.ipqc.wedige.CheckableLinearLayout
+    <RelativeLayout
         android:layout_width="@dimen/dp_120"
         android:layout_height="@dimen/dp_45"
-        android:layout_margin="@dimen/px_1"
-        android:background="@drawable/bg_item_zhicheng">
+        android:layout_margin="@dimen/px_1">
 
         <TextView
             android:id="@+id/item_ipqc_zhicheng_tv"
@@ -25,7 +24,6 @@
             android:gravity="center"
             android:padding="@dimen/dp_2"
             android:singleLine="true"
-            android:text="@={sedata.se_name}"
-            android:textColor="@color/bg_textcolor_rb" />
-    </youdian.apk.ipqc.wedige.CheckableLinearLayout>
+            android:text="@={sedata.se_name}" />
+    </RelativeLayout>
 </layout>

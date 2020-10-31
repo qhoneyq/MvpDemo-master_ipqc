@@ -9,6 +9,7 @@ import java.io.Serializable;
 import youdian.apk.ipqc.BR;
 import youdian.apk.ipqc.bean.FirstCheckListItem;
 import youdian.apk.ipqc.bean.FirstCheckProcess;
+import youdian.apk.ipqc.utils.UserUtils;
 
 
 public class FirstCheckItemObserver extends BaseObservable implements Serializable {
@@ -48,6 +49,7 @@ public class FirstCheckItemObserver extends BaseObservable implements Serializab
         this.method = firstCheckListItem.getMethod();
         this.control = firstCheckListItem.getControl();
         this.control_code = firstCheckListItem.getControl_code();
+        this.emp_no = UserUtils.getInstance().getPnum();
     }
 
     @Bindable

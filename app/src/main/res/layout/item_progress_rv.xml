@@ -10,11 +10,10 @@
     <RelativeLayout
         android:layout_width="@dimen/dp_120"
         android:layout_height="@dimen/dp_45"
-        android:background="@drawable/bg_ipqc_se"
         android:layout_margin="@dimen/px_1">
 
         <TextView
-            android:id="@+id/item_ipqc_zhicheng_tv"
+            android:id="@+id/item_ipqc_process_tv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:button="@null"

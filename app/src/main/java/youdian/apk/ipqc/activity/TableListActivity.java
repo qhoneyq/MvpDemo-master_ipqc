@@ -97,15 +97,17 @@ public class TableListActivity extends BaseMvpActivity<TableListPresenter> imple
         if (seAdapter == null) {
             seAdapter = new ZhichengAdapter(this, seList);
             binding.ipqcMainZhichengRv.setAdapter(seAdapter);
+            seAdapter.setSelectPosition(0);
+            if (flag.equals(Constans.FirstCheck))
+                mPresenter.getFirstTableList(seList.get(0).getSe_code());
+            else
+                mPresenter.getInsTableList(seList.get(0).getSe_code());
         }
         seAdapter.notifyDataSetChanged();
         binding.ipqcMainZhichengRv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                for (SEObsever se : seList) {
-                    se.setCheck(false);
-                }
-                seList.get(i).setCheck(true);
+                seAdapter.setSelectPosition(i);
                 seAdapter.notifyDataSetChanged();
                 if (flag.equals(Constans.FirstCheck))
                     mPresenter.getFirstTableList(seList.get(i).getSe_code());
@@ -128,6 +130,7 @@ public class TableListActivity extends BaseMvpActivity<TableListPresenter> imple
                     firstCheckResult.setCheck_person(UserUtils.getInstance().getPnum());
                     firstCheckResult.setSe_name(itemHometableRvBinding.getTableitem().getSe_name());
                     firstCheckResult.setSe_code(itemHometableRvBinding.getTableitem().getSe());
+                    firstCheckResult.setFirst_checklist_id(itemHometableRvBinding.getTableitem().getId());
                     firstCheckResult.setFirst_checklist_name(itemHometableRvBinding.getTableitem().getList_name());
                     firstCheckResult.setFirst_checklist_code(itemHometableRvBinding.getTableitem().getList_code());
                     Bundle bundle = new Bundle();
@@ -139,6 +142,7 @@ public class TableListActivity extends BaseMvpActivity<TableListPresenter> imple
                     InsCheckResult.setCheck_person(UserUtils.getInstance().getPnum());
                     InsCheckResult.setSe_name(itemHometableRvBinding.getTableitem().getSe_name());
                     InsCheckResult.setSe_code(itemHometableRvBinding.getTableitem().getSe());
+                    InsCheckResult.setIns_checklist_id(itemHometableRvBinding.getTableitem().getId());
                     InsCheckResult.setIns_checklist_name(itemHometableRvBinding.getTableitem().getList_name());
                     InsCheckResult.setIns_checklist_name(itemHometableRvBinding.getTableitem().getList_code());
                     Bundle bundle = new Bundle();

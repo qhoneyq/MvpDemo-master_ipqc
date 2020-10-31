@@ -39,6 +39,7 @@ public class Constans {
     public static final String Night = "Night";
     public static final String CHUJIAN_TYPE = "CHUJIAN_TYPE";
     public static final String Frequency = "Frequency";
+    public static final String FirstSug = "FirstSug";
 
 
     //表头页标识位

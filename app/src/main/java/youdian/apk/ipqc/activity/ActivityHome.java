@@ -76,16 +76,16 @@ public class ActivityHome extends BaseActivity {
     }
 
     public void insChecksClick(){
-                Bundle bundle =new Bundle();
-        InsCheckResultObserver observer = new InsCheckResultObserver();
-        observer.setCheck_person("admin");
-        observer.setIns_checklist_code("code");
-        observer.setIns_checklist_name("name");
-        observer.setSe_code("secode");
-        observer.setSe_name("sename");
-        bundle.putSerializable(Constans.Inspection,observer);
-            NewXunjian_Activity.startActivity(this, bundle);
-//            TableListActivity.startTableListActivity(this, Constans.FirstCheck);
+//                Bundle bundle =new Bundle();
+//        InsCheckResultObserver observer = new InsCheckResultObserver();
+//        observer.setCheck_person("admin");
+//        observer.setIns_checklist_code("code");
+//        observer.setIns_checklist_name("name");
+//        observer.setSe_code("secode");
+//        observer.setSe_name("sename");
+//        bundle.putSerializable(Constans.Inspection,observer);
+//            NewXunjian_Activity.startActivity(this, bundle);
+            TableListActivity.startTableListActivity(this, Constans.FirstCheck);
     }
 
 

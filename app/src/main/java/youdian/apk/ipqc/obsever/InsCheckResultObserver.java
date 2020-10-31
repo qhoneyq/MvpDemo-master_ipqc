@@ -26,6 +26,7 @@ public class InsCheckResultObserver extends BaseObservable implements Serializab
     private String check_quantity = "";
     private String note = "";
     private String machine_type = "";
+    private int ins_checklist_id ;
     private String ins_checklist_name = "";
     private String ins_checklist_code = "";
     private String check_person = "";
@@ -238,6 +239,16 @@ public class InsCheckResultObserver extends BaseObservable implements Serializab
         this.ins_checklist_code = ins_checklist_code;
         notifyPropertyChanged(BR.inspection_result_details);
 }
+
+    @Bindable
+    public int getIns_checklist_id() {
+        return ins_checklist_id;
+    }
+
+    public void setIns_checklist_id(int ins_checklist_id) {
+        this.ins_checklist_id = ins_checklist_id;
+        notifyPropertyChanged(BR.ins_checklist_id);
+    }
 
     @Bindable
     public List<InsCheckItemObserver> getInspection_result_details() {

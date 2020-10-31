@@ -1,13 +1,17 @@
 package youdian.apk.ipqc.model;
 
 
+import androidx.databinding.ObservableList;
+
 import com.foxconn.youdian.apk.ipqc.bean.ListResponseData;
 
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
+import okhttp3.RequestBody;
 import youdian.apk.ipqc.bean.FirstCheckList;
 import youdian.apk.ipqc.bean.HomeTableData;
+import youdian.apk.ipqc.bean.OptionData;
 import youdian.apk.ipqc.bean.Response;
 import youdian.apk.ipqc.bean.SEData;
 import youdian.apk.ipqc.contract.CheckDetailContract_CHUJIAN;
@@ -35,9 +39,28 @@ public class Model_Chujian_CheckDetail implements CheckDetailContract_CHUJIAN.IM
      * @return
      */
     @Override
-    public Observable<Response<ListResponseData<ProgressObserver>>> getProcess(String first_checklist_id) {
+    public Observable<Response<List<ProgressObserver>>> getProcess(String first_checklist_id) {
         return RetrofitClient.getInstance().getApi().getProcess(first_checklist_id);
     }
 
+    /**
+     * 通用，获取建议
+     * @param selectinfos
+     * @return
+     */
+    @Override
+    public Observable<Response<List<OptionData>>> getSelectInfo(String selectinfos) {
+        return RetrofitClient.getInstance().getApi().getSelectInfo(selectinfos);
+    }
+
+    /**
+     * 初件记录提交
+     * @param body
+     * @return
+     */
+    @Override
+    public Observable<Response<String>> postFirstResult(RequestBody body) {
+        return RetrofitClient.getInstance().getApi().postFirstResult(body);
+    }
 
 }

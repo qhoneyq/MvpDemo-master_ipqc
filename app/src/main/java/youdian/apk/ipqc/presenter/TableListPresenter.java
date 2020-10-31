@@ -49,6 +49,12 @@ public class TableListPresenter extends BasePresenter<TableListContract.View> im
         if (!isViewAttached()) {
             return;
         }
+//        seObservablelList = new ObservableArrayList<>();
+//        seObservablelList.add(new SEObsever(new SEData(1,"se1","se1","se1","org1","org1","se1")));
+//        seObservablelList.add(new SEObsever(new SEData(2,"se2","se2","se2","org2","org2","se2")));
+//        seObservablelList.add(new SEObsever(new SEData(3,"se3","se3","se3","org3","org3","se3")));
+//        mView.setSEList(seObservablelList);
+
         model.getSEData(org_code)
                 .compose(RxScheduler.Obs_io_main())
 //                .to(mView.bindAutoDispose())//解决内存泄漏
@@ -130,6 +136,12 @@ public class TableListPresenter extends BasePresenter<TableListContract.View> im
                         mView.hideLoading();
                     }
                 });
+//        firstTableObseversList = new ObservableArrayList<>();
+//        firstTableObseversList.add(new HomeTableObsever(new HomeTableData(1,"se1","se1","list1","list1")));
+//        firstTableObseversList.add(new HomeTableObsever(new HomeTableData(2,"se2","se2","list1","list1")));
+//        firstTableObseversList.add(new HomeTableObsever(new HomeTableData(3,"se2","se2","list2","list2")));
+//        firstTableObseversList.add(new HomeTableObsever(new HomeTableData(4,"se3","se3","list1","list1")));
+//        mView.setTableList(firstTableObseversList);
     }
 
 
