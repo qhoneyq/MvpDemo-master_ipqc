@@ -17,6 +17,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -38,6 +39,7 @@ import youdian.apk.ipqc.utils.Constans;
 
 import static youdian.apk.ipqc.utils.Constans.FLAG_LINE;
 import static youdian.apk.ipqc.utils.Constans.Frequency;
+import static youdian.apk.ipqc.utils.Constans.HuangXian;
 import static youdian.apk.ipqc.utils.Constans.Inspection;
 import static youdian.apk.ipqc.utils.Constans.Shift;
 
@@ -57,9 +59,11 @@ public class NewXunjian_Activity extends BaseMvpActivity<NewXunjianPresenter> im
     private BottomSheetDialog dialog;
     private BottomSheetDialog bottomSheetDialog;
     private BottomSheetDialog dialogshift;
-
+    private String INTENTFLAG;//新建表头 or 修改表头
+    private List<OptionData> listbottom;
     private String flag;
 
+    OptionBottomSheetAdapter adapter;
 
     /**
      * 静态方法跳转到当前页面
@@ -77,13 +81,23 @@ public class NewXunjian_Activity extends BaseMvpActivity<NewXunjianPresenter> im
 
     @Override
     public void initView() {
-        binding = DataBindingUtil.setContentView(this,getLayoutId());
+        binding = DataBindingUtil.setContentView(this, getLayoutId());
         Bundle bundle = getIntent().getBundleExtra("param");
         resultObserver = (InsCheckResultObserver) bundle.getSerializable(Inspection);
-        String time= DatetimeUtil.INSTANCE.getNows_s();
-        resultObserver.setCheck_time(time);
+        INTENTFLAG = (String) bundle.get(Constans.INTENTFLAG);
+        if (INTENTFLAG.equals(Constans.NEW)) {
+            String time = DatetimeUtil.INSTANCE.getNows_ss();
+            resultObserver.setCheck_time(time);
+        }
+        resultObserver.setCheck_quantity("Check_quantity");
+        resultObserver.setWork_no("Work_no");
+        resultObserver.setPart_no("part_no");
+        resultObserver.setEdition("edition");
+        resultObserver.setProduction_batch("Production_batch");
+        resultObserver.setCheck_quantity("123");
+        resultObserver.setMachine_type("Machine_type");
         binding.setInspection(resultObserver);
-        binding.headview.setTitleText(getResources().getString(R.string.biaotouxinxi));
+        binding.headview.setTitleText(resultObserver.getIns_checklist_name() + getResources().getString(R.string.biaotouxinxi));
         binding.headview.setLeftIcon(R.mipmap.home_icon_return);
         binding.headview.setLeftClick(new View.OnClickListener() {
             @Override
@@ -93,6 +107,7 @@ public class NewXunjian_Activity extends BaseMvpActivity<NewXunjianPresenter> im
         });
         mPresenter = new NewXunjianPresenter();
         mPresenter.attachView(this);
+        initBottomDialog();
         dealData();
     }
 
@@ -139,6 +154,7 @@ public class NewXunjian_Activity extends BaseMvpActivity<NewXunjianPresenter> im
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 resultObserver.setLine_code(list.get(i).getLine_code());
                 resultObserver.setLine_name(list.get(i).getLine_name());
+                dialog.dismiss();
             }
         });
 
@@ -146,44 +162,64 @@ public class NewXunjian_Activity extends BaseMvpActivity<NewXunjianPresenter> im
         dialog.show();
     }
 
-    @Override
-    public void showCheckTypeBottomDialog(List<OptionData> list) {
+    /**
+     * init bottomdialog
+     */
+    public void initBottomDialog() {
         if (bottomSheetDialog == null) {
             bottomSheetDialog = new BottomSheetDialog(this);
-            bottomSheetDialog = new BottomSheetDialog(this);
         }
-        if (bottomSheetDialog.isShowing())
-            bottomSheetDialog.dismiss();
         bottomSheetDialog.setCancelable(false);
         bottomSheetDialog.setCanceledOnTouchOutside(true);
         View view = LayoutInflater.from(NewXunjian_Activity.this).inflate(R.layout.bottom_dialog, null);
         ListView bottom_lv = view.findViewById(R.id.bottom_lv);
-        OptionBottomSheetAdapter adapter = new OptionBottomSheetAdapter(list, this);
+        listbottom = new ArrayList<>();
+        adapter = new OptionBottomSheetAdapter(listbottom, this);
         bottom_lv.setAdapter(adapter);
         bottom_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (flag.equals(Frequency)){
-                    resultObserver.setFrequency(list.get(i).getOption_value());
-                    binding.jianyanpinlv.setText(list.get(i).getOption_name());
-                }else if (flag.equals(Shift)){
-                    resultObserver.setShift(list.get(i).getOption_value());
-                    binding.banbie.setText(list.get(i).getOption_name());
-                }else{
-                    resultObserver.setPeriod(list.get(i).getOption_value());
-                    binding.shijianduan.setText(list.get(i).getOption_name());
+                if (flag.equals(Frequency)) {
+//                    resultObserver.setFrequency(listbottom.get(i).getOption_value());
+                    binding.jianyanpinlv.setText(listbottom.get(i).getOption_name());
+                    //根据value确认时间段是否可选
+                    if (listbottom.get(i).getOption_value().equals(Constans.MeiBan)||listbottom.get(i).getOption_value().equals(HuangXian)){
+                        resultObserver.setPeriod(listbottom.get(i).getOption_name());
+                        binding.shijianduan.setClickable(false);
+                    }else{
+                        binding.shijianduan.setClickable(true);
+                        resultObserver.setPeriod("");
+                    }
+
+                } else if (flag.equals(Shift)) {
+                    resultObserver.setShift(listbottom.get(i).getOption_value());
+                    binding.banbie.setText(listbottom.get(i).getOption_name());
+                } else {
+                    resultObserver.setPeriod(listbottom.get(i).getOption_value());
+                    binding.shijianduan.setText(listbottom.get(i).getOption_name());
                 }
                 bottomSheetDialog.dismiss();
             }
         });
 
         bottomSheetDialog.setContentView(view);
+    }
+
+
+    @Override
+    public void showCheckTypeBottomDialog(List<OptionData> list) {
+
+        if (bottomSheetDialog.isShowing())
+            bottomSheetDialog.dismiss();
+        this.listbottom.clear();
+        this.listbottom.addAll(list);
+        adapter.notifyDataSetChanged();
         bottomSheetDialog.show();
     }
 
     @Override
     public void showSomeMsg(String msg) {
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -203,7 +239,7 @@ public class NewXunjian_Activity extends BaseMvpActivity<NewXunjianPresenter> im
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 String date = "" + year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
-                binding.time.setText(date);
+                binding.time.setText(date + " " + DatetimeUtil.INSTANCE.getSecond_ss());
             }
         }, year, month, day);
         datePickerDialog.show();
@@ -241,23 +277,22 @@ public class NewXunjian_Activity extends BaseMvpActivity<NewXunjianPresenter> im
         binding.shijianduan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                flag = "";
                 flag = binding.jianyanpinlv.getText().toString();
-                if (!flag.equals("")){
+                if (!flag.equals("")) {
                     mPresenter.getSelectInfo(flag);
-                }else
-                     showSomeMsg(getResources().getString(R.string.frequency_err));
+                } else
+                    showSomeMsg(getResources().getString(R.string.frequency_err));
             }
         });
 
         binding.banbie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                flag = Shift;
                 mPresenter.getSelectInfo(Constans.Shift);
             }
         });
-
-
-
 
 
         binding.commit.setOnClickListener(new View.OnClickListener() {
@@ -326,7 +361,7 @@ public class NewXunjian_Activity extends BaseMvpActivity<NewXunjianPresenter> im
         } else {
             binding.shengchanpici.setError(null);
         }
-        if (resultObserver.getLine_code().isEmpty()||resultObserver.getLine_name().isEmpty()) {
+        if (resultObserver.getLine_code().isEmpty() || resultObserver.getLine_name().isEmpty()) {
             binding.line.setError(getResources().getString(R.string.line_err));
             return;
         } else {
@@ -347,8 +382,8 @@ public class NewXunjian_Activity extends BaseMvpActivity<NewXunjianPresenter> im
         }
         //页面跳转
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constans.FirstCheck, resultObserver);
-        CheckDetail_Chujian_Activity.startActivity(this,bundle);
+        bundle.putSerializable(Inspection, resultObserver);
+        CheckDetail_Xunjian_Activity.startActivity(this, bundle);
         finish();
     }
 

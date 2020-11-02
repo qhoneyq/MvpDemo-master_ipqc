@@ -43,6 +43,7 @@
         <activity android:name=".activity.NewXunjian_Activity"/>
         <activity android:name=".activity.SmallCaptureActivity"/>
         <activity android:name=".activity.TableListActivity"/>
+        <activity android:name=".activity.CheckDetail_Xunjian_Activity"/>
     </application>
 
 </manifest>

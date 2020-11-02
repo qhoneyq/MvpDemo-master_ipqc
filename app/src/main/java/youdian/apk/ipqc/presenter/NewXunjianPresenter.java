@@ -73,11 +73,7 @@ public class NewXunjianPresenter extends BasePresenter<NewXunjianContract.View> 
                         mView.hideLoading();
                     }
                 });
-//        linesList = new ArrayList<>();
-//        linesList.add(new Lines(1,"se","se","org","line1","111"));
-//        linesList.add(new Lines(2,"se","se","org","line2","222"));
-//        linesList.add(new Lines(3,"se","se","org","line3","333"));
-//        linesList.add(new Lines(4,"se","se","org","line4","444"));
+
     }
 
     //获取通用类型
@@ -94,6 +90,7 @@ public class NewXunjianPresenter extends BasePresenter<NewXunjianContract.View> 
 
                     @Override
                     public void onNext(@NonNull Response<List<OptionData>> listResponse) {
+                        checkTypeList.clear();
                         checkTypeList = listResponse.getData();
                         if (checkTypeList.size() < 0)
                             mView.showError(Constans.FLAG_LINE, "数值为空");
@@ -104,6 +101,7 @@ public class NewXunjianPresenter extends BasePresenter<NewXunjianContract.View> 
                     @Override
                     public void onError(@NonNull Throwable e) {
                         mView.hideLoading();
+                        mView.showSomeMsg("解析错误");
 
                     }
 
@@ -112,14 +110,6 @@ public class NewXunjianPresenter extends BasePresenter<NewXunjianContract.View> 
                         mView.hideLoading();
                     }
                 });
-//        checkTypeList = new ArrayList<>();
-//        checkTypeList.add(new OptionData("q", "Q"));
-//        checkTypeList.add(new OptionData("w", "W"));
-//        checkTypeList.add(new OptionData("e", "E"));
-//        checkTypeList.add(new OptionData("a", "A"));
-//        checkTypeList.add(new OptionData("s", "S"));
-//        mView.showCheckTypeBottomDialog(checkTypeList);
-
     }
 
     /**

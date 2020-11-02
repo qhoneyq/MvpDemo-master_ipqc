@@ -8,6 +8,8 @@ import youdian.apk.ipqc.base.Baseapplicton;
 public class Constans {
     public static final String SIGN = "d883fd21fb995169";
     ////正式版本地址
+//    public static final String BASEURL = "http://10.134.171.219:9091/v1/";
+//    public static final String BASEURLLogin = "http://10.134.171.219:9091/";
     public static final String BASEURL = "http://10.67.124.112:8082/v1/";
     public static final String BASEURLLogin = "http://10.67.124.112:8082/";
 //    public static final String BASEURL = "http://api.ucheck.efoxconn.com:9092/";
@@ -34,6 +36,11 @@ public class Constans {
     public static String FirstCheck = "FirstCheck";
     public static String Inspection = "Inspection";
     public static String Shift = "SHIFT";
+
+    public static String INTENTFLAG = "INTENTFLAG";
+    public static String NEW = "NEW";
+    public static String REINPUT = "REINPUT";
+
 
     public static final String Day = "Day";
     public static final String Night = "Night";
@@ -62,5 +69,9 @@ public class Constans {
     public static String Number = "Number";
     public static String Check = "Check";
     public static String Text = "Text";
+
+
+    public static String MeiBan = "MeiBan";
+    public static String HuangXian = "HuangXian";
 
 }

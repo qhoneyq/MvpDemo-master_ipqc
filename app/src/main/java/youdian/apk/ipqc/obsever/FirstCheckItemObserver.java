@@ -28,10 +28,7 @@ public class FirstCheckItemObserver extends BaseObservable implements Serializab
     private String control_code;
     private String detail_value;
     private String detail_status;
-    private String note;
-    private String u_detail_value = "";
-    private String u_detail_status = "";
-    private String u_note = "";
+    private String note="";
     private String check_time = "";
     private String emp_no = "";
     private boolean isvisiable=false;
@@ -200,36 +197,6 @@ public class FirstCheckItemObserver extends BaseObservable implements Serializab
     public void setNote(String note) {
         this.note = note;
         notifyPropertyChanged(BR.note);
-    }
-
-    @Bindable
-    public String getU_detail_value() {
-        return u_detail_value;
-    }
-
-    public void setU_detail_value(String u_detail_value) {
-        this.u_detail_value = u_detail_value;
-        notifyPropertyChanged(BR.u_detail_value);
-    }
-
-    @Bindable
-    public String getU_detail_status() {
-        return u_detail_status;
-    }
-
-    public void setU_detail_status(String u_detail_status) {
-        this.u_detail_status = u_detail_status;
-        notifyPropertyChanged(BR.u_detail_status);
-    }
-
-    @Bindable
-    public String getU_note() {
-        return u_note;
-    }
-
-    public void setU_note(String u_note) {
-        this.u_note = u_note;
-        notifyPropertyChanged(BR.u_note);
     }
 
     @Bindable

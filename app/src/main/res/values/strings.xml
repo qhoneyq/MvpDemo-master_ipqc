@@ -105,6 +105,7 @@
     <string name="jizhong_err">请输入机种</string>
     <string name="checktype_err">请选择初件类型</string>
     <string name="frequency_err">请选择检验频率</string>
+    <string name="note_err">请选择检验频率</string>
     <string name="shijianduan_err">请选择时间段</string>
     <string name="jianyanpinlv">检验频率</string>
     <string name="shiajianduan">时间段</string>

@@ -85,7 +85,7 @@ public class ActivityHome extends BaseActivity {
 //        observer.setSe_name("sename");
 //        bundle.putSerializable(Constans.Inspection,observer);
 //            NewXunjian_Activity.startActivity(this, bundle);
-            TableListActivity.startTableListActivity(this, Constans.FirstCheck);
+            TableListActivity.startTableListActivity(this, Constans.Inspection);
     }
 
 

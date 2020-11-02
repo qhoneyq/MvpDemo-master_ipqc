@@ -72,7 +72,7 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
     private BottomSheetDialog dialog;
     private BottomSheetDialog checktypedialog;
     private BottomSheetDialog dialogshift;
-
+    private String INTENTFLAG;
 
 
     /**
@@ -91,22 +91,25 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
 
     @Override
     public void initView() {
-        binding = DataBindingUtil.setContentView(this,getLayoutId());
+        binding = DataBindingUtil.setContentView(this, getLayoutId());
         Bundle bundle = getIntent().getBundleExtra("param");
         resultObserver = (FirstCheckResultObserver) bundle.getSerializable(FirstCheck);
-        String time= DatetimeUtil.INSTANCE.getNows_s();
-        resultObserver.setCheck_time(time);
-        resultObserver.setSn("12345sn");
-        resultObserver.setCheck_quantity("Check_quantity");
-        resultObserver.setWork_no("Work_no");
-        resultObserver.setPart_no("part_no");
-        resultObserver.setEdition("edition");
-        resultObserver.setProduction_batch("Production_batch");
-        resultObserver.setCheck_quantity("123");
-        resultObserver.setMachine_type("Machine_type");
+        INTENTFLAG = (String) bundle.get(Constans.INTENTFLAG);
+        if (INTENTFLAG.equals(Constans.NEW)) {
+            String time = DatetimeUtil.INSTANCE.getNows_ss();
+            resultObserver.setCheck_time(time);
+        }
+//        resultObserver.setSn("12345sn");
+//        resultObserver.setCheck_quantity("Check_quantity");
+//        resultObserver.setWork_no("Work_no");
+//        resultObserver.setPart_no("part_no");
+//        resultObserver.setEdition("edition");
+//        resultObserver.setProduction_batch("Production_batch");
+//        resultObserver.setCheck_quantity("123");
+//        resultObserver.setMachine_type("Machine_type");
         binding.setFirstcheck(resultObserver);
         binding.jianyanshuliang.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        binding.headview.setTitleText(getResources().getString(R.string.biaotouxinxi));
+        binding.headview.setTitleText(resultObserver.getFirst_checklist_name() + getResources().getString(R.string.biaotouxinxi));
         binding.headview.setLeftIcon(R.mipmap.home_icon_return);
         binding.headview.setLeftClick(new View.OnClickListener() {
             @Override
@@ -178,6 +181,7 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
 
     /**
      * 初见类型下拉
+     *
      * @param list
      */
     @Override
@@ -205,7 +209,6 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
         checktypedialog.setContentView(view);
         checktypedialog.show();
     }
-
 
 
     /**
@@ -252,6 +255,9 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
         });
         //LINE
         mPresenter.getLines(resultObserver.getSe_code());
+        mPresenter.getSelectInfo("CHUJIAN_TYPE");
+        mPresenter.getSelectInfo("SHIFT");
+
         binding.line.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -260,7 +266,6 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
         });
 
         //CHECKTYPE
-        mPresenter.getSelectInfo("CHUJIAN_TYPE");
         binding.chujianleixing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -269,7 +274,6 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
         });
 
         //SHIFT
-        mPresenter.getSelectInfo("SHIFT");
 
         binding.banbie.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -305,14 +309,14 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
         int year = d.get(Calendar.YEAR);
         int month = d.get(Calendar.MONTH);
         int day = d.get(Calendar.DAY_OF_MONTH);        //初始化默认日期year, month, day
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this,AlertDialog.THEME_DEVICE_DEFAULT_LIGHT, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT, new DatePickerDialog.OnDateSetListener() {
             /**
              * 点击确定后，在这个方法中获取年月日
              */
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 String date = "" + year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
-                binding.time.setText(date);
+                binding.time.setText(date + " " + DatetimeUtil.INSTANCE.getSecond_ss());
             }
         }, year, month, day);
         datePickerDialog.show();
@@ -347,7 +351,7 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
         if (resultObserver.getSn().isEmpty()) {
             binding.snTv.setError(getResources().getString(R.string.sn_err));
             return;
-        }else{
+        } else {
             binding.snTv.setError(null);
         }
         if (resultObserver.getShift().isEmpty()) {
@@ -380,7 +384,7 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
         } else {
             binding.shengchanpici.setError(null);
         }
-        if (resultObserver.getLine_code().isEmpty()||resultObserver.getLine_name().isEmpty()) {
+        if (resultObserver.getLine_code().isEmpty() || resultObserver.getLine_name().isEmpty()) {
             binding.line.setError(getResources().getString(R.string.line_err));
             return;
         } else {
@@ -409,7 +413,7 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
         //页面跳转
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constans.FirstCheck, resultObserver);
-        CheckDetail_Chujian_Activity.startActivity(this,bundle);
+        CheckDetail_Chujian_Activity.startActivity(this, bundle);
         finish();
     }
 

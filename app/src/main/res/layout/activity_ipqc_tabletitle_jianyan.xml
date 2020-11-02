@@ -70,12 +70,11 @@
                         android:maxLength="25"
                         android:maxLines="1"
                         android:paddingLeft="@dimen/dp_5"
+                        android:text="@={inspection.check_time}"
                         android:textColor="@color/gray_87"
-                        android:textSize="@dimen/sp_14"
-                        android:text="@={inspection.check_time}"/>
+                        android:textSize="@dimen/sp_14" />
 
                 </LinearLayout>
-
 
 
                 <LinearLayout
@@ -101,18 +100,24 @@
                             android:text="@string/xinabie"
                             android:textColor="@color/gray_87"
                             android:textSize="@dimen/sp_14" />
+
                         <TextView
                             android:id="@+id/line"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/edt_search_bg"
-                            android:hint="@string/line_err"
                             android:gravity="center_vertical|right"
+                            android:hint="@string/line_err"
                             android:text="@={inspection.line_name}"
                             android:textColor="@color/gray_54"
                             android:textSize="@dimen/sp_14" />
 
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/px_1"
+                        android:background="@color/c5ced3" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -129,17 +134,21 @@
 
                         <EditText
 
-                            android:hint="@string/workno_err"
                             android:id="@+id/gongling"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/edt_search_bg"
                             android:gravity="center_vertical|right"
+                            android:hint="@string/workno_err"
                             android:text="@={inspection.work_no}"
                             android:textColor="@color/gray_54"
-                            android:textSize="@dimen/sp_14"/>
+                            android:textSize="@dimen/sp_14" />
                     </LinearLayout>
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/px_1"
+                        android:background="@color/c5ced3" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -152,7 +161,6 @@
                             android:text="@string/liaohao"
                             android:textColor="@color/gray_87"
                             android:textSize="@dimen/sp_14" />
-
 
 
                         <EditText
@@ -168,10 +176,14 @@
 
                     </LinearLayout>
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/px_1"
+                        android:background="@color/c5ced3" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_45"
-                        >
+                        android:layout_height="@dimen/dp_45">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -196,6 +208,11 @@
 
                     </LinearLayout>
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/px_1"
+                        android:background="@color/c5ced3" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_45">
@@ -215,13 +232,18 @@
                             android:layout_height="match_parent"
                             android:background="@drawable/edt_search_bg"
                             android:gravity="center_vertical|right"
+                            android:hint="@string/product_err"
                             android:text="@={inspection.production_batch}"
                             android:textColor="@color/gray_54"
-                            android:hint="@string/product_err"
                             android:textSize="@dimen/sp_14" />
 
 
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/px_1"
+                        android:background="@color/c5ced3" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -236,19 +258,23 @@
                             android:textSize="@dimen/sp_14" />
 
 
-
-                        <EditText
+                        <TextView
                             android:id="@+id/banbie"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/edt_search_bg"
                             android:editable="false"
                             android:gravity="center_vertical|right"
+                            android:hint="@string/shift_err"
                             android:text="@={inspection.shift_name}"
                             android:textColor="@color/gray_54"
-                            android:hint="@string/shift_err"
                             android:textSize="@dimen/sp_14" />
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/px_1"
+                        android:background="@color/c5ced3" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -269,13 +295,17 @@
                             android:layout_height="match_parent"
                             android:background="@drawable/edt_search_bg"
                             android:gravity="center_vertical|right"
-                            android:text="@={inspection.check_quantity}"
                             android:hint="@string/checkno_err"
+                            android:text="@={inspection.check_quantity}"
                             android:textColor="@color/gray_54"
                             android:textSize="@dimen/sp_14" />
 
                     </LinearLayout>
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/px_1"
+                        android:background="@color/c5ced3" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -290,19 +320,23 @@
                             android:textSize="@dimen/sp_14" />
 
 
-
                         <EditText
                             android:id="@+id/jizhong"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/edt_search_bg"
                             android:gravity="center_vertical|right"
-                            android:text="@={inspection.machine_type}"
                             android:hint="@string/jizhong_err"
+                            android:text="@={inspection.machine_type}"
                             android:textColor="@color/gray_54"
                             android:textSize="@dimen/sp_14" />
 
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/px_1"
+                        android:background="@color/c5ced3" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -317,7 +351,6 @@
                             android:textSize="@dimen/sp_14" />
 
 
-
                         <EditText
                             android:id="@+id/beizhu"
                             android:layout_width="match_parent"
@@ -329,6 +362,11 @@
                             android:textSize="@dimen/sp_14" />
 
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/px_1"
+                        android:background="@color/c5ced3" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -343,20 +381,23 @@
                             android:textSize="@dimen/sp_14" />
 
 
-
-                        <EditText
+                        <TextView
                             android:id="@+id/jianyanpinlv"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:hint="@string/frequency_err"
                             android:background="@drawable/edt_search_bg"
                             android:gravity="center_vertical|right"
+                            android:hint="@string/frequency_err"
                             android:text="@={inspection.frequency}"
                             android:textColor="@color/gray_54"
                             android:textSize="@dimen/sp_14" />
 
                     </LinearLayout>
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/px_1"
+                        android:background="@color/c5ced3" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -371,14 +412,13 @@
                             android:textSize="@dimen/sp_14" />
 
 
-
-                        <EditText
+                        <TextView
                             android:id="@+id/shijianduan"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:hint="@string/shijianduan_err"
                             android:background="@drawable/edt_search_bg"
                             android:gravity="center_vertical|right"
+                            android:hint="@string/shijianduan_err"
                             android:text="@={inspection.period}"
                             android:textColor="@color/gray_54"
                             android:textSize="@dimen/sp_14" />
@@ -386,23 +426,20 @@
                     </LinearLayout>
 
 
-
-
                 </LinearLayout>
 
-                <com.google.android.material.button.MaterialButton
+                <Button
                     android:id="@+id/commit"
-                    android:theme="@style/Theme.MaterialComponents.Light"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_46"
+                    android:layout_height="@dimen/dp_40"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
                     android:layout_marginTop="@dimen/dp_10"
-                    android:backgroundTint="@color/colorPrimary"
+                    android:background="@drawable/btn_commit_bg"
+                    android:includeFontPadding="false"
                     android:text="@string/kaishijianyan"
                     android:textColor="@color/FFFFFF"
-                    android:textSize="@dimen/sp_15"
-                    android:includeFontPadding="false"/>
+                    android:textSize="@dimen/sp_15" />
             </LinearLayout>
         </ScrollView>
 

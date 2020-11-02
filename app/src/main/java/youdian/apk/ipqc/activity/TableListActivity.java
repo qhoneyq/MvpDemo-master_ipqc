@@ -135,6 +135,7 @@ public class TableListActivity extends BaseMvpActivity<TableListPresenter> imple
                     firstCheckResult.setFirst_checklist_code(itemHometableRvBinding.getTableitem().getList_code());
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(Constans.FirstCheck, firstCheckResult);
+                    bundle.putString(Constans.INTENTFLAG,Constans.NEW);
                     //跳转表头
                     NewChujian_Activity.startActivity(this, bundle);
                 } else {
@@ -147,8 +148,9 @@ public class TableListActivity extends BaseMvpActivity<TableListPresenter> imple
                     InsCheckResult.setIns_checklist_name(itemHometableRvBinding.getTableitem().getList_code());
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(Constans.Inspection, InsCheckResult);
+                    bundle.putString(Constans.INTENTFLAG,Constans.NEW);
                     //跳转表头
-                    NewChujian_Activity.startActivity(this, bundle);
+                    NewXunjian_Activity.startActivity(this, bundle);
                 }
 
             });

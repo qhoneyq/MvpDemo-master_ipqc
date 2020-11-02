@@ -31,7 +31,7 @@ public class InsCheckResultObserver extends BaseObservable implements Serializab
     private String ins_checklist_code = "";
     private String check_person = "";
     private String check_time = "";
-    private String sign_status = "";
+    private String sign_status = "Unsigned";
     private List<InsCheckItemObserver> inspection_result_details = new ArrayList<>();
 
     private String frequency ="";

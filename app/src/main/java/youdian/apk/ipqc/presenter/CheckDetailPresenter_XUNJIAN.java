@@ -4,7 +4,6 @@ package youdian.apk.ipqc.presenter;
 import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableList;
 
-import com.foxconn.youdian.apk.ipqc.bean.ListResponseData;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -16,22 +15,23 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import youdian.apk.ipqc.adapter.ActionDetailAdapter;
+import youdian.apk.ipqc.adapter.InsCheckDetailAdapter;
 import youdian.apk.ipqc.base.BasePresenter;
-import youdian.apk.ipqc.bean.FirstCheckList;
-import youdian.apk.ipqc.bean.FirstCheckListItem;
-import youdian.apk.ipqc.bean.FirstCheckProcess;
+import youdian.apk.ipqc.bean.InsCheckList;
+import youdian.apk.ipqc.bean.InsCheckListItem;
+import youdian.apk.ipqc.bean.InsCheckProcess;
 import youdian.apk.ipqc.bean.OptionData;
 import youdian.apk.ipqc.bean.Response;
-import youdian.apk.ipqc.contract.CheckDetailContract_CHUJIAN;
-import youdian.apk.ipqc.obsever.CountModel;
-import youdian.apk.ipqc.model.Model_Chujian_CheckDetail;
+import youdian.apk.ipqc.contract.CheckDetailContract_XUNJIAN;
+import youdian.apk.ipqc.model.Model_Xunjian_CheckDetail;
 import youdian.apk.ipqc.network.RxScheduler;
+import youdian.apk.ipqc.obsever.CountModel;
 import youdian.apk.ipqc.obsever.FirstCheckItemObserver;
-import youdian.apk.ipqc.obsever.FirstCheckResultObserver;
+import youdian.apk.ipqc.obsever.InsCheckItemObserver;
+import youdian.apk.ipqc.obsever.InsCheckResultObserver;
 import youdian.apk.ipqc.obsever.ProgressObserver;
 import youdian.apk.ipqc.utils.Constans;
-import youdian.apk.ipqc.utils.JsonFormatUtils;
-import youdian.apk.ipqc.utils.UserUtils;
+
 
 /**
  * Created by Android Studio.
@@ -40,47 +40,47 @@ import youdian.apk.ipqc.utils.UserUtils;
  * Time: 下午 6:55
  * Function:
  */
-public class CheckDetailPresenter_CHUJIAN extends BasePresenter<CheckDetailContract_CHUJIAN.View> implements CheckDetailContract_CHUJIAN.Presenter, ActionDetailAdapter.onCountChangeListener {
+public class CheckDetailPresenter_XUNJIAN extends BasePresenter<CheckDetailContract_XUNJIAN.View> implements CheckDetailContract_XUNJIAN.Presenter, InsCheckDetailAdapter.onCountChangeListener {
 
-    private CheckDetailContract_CHUJIAN.IModel model;
+    private CheckDetailContract_XUNJIAN.IModel model;
 
-    private List<FirstCheckProcess> firstCheckLists;
-    private ObservableList<FirstCheckItemObserver> checkItemObservers;//全部检验项
-    private ObservableList<FirstCheckItemObserver> onCheckItemList;//单个工序检验项
+    private List<InsCheckProcess> insCheckLists;
+    private ObservableList<InsCheckItemObserver> checkItemObservers;//全部检验项
+    private ObservableList<InsCheckItemObserver> onCheckItemList;//单个工序检验项
     private ObservableList<ProgressObserver> progressObserverList;
     private CountModel countModel = new CountModel();
     List<OptionData> suggestList = new ArrayList<>();//建议列表
 
 
 
-    public CheckDetailPresenter_CHUJIAN() {
-        this.model = new Model_Chujian_CheckDetail();
+    public CheckDetailPresenter_XUNJIAN() {
+        this.model = new Model_Xunjian_CheckDetail();
     }
 
 
     /**
      * 获取全部检验项
-     * @param first_checklist_id
+     * @param ins_checklist_id
      */
     @Override
-    public void getCheckListData(String first_checklist_id) {
+    public void getCheckListData(String ins_checklist_id) {
         if (!isViewAttached()) {
             return;
         }
-        model.getCheckListData(first_checklist_id)
+        model.getCheckListData(ins_checklist_id)
                 .compose(RxScheduler.Obs_io_main())
 //                .to(mView.bindAutoDispose())//解决内存泄漏
-                .subscribe(new Observer<Response<FirstCheckList>>() {
+                .subscribe(new Observer<Response<InsCheckList>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
                         mView.hideLoading();
                     }
 
                     @Override
-                    public void onNext(@NonNull Response<FirstCheckList> listResponse) {
-                        firstCheckLists = listResponse.getData().getFirst_checklist_processes();
+                    public void onNext(@NonNull Response<InsCheckList> listResponse) {
+                        insCheckLists = listResponse.getData().getInspection_checklist_processes();
                         //pipeishuju
-                        dealCheckData(firstCheckLists);
+                        dealCheckData(insCheckLists);
                     }
 
                     @Override
@@ -118,7 +118,6 @@ public class CheckDetailPresenter_CHUJIAN extends BasePresenter<CheckDetailContr
                                 mView.onError( "建议内容为空");
                             else
                                 mView.showBottomDialog(suggestList);
-
                         }
                     }
 
@@ -145,14 +144,14 @@ public class CheckDetailPresenter_CHUJIAN extends BasePresenter<CheckDetailContr
 
     /**
      * 提交记录
-     * @param firstCheckResultObserver
+     * @param insCheckResultObserver
      */
     @Override
-    public void postFirstResult(FirstCheckResultObserver firstCheckResultObserver) {
-       String body = new Gson().toJson(firstCheckResultObserver);
+    public void postInsResult(InsCheckResultObserver insCheckResultObserver) {
+       String body = new Gson().toJson(insCheckResultObserver);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), body);
 
-        model.postFirstResult(requestBody)
+        model.postInsResult(requestBody)
                 .compose(RxScheduler.Obs_io_main())
 //                .to(mView.bindAutoDispose())//解决内存泄漏
                 .subscribe(new Observer<Response<String>>() {
@@ -182,11 +181,11 @@ public class CheckDetailPresenter_CHUJIAN extends BasePresenter<CheckDetailContr
     }
 
 
-    private void dealCheckData(List<FirstCheckProcess> list) {
+    private void dealCheckData(List<InsCheckProcess> list) {
         checkItemObservers = new ObservableArrayList<>();
-        for (FirstCheckProcess firstCheckProcess : list) {
-            for (FirstCheckListItem firstCheckListItem : firstCheckProcess.getFirst_checklist_items()) {
-                checkItemObservers.add(new FirstCheckItemObserver(firstCheckProcess, firstCheckListItem));
+        for (InsCheckProcess insCheckProcess : list) {
+            for (InsCheckListItem insCheckListItem : insCheckProcess.getIns_checklist_items()) {
+                checkItemObservers.add(new InsCheckItemObserver(insCheckProcess, insCheckListItem));
             }
         }
         mView.setCheckListData(checkItemObservers);
@@ -194,11 +193,11 @@ public class CheckDetailPresenter_CHUJIAN extends BasePresenter<CheckDetailContr
 
 
     @Override
-    public void getProcess(String first_checklist_id) {
+    public void getProcess(String ins_checklist_id) {
         if (!isViewAttached()) {
             return;
         }
-        model.getProcess(first_checklist_id)
+        model.getProcess(ins_checklist_id)
                 .compose(RxScheduler.Obs_io_main())
 //                .to(mView.bindAutoDispose())//解决内存泄漏
                 .subscribe(new Observer<Response<List<ProgressObserver>>>() {
@@ -235,8 +234,9 @@ public class CheckDetailPresenter_CHUJIAN extends BasePresenter<CheckDetailContr
     }
 
     @Override
-    public void getCheckDetail(FirstCheckItemObserver checkItemObserver) {
+    public void getCheckDetail(InsCheckItemObserver checkItemObserver) {
 
     }
-    //FirstSug
+
+
 }

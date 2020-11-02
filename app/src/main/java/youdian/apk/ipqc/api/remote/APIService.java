@@ -18,6 +18,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 import youdian.apk.ipqc.bean.FirstCheckList;
 import youdian.apk.ipqc.bean.HomeTableData;
+import youdian.apk.ipqc.bean.InsCheckList;
 import youdian.apk.ipqc.bean.Lines;
 import youdian.apk.ipqc.bean.OptionData;
 import youdian.apk.ipqc.bean.Response;
@@ -81,6 +82,9 @@ public interface APIService {
     @GET("selectinfos/")
     Observable<Response<List<OptionData>>> getSelectInfo(@Query("select_type") String select_type);
 
+    /*****************************************  初件 *******************************************/
+
+
     /**
      * 获取工序
      *
@@ -104,5 +108,34 @@ public interface APIService {
      */
     @POST("firstcheckresults/")
     Observable<Response<String>> postFirstResult(@Body RequestBody body);
+
+
+    /*****************************************  巡检 *******************************************/
+
+
+    /**
+     * 获取工序
+     *
+     * @param ins_checklist_id
+     * @return
+     */
+    @GET("inscheckprocesses/")
+    Observable<Response<List<ProgressObserver>>> getInsProcess(@Query("inspection_checklist_id") String ins_checklist_id);
+
+    /**
+     * 获取工序和检验项表单
+     *
+     * @param inspection_checklist_id
+     * @return
+     */
+    @GET("inschecks/{inspection_checklist_id}/")
+    Observable<Response<InsCheckList>> getInsCheckDataList(@Path("inspection_checklist_id") String inspection_checklist_id);
+
+    /**
+     * 初件提交记录
+     */
+    @POST("inscheckresults/")
+    Observable<Response<String>> postInsResult(@Body RequestBody body);
+
 
 }
