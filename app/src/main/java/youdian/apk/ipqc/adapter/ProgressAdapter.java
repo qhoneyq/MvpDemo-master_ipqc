@@ -14,6 +14,8 @@ import android.widget.TextView;
 import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableList;
 
+import java.util.List;
+
 import pw.xiaohaozi.adapter_plus.adapter.SingleTypeAdapter;
 import youdian.apk.ipqc.R;
 import youdian.apk.ipqc.databinding.ItemProgressRvBinding;
@@ -26,7 +28,7 @@ import youdian.apk.ipqc.viewHolder.ProgresstHolder;
  */
 public class ProgressAdapter extends BaseAdapter {
 
-    ObservableList<ProgressObserver> progressList;
+    List<ProgressObserver> progressList;
     Context context;
 
     private int defaultSelection = -1;
@@ -34,7 +36,7 @@ public class ProgressAdapter extends BaseAdapter {
     private ColorStateList colors;
 
 
-    public ProgressAdapter(Context context,ObservableList<ProgressObserver> progressList) {
+    public ProgressAdapter(Context context,List<ProgressObserver> progressList) {
         this.progressList = progressList;
         this.context = context;
         Resources resources = context.getResources();

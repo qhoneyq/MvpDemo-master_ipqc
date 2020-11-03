@@ -45,9 +45,9 @@ public class CheckDetailPresenter_XUNJIAN extends BasePresenter<CheckDetailContr
     private CheckDetailContract_XUNJIAN.IModel model;
 
     private List<InsCheckProcess> insCheckLists;
-    private ObservableList<InsCheckItemObserver> checkItemObservers;//全部检验项
-    private ObservableList<InsCheckItemObserver> onCheckItemList;//单个工序检验项
-    private ObservableList<ProgressObserver> progressObserverList;
+    private List<InsCheckItemObserver> checkItemObservers;//全部检验项
+    private List<InsCheckItemObserver> onCheckItemList;//单个工序检验项
+    private List<ProgressObserver> progressObserverList;
     private CountModel countModel = new CountModel();
     List<OptionData> suggestList = new ArrayList<>();//建议列表
 
@@ -182,7 +182,7 @@ public class CheckDetailPresenter_XUNJIAN extends BasePresenter<CheckDetailContr
 
 
     private void dealCheckData(List<InsCheckProcess> list) {
-        checkItemObservers = new ObservableArrayList<>();
+        checkItemObservers = new ArrayList<>();
         for (InsCheckProcess insCheckProcess : list) {
             for (InsCheckListItem insCheckListItem : insCheckProcess.getIns_checklist_items()) {
                 checkItemObservers.add(new InsCheckItemObserver(insCheckProcess, insCheckListItem));
@@ -208,11 +208,14 @@ public class CheckDetailPresenter_XUNJIAN extends BasePresenter<CheckDetailContr
 
                     @Override
                     public void onNext(@NonNull Response<List<ProgressObserver>> listResponse) {
-                        progressObserverList = new ObservableArrayList<>();
-                        List<ProgressObserver> list =  listResponse.getData();
-                        for (int i = 0; i < list.size() ; i++) {
-                            progressObserverList.add(list.get(i));
-                        }
+                        progressObserverList = new ArrayList<>();
+//                        List<ProgressObserver> list =  listResponse.getData();
+//                        for (int i = 0; i < list.size() ; i++) {
+//                            progressObserverList.add(list.get(i));
+//                        }
+                        progressObserverList = listResponse.getData();
+                        ProgressObserver progressObserver = new ProgressObserver(100000,"抽样",Constans.ChouYang,"","抽样检验");
+                        progressObserverList.add(progressObserver);
                         mView.setprocess(progressObserverList);
                     }
 

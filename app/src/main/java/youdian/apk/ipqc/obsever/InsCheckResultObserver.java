@@ -26,15 +26,16 @@ public class InsCheckResultObserver extends BaseObservable implements Serializab
     private String check_quantity = "";
     private String note = "";
     private String machine_type = "";
-    private int ins_checklist_id ;
+    private int ins_checklist_id;
     private String ins_checklist_name = "";
     private String ins_checklist_code = "";
     private String check_person = "";
     private String check_time = "";
     private String sign_status = "Unsigned";
     private List<InsCheckItemObserver> inspection_result_details = new ArrayList<>();
+    private List<InsCheckSnObserver> inspection_check_sns = new ArrayList<>();
 
-    private String frequency ="";
+    private String frequency = "";
     private String period = "";
 
     @Bindable
@@ -46,6 +47,7 @@ public class InsCheckResultObserver extends BaseObservable implements Serializab
         this.shift = shift;
         notifyPropertyChanged(BR.shift);
     }
+
     @Bindable
     public String getShift_name() {
         return shift_name;
@@ -148,7 +150,6 @@ public class InsCheckResultObserver extends BaseObservable implements Serializab
     }
 
 
-
     @Bindable
     public String getCheck_quantity() {
         return check_quantity;
@@ -217,7 +218,8 @@ public class InsCheckResultObserver extends BaseObservable implements Serializab
 
     public void setProduction_batch(String production_batch) {
         this.production_batch = production_batch;
-    notifyPropertyChanged(BR.production_batch);}
+        notifyPropertyChanged(BR.production_batch);
+    }
 
     @Bindable
     public String getIns_checklist_name() {
@@ -227,7 +229,7 @@ public class InsCheckResultObserver extends BaseObservable implements Serializab
     public void setIns_checklist_name(String ins_checklist_name) {
         this.ins_checklist_name = ins_checklist_name;
         notifyPropertyChanged(BR.ins_checklist_name);
-}
+    }
 
     @Bindable
     public String getIns_checklist_code() {
@@ -238,7 +240,7 @@ public class InsCheckResultObserver extends BaseObservable implements Serializab
     public void setIns_checklist_code(String ins_checklist_code) {
         this.ins_checklist_code = ins_checklist_code;
         notifyPropertyChanged(BR.inspection_result_details);
-}
+    }
 
     @Bindable
     public int getIns_checklist_id() {
@@ -252,21 +254,23 @@ public class InsCheckResultObserver extends BaseObservable implements Serializab
 
     @Bindable
     public List<InsCheckItemObserver> getInspection_result_details() {
-        return inspection_result_details; }
+        return inspection_result_details;
+    }
 
     public void setInspection_result_details(List<InsCheckItemObserver> inspection_result_details) {
         this.inspection_result_details = inspection_result_details;
         notifyPropertyChanged(BR.inspection_result_details);
-        }
+    }
 
-   @Bindable
-   public String getFrequency() {
+    @Bindable
+    public String getFrequency() {
         return frequency;
     }
 
     public void setFrequency(String frequency) {
         this.frequency = frequency;
-   notifyPropertyChanged(BR.frequency); }
+        notifyPropertyChanged(BR.frequency);
+    }
 
     @Bindable
     public String getPeriod() {
@@ -275,5 +279,16 @@ public class InsCheckResultObserver extends BaseObservable implements Serializab
 
     public void setPeriod(String period) {
         this.period = period;
-    notifyPropertyChanged(BR.period);}
+        notifyPropertyChanged(BR.period);
+    }
+
+    @Bindable
+    public List<InsCheckSnObserver> getInspection_check_sns() {
+        return inspection_check_sns;
+    }
+
+    public void setInspection_check_sns(List<InsCheckSnObserver> inspection_check_sns) {
+        this.inspection_check_sns = inspection_check_sns;
+        notifyPropertyChanged(BR.inspection_check_sns);
+    }
 }

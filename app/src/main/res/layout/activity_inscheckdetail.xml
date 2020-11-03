@@ -308,11 +308,12 @@
                         app:strokeWidth="@dimen/dp_1" />
 
                     <ListView
-                        android:id="@+id/ipqc_recordlist_lv_scan"
+                        android:id="@+id/lvsn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/btn_scan"
-                        android:layout_marginTop="@dimen/dp_5" />
+                        android:layout_marginTop="@dimen/dp_5"
+                        />
                 </RelativeLayout>
 
             </LinearLayout>

@@ -33,6 +33,7 @@
     <string name="ipqcrecordlist">IPQC检验记录</string>
     <string name="xinabie">线别</string>
     <string name="gongling">工令</string>
+    <string name="sn">SN码: </string>
     <string name="snma">SN码</string>
     <string name="banci">版次</string>
     <string name="liaohao">料号</string>
@@ -111,7 +112,9 @@
     <string name="shiajianduan">时间段</string>
 
     <string name="input_tip">请输入原因(必填)</string>
+    <string name="exnote_tip">请输入原因(必填)</string>
     <string name="checkresult">检验结果</string>
+    <string name="exnote">异常备注</string>
     <string name="referencevalue_err">标准数据解析错误</string>
     <string name="referencecomparevalue_err">标准数据对比错误</string>
     <string name="checkedcount">已检查项: </string>

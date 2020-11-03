@@ -15,6 +15,17 @@ public class ProgressObserver extends BaseObservable implements Serializable {
     String progress_sn ="";
     String note = "";
 
+    public ProgressObserver() {
+    }
+
+    public ProgressObserver(int id, String process_name, String process_code, String progress_sn, String note) {
+        this.id = id;
+        this.process_name = process_name;
+        this.process_code = process_code;
+        this.progress_sn = progress_sn;
+        this.note = note;
+    }
+
     @Bindable
     public int getId() {
         return id;

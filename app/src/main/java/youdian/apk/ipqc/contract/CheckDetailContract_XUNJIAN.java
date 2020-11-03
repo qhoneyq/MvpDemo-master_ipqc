@@ -46,11 +46,11 @@ public interface CheckDetailContract_XUNJIAN {
 
         void showMsg(String msg);
 
-        void setCheckListData(ObservableList<InsCheckItemObserver> list);//获取全部检验项
+        void setCheckListData(List<InsCheckItemObserver> list);//获取全部检验项
 
 //        void showCheckItemByProcess(int process_id);//获取单个工序检验项
 
-        void setprocess(ObservableList<ProgressObserver> list);
+        void setprocess(List<ProgressObserver> list);
 
         void showBottomDialog(List<OptionData> list);
 

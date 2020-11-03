@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -88,14 +89,15 @@ public class NewXunjian_Activity extends BaseMvpActivity<NewXunjianPresenter> im
         if (INTENTFLAG.equals(Constans.NEW)) {
             String time = DatetimeUtil.INSTANCE.getNows_ss();
             resultObserver.setCheck_time(time);
+            resultObserver.setCheck_quantity("Check_quantity");
+            resultObserver.setWork_no("Work_no");
+            resultObserver.setPart_no("part_no");
+            resultObserver.setEdition("edition");
+            resultObserver.setProduction_batch("Production_batch");
+            resultObserver.setCheck_quantity("123");
+            resultObserver.setMachine_type("Machine_type");
         }
-        resultObserver.setCheck_quantity("Check_quantity");
-        resultObserver.setWork_no("Work_no");
-        resultObserver.setPart_no("part_no");
-        resultObserver.setEdition("edition");
-        resultObserver.setProduction_batch("Production_batch");
-        resultObserver.setCheck_quantity("123");
-        resultObserver.setMachine_type("Machine_type");
+        binding.jianyanshuliang.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         binding.setInspection(resultObserver);
         binding.headview.setTitleText(resultObserver.getIns_checklist_name() + getResources().getString(R.string.biaotouxinxi));
         binding.headview.setLeftIcon(R.mipmap.home_icon_return);
@@ -183,10 +185,10 @@ public class NewXunjian_Activity extends BaseMvpActivity<NewXunjianPresenter> im
 //                    resultObserver.setFrequency(listbottom.get(i).getOption_value());
                     binding.jianyanpinlv.setText(listbottom.get(i).getOption_name());
                     //根据value确认时间段是否可选
-                    if (listbottom.get(i).getOption_value().equals(Constans.MeiBan)||listbottom.get(i).getOption_value().equals(HuangXian)){
+                    if (listbottom.get(i).getOption_value().equals(Constans.MeiBan) || listbottom.get(i).getOption_value().equals(HuangXian)) {
                         resultObserver.setPeriod(listbottom.get(i).getOption_name());
                         binding.shijianduan.setClickable(false);
-                    }else{
+                    } else {
                         binding.shijianduan.setClickable(true);
                         resultObserver.setPeriod("");
                     }
@@ -343,8 +345,8 @@ public class NewXunjian_Activity extends BaseMvpActivity<NewXunjianPresenter> im
         } else {
             binding.gongling.setError(null);
         }
-        if (resultObserver.getWork_no().isEmpty()) {
-            binding.liaohao.setError(getResources().getString(R.string.workno_err));
+        if (resultObserver.getPart_no().isEmpty()) {
+            binding.liaohao.setError(getResources().getString(R.string.partno_err));
             return;
         } else {
             binding.liaohao.setError(null);
@@ -357,6 +359,30 @@ public class NewXunjian_Activity extends BaseMvpActivity<NewXunjianPresenter> im
         }
         if (resultObserver.getProduction_batch().isEmpty()) {
             binding.shengchanpici.setError(getResources().getString(R.string.product_err));
+            return;
+        } else {
+            binding.shengchanpici.setError(null);
+        }
+        if (resultObserver.getMachine_type().isEmpty()) {
+            binding.shengchanpici.setError(getResources().getString(R.string.jizhong_err));
+            return;
+        } else {
+            binding.shengchanpici.setError(null);
+        }
+        if (resultObserver.getFrequency().isEmpty()) {
+            binding.shengchanpici.setError(getResources().getString(R.string.frequency_err));
+            return;
+        } else {
+            binding.shengchanpici.setError(null);
+        }
+        if (resultObserver.getPeriod().isEmpty()) {
+            binding.shengchanpici.setError(getResources().getString(R.string.shijianduan_err));
+            return;
+        } else {
+            binding.shengchanpici.setError(null);
+        }
+        if (resultObserver.getCheck_quantity().isEmpty()) {
+            binding.jianyanshuliang.setError(getResources().getString(R.string.checkno_err));
             return;
         } else {
             binding.shengchanpici.setError(null);
@@ -383,6 +409,7 @@ public class NewXunjian_Activity extends BaseMvpActivity<NewXunjianPresenter> im
         //页面跳转
         Bundle bundle = new Bundle();
         bundle.putSerializable(Inspection, resultObserver);
+        bundle.putString(Constans.INTENTFLAG,INTENTFLAG);
         CheckDetail_Xunjian_Activity.startActivity(this, bundle);
         finish();
     }

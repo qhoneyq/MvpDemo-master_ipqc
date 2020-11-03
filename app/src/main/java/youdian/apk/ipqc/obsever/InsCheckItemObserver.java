@@ -25,15 +25,16 @@ public class InsCheckItemObserver extends BaseObservable implements Serializable
     private int item_id;
     private String item_sn;
     private String item;
-    private String reference_value;
+    private String reference_value = "";
     private String method;
     private String control;
     private String control_code;
-    private String detail_value;
-    private String detail_status;
+    private String detail_value = "";
+    private String detail_status = "";
     private String note = "";
     private String check_time = "";
     private String emp_no = "";
+    private String frequency = "";
     private String period = "";
     private boolean isvisiable=false;
 
@@ -51,6 +52,15 @@ public class InsCheckItemObserver extends BaseObservable implements Serializable
         this.control = firstCheckListItem.getControl();
         this.control_code = firstCheckListItem.getControl_code();
     }
+
+   @Bindable
+   public String getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(String frequency) {
+        this.frequency = frequency;
+    notifyPropertyChanged(BR.frequency);}
 
     @Bindable
     public int getProcess_id() {
