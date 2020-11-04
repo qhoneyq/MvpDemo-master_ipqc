@@ -12,6 +12,7 @@ import youdian.apk.ipqc.bean.Response;
 import youdian.apk.ipqc.contract.CheckDetailContract_CHUJIAN;
 import youdian.apk.ipqc.contract.CheckDetailContract_XUNJIAN;
 import youdian.apk.ipqc.network.RetrofitClient;
+import youdian.apk.ipqc.obsever.InsCheckResultObserver;
 import youdian.apk.ipqc.obsever.ProgressObserver;
 
 public class Model_Xunjian_CheckDetail implements CheckDetailContract_XUNJIAN.IModel {
@@ -54,7 +55,7 @@ public class Model_Xunjian_CheckDetail implements CheckDetailContract_XUNJIAN.IM
      * @return
      */
     @Override
-    public Observable<Response<String>> postInsResult(RequestBody body) {
+    public Observable<Response<InsCheckResultObserver>> postInsResult(RequestBody body) {
         return RetrofitClient.getInstance().getApi().postInsResult(body);
     }
 

@@ -37,7 +37,7 @@ public interface CheckDetailContract_CHUJIAN {
 
         Observable<Response<List<OptionData>>> getSelectInfo(String option);
 
-        Observable<Response<String>> postFirstResult(RequestBody body);
+        Observable<Response<FirstCheckResultObserver>> postFirstResult(RequestBody body);
     }
 
     interface View extends BaseView {
@@ -47,13 +47,15 @@ public interface CheckDetailContract_CHUJIAN {
 
         void showMsg(String msg);
 
-        void setCheckListData(ObservableList<FirstCheckItemObserver> list);//获取全部检验项
+        void setCheckListData(List<FirstCheckItemObserver> list);//获取全部检验项
 
 //        void showCheckItemByProcess(int process_id);//获取单个工序检验项
 
         void setprocess(ObservableList<ProgressObserver> list);
 
         void showBottomDialog(List<OptionData> list);
+
+        void showPopWindow(boolean issucceed,String result);
 
     }
 

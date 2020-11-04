@@ -31,6 +31,7 @@ import youdian.apk.ipqc.obsever.FirstCheckResultObserver;
 import youdian.apk.ipqc.obsever.ProgressObserver;
 import youdian.apk.ipqc.utils.Constans;
 import youdian.apk.ipqc.utils.JsonFormatUtils;
+import youdian.apk.ipqc.utils.MyUtils;
 import youdian.apk.ipqc.utils.UserUtils;
 
 /**
@@ -52,7 +53,6 @@ public class CheckDetailPresenter_CHUJIAN extends BasePresenter<CheckDetailContr
     List<OptionData> suggestList = new ArrayList<>();//建议列表
 
 
-
     public CheckDetailPresenter_CHUJIAN() {
         this.model = new Model_Chujian_CheckDetail();
     }
@@ -60,6 +60,7 @@ public class CheckDetailPresenter_CHUJIAN extends BasePresenter<CheckDetailContr
 
     /**
      * 获取全部检验项
+     *
      * @param first_checklist_id
      */
     @Override
@@ -97,6 +98,7 @@ public class CheckDetailPresenter_CHUJIAN extends BasePresenter<CheckDetailContr
 
     /**
      * 获取检验建议
+     *
      * @param option
      */
     @Override
@@ -115,7 +117,7 @@ public class CheckDetailPresenter_CHUJIAN extends BasePresenter<CheckDetailContr
                         if (option.equals(Constans.FirstSug)) {
                             suggestList = listResponse.getData();
                             if (suggestList.size() <= 0)
-                                mView.onError( "建议内容为空");
+                                mView.onError("建议内容为空");
                             else
                                 mView.showBottomDialog(suggestList);
 
@@ -145,31 +147,37 @@ public class CheckDetailPresenter_CHUJIAN extends BasePresenter<CheckDetailContr
 
     /**
      * 提交记录
+     *
      * @param firstCheckResultObserver
      */
     @Override
     public void postFirstResult(FirstCheckResultObserver firstCheckResultObserver) {
-       String body = new Gson().toJson(firstCheckResultObserver);
+        String body = new Gson().toJson(firstCheckResultObserver);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), body);
 
         model.postFirstResult(requestBody)
                 .compose(RxScheduler.Obs_io_main())
 //                .to(mView.bindAutoDispose())//解决内存泄漏
-                .subscribe(new Observer<Response<String>>() {
+                .subscribe(new Observer<Response<FirstCheckResultObserver>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
                         mView.hideLoading();
                     }
 
                     @Override
-                    public void onNext(@NonNull Response<String> response) {
-                        mView.showMsg(response.getMsg());
+                    public void onNext(@NonNull Response<FirstCheckResultObserver> response) {
+                        if (response.getCode() == 100)
+                            mView.showPopWindow(true, "检验成功");
+                        else
+                            mView.onError(response.getMsg());
 
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
                         mView.hideLoading();
+                        mView.showPopWindow(false, "数据提交失败");
+
 
                     }
 
@@ -210,8 +218,8 @@ public class CheckDetailPresenter_CHUJIAN extends BasePresenter<CheckDetailContr
                     @Override
                     public void onNext(@NonNull Response<List<ProgressObserver>> listResponse) {
                         progressObserverList = new ObservableArrayList<>();
-                        List<ProgressObserver> list =  listResponse.getData();
-                        for (int i = 0; i < list.size() ; i++) {
+                        List<ProgressObserver> list = listResponse.getData();
+                        for (int i = 0; i < list.size(); i++) {
                             progressObserverList.add(list.get(i));
                         }
                         mView.setprocess(progressObserverList);

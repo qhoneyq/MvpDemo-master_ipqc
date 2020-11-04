@@ -18,12 +18,14 @@ import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,13 +54,15 @@ public class MyUtils {
         toast.setView(toastview);
         toast.show();
     }
-    public static void dialogShow(Context context, String s) {
-        View view= LayoutInflater.from(context).inflate(R.layout.mytoastlayout,null);
-        TextView text = (TextView) view.findViewById(R.id.mytoast_tv);
+    public static void dialogShow(Context context, String s, int drawable) {
+        View view= LayoutInflater.from(context).inflate(R.layout.dialog_common,null);
+        TextView text = (TextView) view.findViewById(R.id.dialog__tv);
+        ImageView imageView = (ImageView) view.findViewById(R.id.img_tip);
+        imageView.setImageResource(drawable);
         text.setText(s);
         new AlertDialog.Builder(context)
                 .setView(view)
-                .setCancelable(true)
+                .setCancelable(false)
                 .show();
     }
 
@@ -68,11 +72,6 @@ public class MyUtils {
         return (int) (dpValue * scale);
     }
 
-    public static boolean isSucceed(String code) {
-        if (code.equals("S1000"))
-            return true;
-        return false;
-    }
 
 
 
@@ -187,7 +186,7 @@ public class MyUtils {
         for (int i = 0; i < runningTaskInfos.size(); i++) {
             System.out.println(runningTaskInfos.get(i).topActivity);
             if (runningTaskInfos.get(i).topActivity.toString().contains(
-                    "com.ccard.activityforfoxconn")) {
+                    "youdian.apk")) {
                 return true;
             }
         }

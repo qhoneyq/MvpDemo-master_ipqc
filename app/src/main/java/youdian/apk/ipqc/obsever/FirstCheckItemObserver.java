@@ -25,9 +25,9 @@ public class FirstCheckItemObserver extends BaseObservable implements Serializab
     private String reference_value;
     private String method;
     private String control;
-    private String control_code;
-    private String detail_value;
-    private String detail_status;
+    private String control_code="";
+    private String detail_value="";
+    private String detail_status="";
     private String note="";
     private String check_time = "";
     private String emp_no = "";

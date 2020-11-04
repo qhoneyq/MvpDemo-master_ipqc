@@ -17,6 +17,7 @@ import youdian.apk.ipqc.bean.SEData;
 import youdian.apk.ipqc.contract.CheckDetailContract_CHUJIAN;
 import youdian.apk.ipqc.contract.TableListContract;
 import youdian.apk.ipqc.network.RetrofitClient;
+import youdian.apk.ipqc.obsever.FirstCheckResultObserver;
 import youdian.apk.ipqc.obsever.ProgressObserver;
 
 public class Model_Chujian_CheckDetail implements CheckDetailContract_CHUJIAN.IModel {
@@ -59,7 +60,7 @@ public class Model_Chujian_CheckDetail implements CheckDetailContract_CHUJIAN.IM
      * @return
      */
     @Override
-    public Observable<Response<String>> postFirstResult(RequestBody body) {
+    public Observable<Response<FirstCheckResultObserver>> postFirstResult(RequestBody body) {
         return RetrofitClient.getInstance().getApi().postFirstResult(body);
     }
 

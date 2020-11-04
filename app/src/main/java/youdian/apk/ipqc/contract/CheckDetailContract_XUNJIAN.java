@@ -36,7 +36,7 @@ public interface CheckDetailContract_XUNJIAN {
 
         Observable<Response<List<OptionData>>> getSelectInfo(String option);
 
-        Observable<Response<String>> postInsResult(RequestBody body);
+        Observable<Response<InsCheckResultObserver>> postInsResult(RequestBody body);
     }
 
     interface View extends BaseView {
@@ -54,6 +54,7 @@ public interface CheckDetailContract_XUNJIAN {
 
         void showBottomDialog(List<OptionData> list);
 
+        void showPopWindow(boolean issucceed,String result);
     }
 
 

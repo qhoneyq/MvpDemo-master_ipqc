@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="count"
             type="youdian.apk.ipqc.obsever.CountModel" />
@@ -162,10 +163,11 @@
                         android:textColor="@color/FFFFFF"
                         android:textSize="@dimen/sp_15" />
                 </LinearLayout>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_1"
-                    android:background="@color/c5ced3"/>
+                    android:background="@color/c5ced3" />
             </RelativeLayout>
 
             <LinearLayout
@@ -181,10 +183,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:divider="@drawable/divider_white"
-                    android:dividerHeight="@dimen/px_1"/>
+                    android:dividerHeight="@dimen/px_1" />
 
-                <!-- 检查项 -->
-                <RelativeLayout
+                <androidx.core.widget.NestedScrollView
                     android:id="@+id/rl_action"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -193,36 +194,50 @@
                     android:background="@color/FFFFFF"
                     android:paddingLeft="@dimen/dp_13"
                     android:paddingRight="@dimen/dp_13"
+                    android:fillViewport="true"
                     android:visibility="visible">
 
-                    <TextView
-                        android:id="@+id/tv_progress_note"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="@dimen/dp_10"
-                        android:paddingTop="@dimen/dp_13"
-                        android:paddingBottom="@dimen/dp_13"
-                        android:text="@string/jianchabianzhun"
-                        android:textColor="@color/black_54"
-                        android:textSize="@dimen/sp_14" />
-
-                    <View
-                        android:id="@+id/diver_split"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_1"
-                        android:layout_below="@id/tv_progress_note"
-                        android:background="@color/c5ced3" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_action"
+                    <!-- 检查项 -->
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_below="@id/diver_split"
-                        android:descendantFocusability="afterDescendants"
-                        android:padding="@dimen/dp_10" />
+                        android:orientation="vertical"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        >
 
-                </RelativeLayout>
+                        <TextView
+                            android:id="@+id/tv_progress_note"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="@dimen/dp_10"
+                            android:paddingTop="@dimen/dp_13"
+                            android:paddingBottom="@dimen/dp_13"
+                            android:text="@string/jianchabianzhun"
+                            android:textColor="@color/black_54"
+                            android:textSize="@dimen/sp_14" />
+
+                        <View
+                            android:id="@+id/diver_split"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp_1"
+                            android:layout_below="@id/tv_progress_note"
+                            android:background="@color/c5ced3" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_action"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_below="@id/diver_split"
+                            android:descendantFocusability="afterDescendants"
+                            android:focusable="false"
+                            android:nestedScrollingEnabled="false"
+                            android:focusableInTouchMode="false"
+                            android:padding="@dimen/dp_10" />
+
+                    </LinearLayout>
+                </androidx.core.widget.NestedScrollView>
 
                 <RelativeLayout
                     android:id="@+id/rl_chouyang"

@@ -24,6 +24,8 @@ import youdian.apk.ipqc.bean.OptionData;
 import youdian.apk.ipqc.bean.Response;
 import youdian.apk.ipqc.bean.SEData;
 import youdian.apk.ipqc.bean.UserData;
+import youdian.apk.ipqc.obsever.FirstCheckResultObserver;
+import youdian.apk.ipqc.obsever.InsCheckResultObserver;
 import youdian.apk.ipqc.obsever.ProgressObserver;
 
 
@@ -107,7 +109,7 @@ public interface APIService {
      * 初件提交记录
      */
     @POST("firstcheckresults/")
-    Observable<Response<String>> postFirstResult(@Body RequestBody body);
+    Observable<Response<FirstCheckResultObserver>> postFirstResult(@Body RequestBody body);
 
 
     /*****************************************  巡检 *******************************************/
@@ -135,7 +137,7 @@ public interface APIService {
      * 初件提交记录
      */
     @POST("inscheckresults/")
-    Observable<Response<String>> postInsResult(@Body RequestBody body);
+    Observable<Response<InsCheckResultObserver>> postInsResult(@Body RequestBody body);
 
 
 }

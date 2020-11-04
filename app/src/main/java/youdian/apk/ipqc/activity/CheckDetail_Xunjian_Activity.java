@@ -5,16 +5,20 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
@@ -55,8 +59,11 @@ import youdian.apk.ipqc.obsever.OptionObserver;
 import youdian.apk.ipqc.obsever.ProgressObserver;
 import youdian.apk.ipqc.presenter.CheckDetailPresenter_CHUJIAN;
 import youdian.apk.ipqc.presenter.CheckDetailPresenter_XUNJIAN;
+import youdian.apk.ipqc.utils.CommonUtils;
 import youdian.apk.ipqc.utils.Constans;
+import youdian.apk.ipqc.utils.MycountDownTimer;
 import youdian.apk.ipqc.utils.UserUtils;
+import youdian.apk.ipqc.wedige.CustomPopupWindow;
 
 import static youdian.apk.ipqc.utils.Constans.Abnormal;
 import static youdian.apk.ipqc.utils.Constans.FLAG_SN;
@@ -75,6 +82,7 @@ import static youdian.apk.ipqc.utils.Constans.Normal;
 public class CheckDetail_Xunjian_Activity extends BaseMvpActivity<CheckDetailPresenter_XUNJIAN> implements CheckDetailContract_XUNJIAN.View, InsCheckDetailAdapter.onCountChangeListener, SnChouyangAdapter.onCountChangeListener {
 
     ActivityInscheckdetailBinding binding;
+    private CustomPopupWindow customPopupWindow;
     private BottomSheetDialog dialog;
     private ProgressAdapter progressAdapter;
     private SuggestionAdapter suggestionAdapter;
@@ -117,10 +125,18 @@ public class CheckDetail_Xunjian_Activity extends BaseMvpActivity<CheckDetailPre
         binding.tvPeriod.setText(resultObserver.getPeriod());
         binding.setCount(countModel);
         snCheckItemList = new ArrayList<>();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+        binding.rvAction.setHasFixedSize(true);
+        binding.rvAction.setItemAnimator(new DefaultItemAnimator());
+        binding.rvAction.setLayoutManager(layoutManager);
         mPresenter = new CheckDetailPresenter_XUNJIAN();
         mPresenter.attachView(this);
         mPresenter.getProcess(resultObserver.getIns_checklist_id() + "");
-        mPresenter.getCheckSuggestion(Constans.FirstSug);
 
         binding.heardview.setTitleText(resultObserver.getIns_checklist_name());
         binding.heardview.setLeftIcon(R.mipmap.home_icon_return);
@@ -169,6 +185,12 @@ public class CheckDetail_Xunjian_Activity extends BaseMvpActivity<CheckDetailPre
                 startQrCode();
             }
         });
+        customPopupWindow = new CustomPopupWindow.Builder(this)
+                .setContentView(R.layout.popwindow_result)
+                .setCancleClickOutSide(true)
+                .setwidth(getResources().getDimensionPixelSize(R.dimen.dp_240))
+                .setheight(getResources().getDimensionPixelSize(R.dimen.dp_160))
+                .build();
     }
 
     @Override
@@ -261,6 +283,29 @@ public class CheckDetail_Xunjian_Activity extends BaseMvpActivity<CheckDetailPre
         });
     }
 
+    /**
+     * 记录提交成功
+     */
+    @Override
+    public void showPopWindow(boolean isSucceed, String result) {
+        TextView tvofftime = (TextView) customPopupWindow.getItemView(R.id.tv_offtime);
+        AppCompatImageView img_icon = (AppCompatImageView) customPopupWindow.getItemView(R.id.img_pop);
+        TextView tvResult = (TextView) customPopupWindow.getItemView(R.id.tv_pop);
+        if (isSucceed) {
+            img_icon.setImageResource(R.mipmap.icon_green);
+            tvResult.setTextColor(Color.BLACK);
+            tvResult.setText(result);
+        } else {
+            img_icon.setImageResource(R.mipmap.icon_red);
+            tvResult.setTextColor(Color.BLACK);
+            tvResult.setText(result);
+        }
+        MycountDownTimer downTimer = new MycountDownTimer(this, tvofftime, 6000, 1);
+        downTimer.start();
+        customPopupWindow.showAtLocation(binding.getRoot(), Gravity.CENTER, 0, 0);
+        CommonUtils.setBackgroundAlpha((float) 0.3, getWindow());
+
+    }
 
     /**
      * 响应presenter,显示底部弹窗（建议）
@@ -292,14 +337,6 @@ public class CheckDetail_Xunjian_Activity extends BaseMvpActivity<CheckDetailPre
         btn_commit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String sug = "";
-                for (OptionObserver optionObserver : suggestionList) {
-                    if (optionObserver.isCheck()) {
-                        sug = sug + optionObserver.getOption_value() + ";";
-                    }
-                }
-                sug = sug + edt_sug.getText().toString();
-                resultObserver.setSuggestion(sug);
                 resultObserver.setResult_status(getStatus());
                 resultObserver.setInspection_result_details(allCheckItemList);
                 mPresenter.postInsResult(resultObserver);
@@ -329,8 +366,6 @@ public class CheckDetail_Xunjian_Activity extends BaseMvpActivity<CheckDetailPre
         allCheckItemList = new ArrayList<>();
         allCheckItemList.addAll(list);
         countModel.setCount_all(allCheckItemList.size() + "");
-        binding.rvAction.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        binding.rvAction.setItemAnimator(new DefaultItemAnimator());
         showCheckItemByProcess(process_id);
     }
 
@@ -357,17 +392,7 @@ public class CheckDetail_Xunjian_Activity extends BaseMvpActivity<CheckDetailPre
         checkDetailAdapter.noyify(onCheckItemList);
         binding.rvAction.setAdapter(checkDetailAdapter);
     }
-//
-//    public void showCheckItemByProcess(int p_id) {
-//        for (InsCheckItemObserver checkItemObserver : allCheckItemList) {
-//            if (checkItemObserver.getProcess_id() == p_id) {
-//                checkItemObserver.setIsvisiable(true);
-//            } else
-//                checkItemObserver.setIsvisiable(false);
-//        }
-//
-//        checkDetailAdapter.notifyDataSetChanged();
-//    }
+
 
     /**
      * 查询当前点检结果
@@ -395,7 +420,7 @@ public class CheckDetail_Xunjian_Activity extends BaseMvpActivity<CheckDetailPre
         for (InsCheckItemObserver check : allCheckItemList) {
             if (!check.getDetail_status().equals("")) {
                 check.setEmp_no(UserUtils.getInstance().getPnum());
-                check.setPeriod(resultObserver.getPeriod());
+                check.setTime_period(resultObserver.getPeriod());
                 check.setFrequency(resultObserver.getFrequency());
                 count++;
             }

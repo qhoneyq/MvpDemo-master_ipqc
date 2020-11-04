@@ -1,19 +1,24 @@
 package youdian.apk.ipqc.activity;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableList;
@@ -41,14 +46,21 @@ import youdian.apk.ipqc.databinding.ActivityFirstcheckdetailBinding;
 import youdian.apk.ipqc.obsever.CountModel;
 import youdian.apk.ipqc.obsever.FirstCheckItemObserver;
 import youdian.apk.ipqc.obsever.FirstCheckResultObserver;
+import youdian.apk.ipqc.obsever.InsCheckItemObserver;
 import youdian.apk.ipqc.obsever.OptionObserver;
 import youdian.apk.ipqc.obsever.ProgressObserver;
 import youdian.apk.ipqc.presenter.CheckDetailPresenter_CHUJIAN;
 import youdian.apk.ipqc.presenter.NewChujianPresenter;
+import youdian.apk.ipqc.utils.CommonUtils;
 import youdian.apk.ipqc.utils.Constans;
+import youdian.apk.ipqc.utils.MyUtils;
+import youdian.apk.ipqc.utils.MycountDownTimer;
+import youdian.apk.ipqc.utils.UserUtils;
+import youdian.apk.ipqc.wedige.CustomPopupWindow;
 
 import static youdian.apk.ipqc.utils.Constans.Abnormal;
 import static youdian.apk.ipqc.utils.Constans.FirstCheck;
+import static youdian.apk.ipqc.utils.Constans.NEW;
 import static youdian.apk.ipqc.utils.Constans.Normal;
 
 /**
@@ -61,14 +73,17 @@ import static youdian.apk.ipqc.utils.Constans.Normal;
 public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPresenter_CHUJIAN> implements CheckDetailContract_CHUJIAN.View, ActionDetailAdapter.onCountChangeListener {
 
     ActivityFirstcheckdetailBinding binding;
+    private CustomPopupWindow customPopupWindow;
     private BottomSheetDialog dialog;
     private ProgressAdapter progressAdapter;
     private SuggestionAdapter suggestionAdapter;
     ObservableList<ProgressObserver> processList = new ObservableArrayList<>();
     private ActionDetailAdapter checkDetailAdapter;
     private FirstCheckResultObserver resultObserver;//检验记录表头
-    ObservableList<FirstCheckItemObserver> allCheckItemList;//全部检验项
+    List<FirstCheckItemObserver> allCheckItemList;//全部检验项
+    List<FirstCheckItemObserver> onCheckItemList;//显示检验项
     ObservableList<OptionObserver> suggestionList;
+    private String INTENTFLAG;//修改 or 新建
     private int process_id;
     private CountModel countModel = new CountModel();
 
@@ -93,8 +108,19 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
         Bundle bundle = getIntent().getBundleExtra("param");
         resultObserver = (FirstCheckResultObserver) bundle.getSerializable(FirstCheck);
         binding = DataBindingUtil.setContentView(this, getLayoutId());
+        INTENTFLAG = bundle.getString(Constans.INTENTFLAG);
         binding.tvSn.setText(resultObserver.getSn());
         binding.setCount(countModel);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+        binding.rvAction.setItemAnimator(new DefaultItemAnimator());
+        binding.rvAction.setHasFixedSize(true);
+        binding.rvAction.setHasFixedSize(true);
+        binding.rvAction.setLayoutManager(layoutManager);
         mPresenter = new CheckDetailPresenter_CHUJIAN();
         mPresenter.attachView(this);
         mPresenter.getProcess(resultObserver.getFirst_checklist_id() + "");
@@ -104,15 +130,16 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
         binding.heardview.setLeftClick(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                onError(getResources().getString(R.string.returnmsg));
             }
         });
         binding.btnRewritetitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
+                resultObserver.setFirst_result_details(allCheckItemList);
                 bundle.putSerializable(Constans.FirstCheck, resultObserver);
-                bundle.putString(Constans.INTENTFLAG,Constans.REINPUT);
+                bundle.putString(Constans.INTENTFLAG, Constans.REINPUT);
                 //跳转表头
                 NewChujian_Activity.startActivity(CheckDetail_Chujian_Activity.this, bundle);
                 finish();
@@ -121,13 +148,19 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
         binding.btnCommit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (countModel.getCount_ed().equals(countModel.getCount_all())) {
+                if (getNumber() == allCheckItemList.size()) {
                     showDialog();
                 } else {
                     onError(getResources().getString(R.string.lackmsg));
                 }
             }
         });
+        customPopupWindow = new CustomPopupWindow.Builder(this)
+                .setContentView(R.layout.popwindow_result)
+                .setCancleClickOutSide(true)
+                .setwidth(getResources().getDimensionPixelSize(R.dimen.dp_240))
+                .setheight(getResources().getDimensionPixelSize(R.dimen.dp_160))
+                .build();
 
 
     }
@@ -150,13 +183,6 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
     @Override
     public void showMsg(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                finish();
-            }
-        }, 1000);
     }
 
     @Override
@@ -188,7 +214,12 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
             binding.tvProgressNote.setText(processList.get(0).getNote());
         }
         progressAdapter.notifyDataSetChanged();
-        mPresenter.getCheckListData(resultObserver.getFirst_checklist_id() + "");
+        if (INTENTFLAG.equals(NEW))
+            mPresenter.getCheckListData(resultObserver.getFirst_checklist_id() + "");
+        else {
+            allCheckItemList = resultObserver.getFirst_result_details();
+            setCheckListData(allCheckItemList);
+        }
         binding.rvProgress.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -241,11 +272,36 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
                 sug = sug + edt_sug.getText().toString();
                 resultObserver.setSuggestion(sug);
                 resultObserver.setResult_status(getStatus());
-                praseList(allCheckItemList);
+                resultObserver.setFirst_result_details(allCheckItemList);
+                mPresenter.postFirstResult(resultObserver);
                 dialog.dismiss();
             }
         });
         dialog.setContentView(view);
+
+    }
+
+    /**
+     * 记录提交成功
+     */
+    @Override
+    public void showPopWindow(boolean isSucceed, String result) {
+        TextView tvofftime = (TextView) customPopupWindow.getItemView(R.id.tv_offtime);
+        AppCompatImageView img_icon = (AppCompatImageView) customPopupWindow.getItemView(R.id.img_pop);
+        TextView tvResult = (TextView) customPopupWindow.getItemView(R.id.tv_pop);
+        if (isSucceed) {
+            img_icon.setImageResource(R.mipmap.icon_green);
+            tvResult.setTextColor(Color.BLACK);
+            tvResult.setText(result);
+        } else {
+            img_icon.setImageResource(R.mipmap.icon_red);
+            tvResult.setTextColor(Color.BLACK);
+            tvResult.setText(result);
+        }
+        MycountDownTimer downTimer = new MycountDownTimer(this, tvofftime, 6000, 1);
+        downTimer.start();
+        customPopupWindow.showAtLocation(binding.getRoot(), Gravity.CENTER, 0, 0);
+        CommonUtils.setBackgroundAlpha((float) 0.3, getWindow());
 
     }
 
@@ -262,17 +318,11 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
      * @param list
      */
     @Override
-    public void setCheckListData(ObservableList<FirstCheckItemObserver> list) {
-        allCheckItemList = new ObservableArrayList<>();
+    public void setCheckListData(List<FirstCheckItemObserver> list) {
+        allCheckItemList = new ArrayList<>();
+        onCheckItemList = new ArrayList<>();
         allCheckItemList.addAll(list);
         countModel.setCount_all(allCheckItemList.size() + "");
-        binding.rvAction.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        binding.rvAction.setItemAnimator(new DefaultItemAnimator());
-        if (checkDetailAdapter == null) {
-            checkDetailAdapter = new ActionDetailAdapter(this, allCheckItemList, this);
-            binding.rvAction.setAdapter(checkDetailAdapter);
-
-        }
         showCheckItemByProcess(process_id);
     }
 
@@ -282,13 +332,22 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
      * @param p_id
      */
     public void showCheckItemByProcess(int p_id) {
+        onCheckItemList.clear();
         for (FirstCheckItemObserver checkItemObserver : allCheckItemList) {
             if (checkItemObserver.getProcess_id() == p_id) {
-                checkItemObserver.setIsvisiable(true);
-            } else
-                checkItemObserver.setIsvisiable(false);
+                onCheckItemList.add(checkItemObserver);
+            }
         }
+        if (checkDetailAdapter == null) {
+            checkDetailAdapter = new ActionDetailAdapter(this, onCheckItemList, this);
+            binding.rvAction.setAdapter(checkDetailAdapter);
+        }
+        countModel.setCount_ed("0");
+        countModel.setCount_all(onCheckItemList.size() + "");
+        binding.rvAction.removeAllViews();
 
+        checkDetailAdapter.noyify(onCheckItemList);
+        binding.rvAction.setAdapter(checkDetailAdapter);
         checkDetailAdapter.notifyDataSetChanged();
     }
 
@@ -308,6 +367,22 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
         return isNomal;
     }
 
+    /**
+     * 查询当前点检结数量
+     *
+     * @return
+     */
+    private int getNumber() {
+        int count = 0;
+        for (FirstCheckItemObserver check : allCheckItemList) {
+            if (!check.getDetail_status().equals("")) {
+                check.setEmp_no(UserUtils.getInstance().getPnum());
+                count++;
+            }
+        }
+        return count;
+    }
+
 
     @Override
     public void getCheckedCount(int s) {
@@ -319,25 +394,17 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
         checkItemObserver.setCheck_time(DatetimeUtil.INSTANCE.getNows_ss());
         for (int i = 0; i < allCheckItemList.size(); i++) {
             FirstCheckItemObserver check = allCheckItemList.get(i);
-            if (checkItemObserver.getItem_id() == check.getItem_id()) {
-//                check.setNote(checkItemObserver.getNote());
-//                check.setCheck_time(DatetimeUtil.INSTANCE.getNows_ss());
-//                check.setDetail_value(checkItemObserver.getDetail_value());
-//                check.setDetail_status(checkItemObserver.getDetail_status());
+            if (checkItemObserver.getItem().equals(check.getItem())) {
+                check.setNote(checkItemObserver.getNote());
+                check.setCheck_time(DatetimeUtil.INSTANCE.getNows_ss());
+                check.setDetail_value(checkItemObserver.getDetail_value());
+                check.setDetail_status(checkItemObserver.getDetail_status());
                 break;
             } else
                 return;
         }
     }
 
-    private void praseList(ObservableList<FirstCheckItemObserver> list) {
-        List<FirstCheckItemObserver> listResult = new ArrayList<>();
-        for (FirstCheckItemObserver item : list) {
-            listResult.add(item);
-        }
-        resultObserver.setFirst_result_details(listResult);
-        mPresenter.postFirstResult(resultObserver);
-    }
 
 }
 

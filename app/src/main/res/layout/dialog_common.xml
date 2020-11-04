@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dp_260"
+    android:layout_height="@dimen/dp_180"
+    android:orientation="vertical"
+    android:layout_centerInParent="true">
+
+    <RelativeLayout
+        android:id="@+id/LinearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <ImageView
+            android:id="@+id/img_tip"
+            style="?android:attr/progressBarStyleInverse"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_centerInParent="true"
+            android:indeterminateTint="@color/_66CBFF"
+
+            />
+
+        <TextView
+            android:id="@+id/dialog__tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_40"
+            android:layout_below="@id/img_tip"
+            android:gravity="center"
+            android:maxLines="2"
+            android:singleLine="false"
+            android:textSize="@dimen/sp_14"
+            android:textColor="@color/black_54"
+            android:visibility="visible" />
+    </RelativeLayout>
+</RelativeLayout>

@@ -59,11 +59,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(this.getLayoutId());
-        MyUtils.setStatus(this);
+//        MyUtils.setStatus(this);
         //华为全屏
-        if (AndroidBug54971Workaround.checkDeviceHasNavigationBar(this)) {                                  //适配华为手机虚拟键遮挡tab的问题
-            AndroidBug54971Workaround.assistActivity(findViewById(android.R.id.content));                   //需要在setContentView()方法后面执行
-        }
+//        if (AndroidBug54971Workaround.checkDeviceHasNavigationBar(this)) {                                  //适配华为手机虚拟键遮挡tab的问题
+//            AndroidBug54971Workaround.assistActivity(findViewById(android.R.id.content));                   //需要在setContentView()方法后面执行
+//        }
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, REQUEST_PERMISSION_CODE);
@@ -183,5 +183,11 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     public abstract void initView();
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (AndroidBug54971Workaround.checkDeviceHasNavigationBar(this)) {                                  //适配华为手机虚拟键遮挡tab的问题
+            AndroidBug54971Workaround.assistActivity(findViewById(android.R.id.content));                   //需要在setContentView()方法后面执行
+        }
+    }
 }

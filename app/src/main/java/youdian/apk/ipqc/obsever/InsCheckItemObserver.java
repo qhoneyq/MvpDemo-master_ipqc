@@ -35,7 +35,7 @@ public class InsCheckItemObserver extends BaseObservable implements Serializable
     private String check_time = "";
     private String emp_no = "";
     private String frequency = "";
-    private String period = "";
+    private String time_period = "";
     private boolean isvisiable=false;
 
     public InsCheckItemObserver(InsCheckProcess firstCheckProcess, InsCheckListItem firstCheckListItem) {
@@ -243,12 +243,12 @@ public class InsCheckItemObserver extends BaseObservable implements Serializable
     }
 
     @Bindable
-    public String getPeriod() {
-        return period;
+    public String getTime_period() {
+        return time_period;
     }
 
-    public void setPeriod(String period) {
-        this.period = period;
-        notifyPropertyChanged(BR.period);
+    public void setTime_period(String time_period) {
+        this.time_period = time_period;
+        notifyPropertyChanged(BR.time_period);
     }
 }

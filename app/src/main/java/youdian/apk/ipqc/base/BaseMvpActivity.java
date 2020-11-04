@@ -8,6 +8,7 @@ import androidx.lifecycle.Lifecycle;
 import autodispose2.AutoDispose;
 import autodispose2.AutoDisposeConverter;
 import autodispose2.androidx.lifecycle.AndroidLifecycleScopeProvider;
+import youdian.apk.ipqc.utils.AndroidBug54971Workaround;
 
 /**
  * @author azheng
@@ -46,5 +47,13 @@ public abstract class BaseMvpActivity<T extends BasePresenter> extends BaseActiv
     public <T> AutoDisposeConverter<T> bindAutoDispose() {
         return AutoDispose.autoDisposable(AndroidLifecycleScopeProvider
                 .from(this, Lifecycle.Event.ON_DESTROY));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (AndroidBug54971Workaround.checkDeviceHasNavigationBar(this)) {                                  //适配华为手机虚拟键遮挡tab的问题
+            AndroidBug54971Workaround.assistActivity(findViewById(android.R.id.content));                   //需要在setContentView()方法后面执行
+        }
     }
 }

@@ -50,6 +50,14 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     PendingIntent mPendingIntent;
     private boolean isOnShowing = false;//是否正在刷卡
 
+    /**
+     * 通过静态方法跳转到登录页面
+     */
+    public static void startActivityLogin(Context context) {
+        Intent intent = new Intent(context, LoginActivity.class);
+        context.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

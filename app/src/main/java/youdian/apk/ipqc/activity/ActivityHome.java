@@ -1,5 +1,7 @@
 package youdian.apk.ipqc.activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -16,6 +18,7 @@ import youdian.apk.ipqc.databinding.ActivityHomeBinding;
 import youdian.apk.ipqc.obsever.FirstCheckResultObserver;
 import youdian.apk.ipqc.obsever.InsCheckResultObserver;
 import youdian.apk.ipqc.utils.Constans;
+import youdian.apk.ipqc.utils.DeviceUtils;
 import youdian.apk.ipqc.utils.UserUtils;
 
 public class ActivityHome extends BaseActivity {
@@ -59,6 +62,27 @@ public class ActivityHome extends BaseActivity {
             }
         });
         binding.homeHeaderview.setTitleText(getResources().getString(R.string.title));
+        binding.homeHeaderview.showIcon(true);
+        binding.homeHeaderview.setLeftIcon(R.mipmap.login_icon_user);
+        binding.homeHeaderview.setLeftClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AlertDialog.Builder(ActivityHome.this)
+                        .setTitle("切换用户")
+                        .setMessage("确定切换其他用户登录吗\n"+ DeviceUtils.getDeviceId(ActivityHome.this))
+                        .setNegativeButton("确定",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface arg0,
+                                                        int arg1) {
+                                        UserUtils.getInstance().logout();
+                                        LoginActivity.startActivityLogin(ActivityHome.this);
+
+                                    }
+                                }).setPositiveButton("取消", null).show();
+
+            }
+        });
 
     }
 

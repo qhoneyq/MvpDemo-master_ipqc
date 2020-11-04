@@ -28,18 +28,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 import youdian.apk.dianjian.utils.DatetimeUtil;
 import youdian.apk.ipqc.R;
 import youdian.apk.ipqc.obsever.FirstCheckItemObserver;
 import youdian.apk.ipqc.databinding.ItemCheckactionBinding;
+import youdian.apk.ipqc.obsever.InsCheckItemObserver;
 import youdian.apk.ipqc.utils.CommonUtils;
 import youdian.apk.ipqc.utils.Constans;
 
 public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapter.MyHolder> {
 
 
-    ObservableList<FirstCheckItemObserver> list_action;
+    List<FirstCheckItemObserver> list_action;
     Context context;
     private PopupWindow mPopWindow;          //动作规范弹窗
     private PopupWindow popuList;            //点检动作下拉控件
@@ -48,7 +50,7 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
     private boolean[] ischeck;
 
     //    onClick onclick;
-    public ActionDetailAdapter(Context context, ObservableList<FirstCheckItemObserver> list_action, ActionDetailAdapter.onCountChangeListener listener) {
+    public ActionDetailAdapter(Context context, List<FirstCheckItemObserver> list_action, ActionDetailAdapter.onCountChangeListener listener) {
         this.list_action = list_action;
         this.context = context;
         this.onCountChangeListener = listener;
@@ -111,10 +113,8 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
         if (viewHolder instanceof ActionDetailAdapter.MyHolder) {
 
             FirstCheckItemObserver actionDetail = list_action.get(p);
-//            if (actionDetail.isIsvisiable()) {
-                actionDetail.setNote("");
+
                 viewHolder.binding.setFirstResult(actionDetail);
-//                viewHolder.setVisibility(actionDetail.isIsvisiable());
 
                 //检查标准tip
                 viewHolder.binding.imgTip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -131,6 +131,16 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
                     viewHolder.binding.ctEdt.setVisibility(View.GONE);
                     viewHolder.binding.ctDropdown.setVisibility(View.GONE);
                     viewHolder.binding.ctSelect.setVisibility(View.VISIBLE);
+                    //结果显示
+                    if (actionDetail.getDetail_status().equals(Constans.Normal)) {
+                        viewHolder.binding.ctRbYes.setChecked(true);
+                    } else if (actionDetail.getDetail_status().equals(Constans.Abnormal)) {
+                        viewHolder.binding.ctRgEdtNote.setVisibility(View.VISIBLE);
+                        viewHolder.binding.ctRbNo.setChecked(true);
+                        viewHolder.binding.ctRgEdtNote.setText(actionDetail.getNote());
+                    } else if (actionDetail.getDetail_status().equals(Constans.NA)) {
+                        viewHolder.binding.ctRbNa.setChecked(true);
+                    }
                 } else if (actionDetail.getControl_code().equals(Constans.Number)) {
                     viewHolder.binding.ctEdt.setVisibility(View.VISIBLE);
                     viewHolder.binding.ctDropdown.setVisibility(View.GONE);
@@ -153,12 +163,30 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
                             }
                         }
                     });
-
-//        } else if (actionDetail.getControl_code().equals("Text")) {
+                    if (actionDetail.getDetail_status().equals(Constans.Normal)) {
+                        viewHolder.binding.ctDropdown.setText(actionDetail.getDetail_value());
+                        viewHolder.binding.ctRbYes.setChecked(true);
+                    } else if (actionDetail.getDetail_status().equals(Constans.Abnormal)) {
+                        viewHolder.binding.ctRbNo.setChecked(true);
+                        viewHolder.binding.ctDropdown.setText(actionDetail.getDetail_value());
+                        viewHolder.binding.ctRgEdtNote.setText(actionDetail.getNote());
+                    } else if (actionDetail.getDetail_status().equals(Constans.NA)) {
+                        viewHolder.binding.ctRbNa.setChecked(true);
+                        viewHolder.binding.ctDropdown.setText(actionDetail.getDetail_value());
+                    }
                 } else {//文本
                     viewHolder.binding.ctEdt.setVisibility(View.VISIBLE);
                     viewHolder.binding.ctDropdown.setVisibility(View.GONE);
                     viewHolder.binding.ctSelect.setVisibility(View.VISIBLE);
+                    viewHolder.binding.ctEdt.setText(actionDetail.getDetail_value());
+                    if (actionDetail.getDetail_status().equals(Constans.Normal)) {
+                        viewHolder.binding.ctRbYes.setChecked(true);
+                    } else if (actionDetail.getDetail_status().equals(Constans.Abnormal)) {
+                        viewHolder.binding.ctRbNo.setChecked(true);
+                        viewHolder.binding.ctRgEdtNote.setText(actionDetail.getNote());
+                    } else if (actionDetail.getDetail_status().equals(Constans.NA)) {
+                        viewHolder.binding.ctRbNa.setChecked(true);
+                    }
                 }
 
 
@@ -168,11 +196,6 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
                 viewHolder.binding.ctRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
-//                    if (!ischeck[viewHolder.getBindingAdapterPosition()]) {
-//                        ischeck[viewHolder.getBindingAdapterPosition()] = true;
-//                        Count = getCount();
-//                        onCountChangeListener.getCheckedCount(Count);
-//                    }
                         actionDetail.setCheck_time(DatetimeUtil.INSTANCE.getNows_ss());
                         if (checkedId == R.id.ct_rb_no) {
                             viewHolder.binding.ctRgEdtNote.setVisibility(View.VISIBLE);
@@ -198,8 +221,7 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
 
                             }
                         }
-                        summary(actionDetail, p);
-//                        summary(actionDetail, viewHolder.getBindingAdapterPosition());
+                        summary(actionDetail, viewHolder.getBindingAdapterPosition());
                     }
                 });
                 viewHolder.binding.ctEdt.addTextChangedListener(new TextWatcher() {
@@ -233,8 +255,7 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
                                         } else
                                             actionDetail.setDetail_status(Constans.Abnormal);
                                         actionDetail.setDetail_value(s.toString());
-//                                    onCountChangeListener.getCheckDetail(actionDetail);
-                                        summary(actionDetail, p);
+                                        summary(actionDetail, viewHolder.getBindingAdapterPosition());
 
                                     } catch (NumberFormatException e) {
                                         e.printStackTrace();
@@ -250,7 +271,7 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
                             } else {
                                 //文本监听
                                 actionDetail.setDetail_value(s.toString());
-                                summary(actionDetail, p);
+                                summary(actionDetail, viewHolder.getBindingAdapterPosition());
 
 //                            onCountChangeListener.getCheckDetail(actionDetail);
 
@@ -267,10 +288,7 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
                         actionDetail.setNote(s.toString());
-//                    if (actionDetail.getControl_code().equals(Radio)) {
-//                        onCountChangeListener.getCheckDetail(actionDetail);
-                        summary(actionDetail, p);
-//                    }
+                        summary(actionDetail, viewHolder.getBindingAdapterPosition());
                     }
 
                     @Override
@@ -294,21 +312,11 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
 
                     @Override
                     public void afterTextChanged(Editable s) {
-//                    if (!ischeck[viewHolder.getBindingAdapterPosition()]) {
-//                        ischeck[viewHolder.getBindingAdapterPosition()] = true;
-//                        Count = getCount();
-//                        onCountChangeListener.getCheckedCount(Count);
-//                    }
-//                    onCountChangeListener.getCheckDetail(actionDetail);
                         actionDetail.setDetail_value(s.toString());
-                        summary(actionDetail, p);
+                        summary(actionDetail, viewHolder.getBindingAdapterPosition());
 
                     }
                 });
-
-//            }else {
-////                viewHolder.setVisibility(false);
-//            }
         }
     }
 
@@ -419,7 +427,7 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
     private void summary(FirstCheckItemObserver actionDetail, int position) {
         if (actionDetail.getControl_code().equals(Constans.Radio)) {
             //单选情况下，false时必须填备注
-            if (actionDetail.getDetail_status() != null && actionDetail.getDetail_value() != null) {
+            if (!actionDetail.getDetail_status().equals("") && !actionDetail.getDetail_status().equals("") ) {//存在检验值和检验结果
                 if (actionDetail.getDetail_status().equals("Abnormal") && actionDetail.getNote().equals("")) {
                     if (ischeck[position] == true) {//检验变未检验
                         ischeck[position] = false;
@@ -445,7 +453,7 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
             onCountChangeListener.getCheckDetail(actionDetail);
 
         } else if (actionDetail.getControl_code().equals(Constans.Check) || actionDetail.getControl_code().equals(Constans.Text)) {
-            if (actionDetail.getDetail_status() != null && actionDetail.getDetail_value() != null) {//存在检验值和检验结果
+            if (!actionDetail.getDetail_status().equals("") && !actionDetail.getDetail_status().equals("") ) {//存在检验值和检验结果
                 if (actionDetail.getDetail_status().equals("Abnormal") && actionDetail.getNote().equals("")) {//false情况检验备注
                     if (ischeck[position] == true) {//检验变未检验
                         ischeck[position] = false;
@@ -470,8 +478,7 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
             }
             onCountChangeListener.getCheckDetail(actionDetail);
         } else {
-            if (actionDetail.getDetail_status() != null &&
-                    actionDetail.getDetail_value() != null) {
+            if (!actionDetail.getDetail_status().equals("") && !actionDetail.getDetail_status().equals("") ) {//存在检验值和检验结果
                 ischeck[position] = true;
                 Count = getCount();
                 onCountChangeListener.getCheckedCount(Count);
@@ -486,6 +493,14 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
 
         }
     }
-
+    public void noyify(List<FirstCheckItemObserver> list) {
+        list_action = new ObservableArrayList<>();
+        list_action.addAll(list);
+        ischeck = new boolean[list_action.size()];
+        for (int i = 0; i < list_action.size(); i++) {
+            ischeck[i] = false;
+        }
+        notifyDataSetChanged();
+    }
 
 }

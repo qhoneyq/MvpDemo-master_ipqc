@@ -175,8 +175,6 @@ public class InsCheckDetailAdapter extends RecyclerView.Adapter<InsCheckDetailAd
                     viewHolder.binding.ctRbNa.setChecked(true);
                 }
             }
-            /******************************************** 数据恢复 ****************************************************/
-
 
             /******************************************** 各种监听 ****************************************************/
 
@@ -184,11 +182,7 @@ public class InsCheckDetailAdapter extends RecyclerView.Adapter<InsCheckDetailAd
             viewHolder.binding.ctRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
-//                    if (!ischeck[viewHolder.getBindingAdapterPosition()]) {
-//                        ischeck[viewHolder.getBindingAdapterPosition()] = true;
-//                        Count = getCount();
-//                        onCountChangeListener.getCheckedCount(Count);
-//                    }
+
                     actionDetail.setCheck_time(DatetimeUtil.INSTANCE.getNows_ss());
                     if (checkedId == R.id.ct_rb_no) {
                         viewHolder.binding.ctRgEdtNote.setVisibility(View.VISIBLE);
@@ -214,7 +208,6 @@ public class InsCheckDetailAdapter extends RecyclerView.Adapter<InsCheckDetailAd
 
                         }
                     }
-//                        summary(actionDetail, p);
                     summary(actionDetail, viewHolder.getBindingAdapterPosition());
                 }
             });
@@ -281,11 +274,7 @@ public class InsCheckDetailAdapter extends RecyclerView.Adapter<InsCheckDetailAd
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     actionDetail.setNote(s.toString());
-//                    if (actionDetail.getControl_code().equals(Radio)) {
-//                        onCountChangeListener.getCheckDetail(actionDetail);
-//                        summary(actionDetail, p);
                     summary(actionDetail, viewHolder.getBindingAdapterPosition());
-//                    }
                 }
 
                 @Override
@@ -309,24 +298,13 @@ public class InsCheckDetailAdapter extends RecyclerView.Adapter<InsCheckDetailAd
 
                 @Override
                 public void afterTextChanged(Editable s) {
-//                    if (!ischeck[viewHolder.getBindingAdapterPosition()]) {
-//                        ischeck[viewHolder.getBindingAdapterPosition()] = true;
-//                        Count = getCount();
-//                        onCountChangeListener.getCheckedCount(Count);
-//                    }
-//                    onCountChangeListener.getCheckDetail(actionDetail);
                     if (actionDetail.getControl_code().equals(Constans.Check)) {
                         actionDetail.setDetail_value(s.toString());
-//                        summary(actionDetail, p);
                         summary(actionDetail, viewHolder.getBindingAdapterPosition());
                     }
 
                 }
             });
-
-//            }else {
-////                viewHolder.setVisibility(false);
-//            }
         }
     }
 
@@ -437,7 +415,7 @@ public class InsCheckDetailAdapter extends RecyclerView.Adapter<InsCheckDetailAd
     private void summary(InsCheckItemObserver actionDetail, int position) {
         if (actionDetail.getControl_code().equals(Constans.Radio)) {
             //单选情况下，false时必须填备注
-            if (actionDetail.getDetail_status() != null && actionDetail.getDetail_value() != null) {
+            if (!actionDetail.getDetail_status().equals("") && !actionDetail.getDetail_status().equals("") ) {//存在检验值和检验结果
                 if (actionDetail.getDetail_status().equals("Abnormal") && actionDetail.getNote().equals("")) {
                     if (ischeck[position] == true) {//检验变未检验
                         ischeck[position] = false;
@@ -463,7 +441,7 @@ public class InsCheckDetailAdapter extends RecyclerView.Adapter<InsCheckDetailAd
             onCountChangeListener.getCheckDetail(actionDetail);
 
         } else if (actionDetail.getControl_code().equals(Constans.Check) || actionDetail.getControl_code().equals(Constans.Text)) {
-            if (actionDetail.getDetail_status() != null && actionDetail.getDetail_value() != null) {//存在检验值和检验结果
+            if (!actionDetail.getDetail_status().equals("") && !actionDetail.getDetail_status().equals("") ) {//存在检验值和检验结果
                 if (actionDetail.getDetail_status().equals("Abnormal") && actionDetail.getNote().equals("")) {//false情况检验备注
                     if (ischeck[position] == true) {//检验变未检验
                         ischeck[position] = false;
@@ -488,8 +466,7 @@ public class InsCheckDetailAdapter extends RecyclerView.Adapter<InsCheckDetailAd
             }
             onCountChangeListener.getCheckDetail(actionDetail);
         } else {
-            if (actionDetail.getDetail_status() != null &&
-                    actionDetail.getDetail_value() != null) {
+            if (!actionDetail.getDetail_status().equals("") && !actionDetail.getDetail_status().equals("") ) {//存在检验值和检验结果
                 ischeck[position] = true;
                 Count = getCount();
                 onCountChangeListener.getCheckedCount(Count);

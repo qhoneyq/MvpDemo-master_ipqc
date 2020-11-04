@@ -413,6 +413,7 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
         //页面跳转
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constans.FirstCheck, resultObserver);
+        bundle.putString(Constans.INTENTFLAG,INTENTFLAG);
         CheckDetail_Chujian_Activity.startActivity(this, bundle);
         finish();
     }

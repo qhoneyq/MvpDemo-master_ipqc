@@ -154,25 +154,25 @@ public class CheckDetailPresenter_XUNJIAN extends BasePresenter<CheckDetailContr
         model.postInsResult(requestBody)
                 .compose(RxScheduler.Obs_io_main())
 //                .to(mView.bindAutoDispose())//解决内存泄漏
-                .subscribe(new Observer<Response<String>>() {
+                .subscribe(new Observer<Response<InsCheckResultObserver>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
                         mView.hideLoading();
                     }
 
                     @Override
-                    public void onNext(@NonNull Response<String> response) {
-                        mView.showMsg(response.getMsg());
+                    public void onNext(@NonNull Response<InsCheckResultObserver> response) {
+                        mView.showPopWindow(true,"检验成功");
 
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
                         mView.hideLoading();
+                        mView.showPopWindow(false,"数据提交失败");}
 
-                    }
 
-                    @Override
+                        @Override
                     public void onComplete() {
                         mView.hideLoading();
                     }

@@ -122,5 +122,8 @@
     <string name="othersuggest">其他建议</string>
     <string name="commit">提交</string>
     <string name="query">确认提交</string>
+    <string name="succeed">检验成功</string>
+    <string name="fail">提交失败</string>
     <string name="lackmsg">请完成所有检验项目后提交</string>
+    <string name="returnmsg">还未提交检验数据，是否确定退出？</string>
 </resources>
