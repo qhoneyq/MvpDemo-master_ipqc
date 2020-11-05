@@ -1,0 +1,52 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\build\\intermediates\\res\\merged\\release\\values-v11\\values-v11.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\res\\values-v11\\zxing_themes.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "2",
+                        "startOffsets": "55",
+                        "endLines": "3",
+                        "endColumns": "10",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "3",
+                        "endColumns": "10",
+                        "endOffsets": "150"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-v11\\values-v11.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\res\\values-v11\\zxing_themes.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "2",
+                        "startOffsets": "55",
+                        "endLines": "3",
+                        "endColumns": "10",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "3",
+                        "endColumns": "10",
+                        "endOffsets": "150"
+                    }
+                }
+            ]
+        }
+    ]
+}

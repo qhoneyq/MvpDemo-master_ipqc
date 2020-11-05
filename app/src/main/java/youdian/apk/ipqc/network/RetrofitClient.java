@@ -18,6 +18,7 @@ import youdian.apk.ipqc.api.client.ClientFactory;
 import youdian.apk.ipqc.api.converter.CheckGsonConverterFactory;
 import youdian.apk.ipqc.api.remote.APIService;
 import youdian.apk.ipqc.utils.Constans;
+import youdian.apk.ipqc.utils.UserUtils;
 
 
 public class RetrofitClient {
@@ -59,10 +60,10 @@ public class RetrofitClient {
                 //添加Token
 //                        .header("token", "");
                 Request request;
-//                if (UserUtils.getInstance().isLogin())
-//                     request = requestBuilder.addHeader(Constans.AUTHORIZATION, UserUtils.getInstance().getToken())
-//                            .build();
-//                else
+                if (UserUtils.getInstance().isLogin())
+                     request = requestBuilder.addHeader(Constans.AUTHORIZATION, UserUtils.getInstance().getToken())
+                            .build();
+                else
                 request = requestBuilder.build();
                 return chain.proceed(request);
             }
@@ -125,7 +126,8 @@ public class RetrofitClient {
                     .addConverterFactory(CheckGsonConverterFactory.create())
                     //设置网络请求适配器，使其支持RxJava与RxAndroid
                     .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-                    .client(ClientFactory.getInstance().getOkHttpClient())
+//                    .client(ClientFactory.getInstance().getOkHttpClient())
+                    .client(getOkHttpClient())
                     .build();
         }
         //创建—— 网络请求接口—— 实例

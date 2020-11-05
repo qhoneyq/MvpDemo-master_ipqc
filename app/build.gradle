@@ -1,15 +1,20 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'replugin-plugin-gradle'
 
 android {
     compileSdkVersion 29
     defaultConfig {
         applicationId "youdian.apk.ipqc"
         minSdkVersion 19
-        targetSdkVersion 29
+       targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+
+        vectorDrawables.useSupportLibrary = true
+
     }
 
     buildTypes {
@@ -37,7 +42,18 @@ android {
         javaMaxHeapSize "4g"
     }
     buildToolsVersion '29.0.3'
+
+
 }
+repluginPluginConfig {
+    //插件名
+    pluginName = "ipqc"
+    //宿主app的包名
+    hostApplicationId = "youdian.apk"
+    //宿主app的启动activity
+    hostAppLauncherActivity = "youdian.apk.MainActivity"
+}
+
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -71,6 +87,11 @@ dependencies {
 
     //优化adapter
     implementation 'com.github.xiaohaozi9825:adapter_plus:1.9'
+
+    implementation 'com.qihoo360.replugin:replugin-plugin-lib:2.3.3'
+
+    //方法数量过多
+    implementation 'com.android.support:multidex:1.0.3'
 
 
 

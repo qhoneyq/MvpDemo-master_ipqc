@@ -10,8 +10,8 @@ public class Constans {
     ////正式版本地址
 //    public static final String BASEURL = "http://10.134.171.219:9091/v1/";
 //    public static final String BASEURLLogin = "http://10.134.171.219:9091/";
-    public static final String BASEURL = "http://10.67.124.112:8082/v1/";
-    public static final String BASEURLLogin = "http://10.67.124.112:8082/";
+    public static final String BASEURL = "http://10.134.171.201:9091/v1/";
+    public static final String BASEURLLogin = "http://10.134.171.201:9091/";
 //    public static final String BASEURL = "http://api.ucheck.efoxconn.com:9092/";
     public static final String APK_DOWNLOAD_URL = "http://api.ucheck.efoxconn.com:9092/v1/user/download/";
 //    public static final String BASEURL = "http://10.134.171.134:9092/";

@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.view.KeyEvent;
 import android.view.View;
 
 
@@ -33,7 +34,32 @@ public class ActivityHome extends BaseActivity {
         intent.putExtra("param", data);
         context.startActivity(intent);
     }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            new AlertDialog.Builder(ActivityHome.this)
+                    .setTitle("退出")
+                    .setMessage("确定退出应用吗")
+                    .setNegativeButton("确定",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface arg0,
+                                                    int arg1) {
+                                    Intent intent = new Intent(Intent.ACTION_MAIN);
+                                    intent.addCategory(Intent.CATEGORY_HOME);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
 
+                                }
+                            }).setPositiveButton("取消", null).show();
+            return true;
+
+        } else if (keyCode == KeyEvent.KEYCODE_HOME) {
+            System.out.println("HOME has been pressed yet ...");
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     @Override
     public int getLayoutId() {

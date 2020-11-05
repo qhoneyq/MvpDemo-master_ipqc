@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\build\\intermediates\\res\\merged\\release\\layout-v21\\notification_action.xml",
+        "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-2\\files-2.1\\b83c95b674d6ec76a731848e77580652\\res\\layout-v21\\notification_action.xml"
+    },
+    {
+        "merged": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\build\\intermediates\\res\\merged\\release\\layout-v21\\notification_template_custom_big.xml",
+        "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-2\\files-2.1\\b83c95b674d6ec76a731848e77580652\\res\\layout-v21\\notification_template_custom_big.xml"
+    },
+    {
+        "merged": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\build\\intermediates\\res\\merged\\release\\layout-v21\\notification_template_icon_group.xml",
+        "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-2\\files-2.1\\b83c95b674d6ec76a731848e77580652\\res\\layout-v21\\notification_template_icon_group.xml"
+    },
+    {
+        "merged": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\build\\intermediates\\res\\merged\\release\\layout-v21\\notification_action_tombstone.xml",
+        "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-2\\files-2.1\\b83c95b674d6ec76a731848e77580652\\res\\layout-v21\\notification_action_tombstone.xml"
+    }
+]

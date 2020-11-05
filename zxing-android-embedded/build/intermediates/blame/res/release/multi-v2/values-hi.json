@@ -1,0 +1,68 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-hi\\values-hi.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\res-orig\\values-hi\\zxing_strings.xml",
+                    "from": {
+                        "startLines": "17,18,19,20",
+                        "startColumns": "2,2,2,2",
+                        "startOffsets": "649,705,755,920",
+                        "endColumns": "54,48,163,100",
+                        "endOffsets": "701,751,916,1018"
+                    },
+                    "to": {
+                        "startLines": "3,4,5,6",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "156,213,264,430",
+                        "endColumns": "56,50,165,102",
+                        "endOffsets": "208,259,425,528"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-2\\files-2.1\\b83c95b674d6ec76a731848e77580652\\res\\values-hi\\values-hi.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\build\\intermediates\\res\\merged\\release\\values-hi\\values-hi.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\res-orig\\values-hi\\zxing_strings.xml",
+                    "from": {
+                        "startLines": "17,18,19,20",
+                        "startColumns": "2,2,2,2",
+                        "startOffsets": "649,705,755,920",
+                        "endColumns": "54,48,163,100",
+                        "endOffsets": "701,751,916,1018"
+                    },
+                    "to": {
+                        "startLines": "3,4,5,6",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "156,213,264,430",
+                        "endColumns": "56,50,165,102",
+                        "endOffsets": "208,259,425,528"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-2\\files-2.1\\b83c95b674d6ec76a731848e77580652\\res\\values-hi\\values-hi.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        }
+    ]
+}

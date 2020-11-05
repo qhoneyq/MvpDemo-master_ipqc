@@ -1,0 +1,68 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-zh-rCN\\values-zh-rCN.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\res-orig\\values-zh-rCN\\zxing_strings.xml",
+                    "from": {
+                        "startLines": "17,18,19,20",
+                        "startColumns": "2,2,2,2",
+                        "startOffsets": "649,697,743,829",
+                        "endColumns": "46,44,84,66",
+                        "endOffsets": "693,739,825,893"
+                    },
+                    "to": {
+                        "startLines": "3,4,5,6",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "156,205,252,339",
+                        "endColumns": "48,46,86,68",
+                        "endOffsets": "200,247,334,403"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-2\\files-2.1\\b83c95b674d6ec76a731848e77580652\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\build\\intermediates\\res\\merged\\release\\values-zh-rCN\\values-zh-rCN.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\res-orig\\values-zh-rCN\\zxing_strings.xml",
+                    "from": {
+                        "startLines": "17,18,19,20",
+                        "startColumns": "2,2,2,2",
+                        "startOffsets": "649,697,743,829",
+                        "endColumns": "46,44,84,66",
+                        "endOffsets": "693,739,825,893"
+                    },
+                    "to": {
+                        "startLines": "3,4,5,6",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "156,205,252,339",
+                        "endColumns": "48,46,86,68",
+                        "endOffsets": "200,247,334,403"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-2\\files-2.1\\b83c95b674d6ec76a731848e77580652\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        }
+    ]
+}

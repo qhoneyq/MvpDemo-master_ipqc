@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\notify_panel_notification_icon_bg.png",
+        "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-2\\files-2.1\\b83c95b674d6ec76a731848e77580652\\res\\drawable-hdpi-v4\\notify_panel_notification_icon_bg.png"
+    },
+    {
+        "merged": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\notification_bg_normal.9.png",
+        "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-2\\files-2.1\\b83c95b674d6ec76a731848e77580652\\res\\drawable-hdpi-v4\\notification_bg_normal.9.png"
+    },
+    {
+        "merged": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\notification_bg_low_pressed.9.png",
+        "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-2\\files-2.1\\b83c95b674d6ec76a731848e77580652\\res\\drawable-hdpi-v4\\notification_bg_low_pressed.9.png"
+    },
+    {
+        "merged": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\notification_bg_low_normal.9.png",
+        "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-2\\files-2.1\\b83c95b674d6ec76a731848e77580652\\res\\drawable-hdpi-v4\\notification_bg_low_normal.9.png"
+    },
+    {
+        "merged": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\notification_bg_normal_pressed.9.png",
+        "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-2\\files-2.1\\b83c95b674d6ec76a731848e77580652\\res\\drawable-hdpi-v4\\notification_bg_normal_pressed.9.png"
+    }
+]

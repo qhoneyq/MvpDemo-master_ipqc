@@ -1,0 +1,68 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-sv\\values-sv.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-2\\files-2.1\\b83c95b674d6ec76a731848e77580652\\res\\values-sv\\values-sv.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\res-orig\\values-sv\\zxing_strings.xml",
+                    "from": {
+                        "startLines": "17,18,19,20",
+                        "startColumns": "2,2,2,2",
+                        "startOffsets": "649,707,753,858",
+                        "endColumns": "56,44,103,111",
+                        "endOffsets": "703,749,854,967"
+                    },
+                    "to": {
+                        "startLines": "3,4,5,6",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "156,215,262,368",
+                        "endColumns": "58,46,105,113",
+                        "endOffsets": "210,257,363,477"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\build\\intermediates\\res\\merged\\release\\values-sv\\values-sv.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-2\\files-2.1\\b83c95b674d6ec76a731848e77580652\\res\\values-sv\\values-sv.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\res-orig\\values-sv\\zxing_strings.xml",
+                    "from": {
+                        "startLines": "17,18,19,20",
+                        "startColumns": "2,2,2,2",
+                        "startOffsets": "649,707,753,858",
+                        "endColumns": "56,44,103,111",
+                        "endOffsets": "703,749,854,967"
+                    },
+                    "to": {
+                        "startLines": "3,4,5,6",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "156,215,262,368",
+                        "endColumns": "58,46,105,113",
+                        "endOffsets": "210,257,363,477"
+                    }
+                }
+            ]
+        }
+    ]
+}
