@@ -37,6 +37,27 @@ public class FirstCheckResultObserver extends BaseObservable implements Serializ
     private String sign_status ="Unsigned";
     private List<FirstCheckItemObserver> first_result_details = new ArrayList<>();
 
+    private String organization_name ="";
+    private String organization_code ="";
+
+
+    @Bindable
+    public String getOrganization_name() {
+        return organization_name;
+    }
+
+    public void setOrganization_name(String organization_name) {
+        this.organization_name = organization_name;
+        notifyPropertyChanged(BR.organization_name);}
+
+    @Bindable
+    public String getOrganization_code() {
+        return organization_code;
+    }
+
+    public void setOrganization_code(String organization_code) {
+        this.organization_code = organization_code;
+        notifyPropertyChanged(BR.organization_code);}
     @Bindable
     public int getFirst_checklist_id() {
         return first_checklist_id;
@@ -125,6 +146,7 @@ public class FirstCheckResultObserver extends BaseObservable implements Serializ
         this.line_name = line_name;
         notifyPropertyChanged(BR.line_name);
     }
+
 
     @Bindable
     public String getLine_code() {

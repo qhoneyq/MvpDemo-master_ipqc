@@ -128,6 +128,8 @@ public class TableListActivity extends BaseMvpActivity<TableListPresenter> imple
                 if (flag.equals(Constans.FirstCheck)) {
                     firstCheckResult = new FirstCheckResultObserver();
                     firstCheckResult.setCheck_person(UserUtils.getInstance().getPnum());
+                    firstCheckResult.setOrganization_name(UserUtils.getInstance().getBUName());
+                    firstCheckResult.setOrganization_code(UserUtils.getInstance().getBUCODE());
                     firstCheckResult.setSe_name(itemHometableRvBinding.getTableitem().getSe_name());
                     firstCheckResult.setSe_code(itemHometableRvBinding.getTableitem().getSe());
                     firstCheckResult.setFirst_checklist_id(itemHometableRvBinding.getTableitem().getId());
@@ -142,6 +144,8 @@ public class TableListActivity extends BaseMvpActivity<TableListPresenter> imple
                     InsCheckResult = new InsCheckResultObserver();
                     InsCheckResult.setCheck_person(UserUtils.getInstance().getPnum());
                     InsCheckResult.setSe_name(itemHometableRvBinding.getTableitem().getSe_name());
+                    InsCheckResult.setOrganization_name(UserUtils.getInstance().getBUName());
+                    InsCheckResult.setOrganization_code(UserUtils.getInstance().getBUCODE());
                     InsCheckResult.setSe_code(itemHometableRvBinding.getTableitem().getSe());
                     InsCheckResult.setIns_checklist_id(itemHometableRvBinding.getTableitem().getId());
                     InsCheckResult.setIns_checklist_name(itemHometableRvBinding.getTableitem().getList_name());

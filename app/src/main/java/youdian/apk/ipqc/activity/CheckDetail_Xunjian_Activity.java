@@ -38,26 +38,19 @@ import java.util.List;
 import autodispose2.AutoDisposeConverter;
 import youdian.apk.dianjian.utils.DatetimeUtil;
 import youdian.apk.ipqc.R;
-import youdian.apk.ipqc.adapter.ActionDetailAdapter;
 import youdian.apk.ipqc.adapter.InsCheckDetailAdapter;
 import youdian.apk.ipqc.adapter.ProgressAdapter;
 import youdian.apk.ipqc.adapter.SnChouyangAdapter;
-import youdian.apk.ipqc.adapter.SuggestionAdapter;
 import youdian.apk.ipqc.base.BaseMvpActivity;
 import youdian.apk.ipqc.bean.OptionData;
-import youdian.apk.ipqc.contract.CheckDetailContract_CHUJIAN;
 import youdian.apk.ipqc.contract.CheckDetailContract_XUNJIAN;
-import youdian.apk.ipqc.databinding.ActivityFirstcheckdetailBinding;
 import youdian.apk.ipqc.databinding.ActivityInscheckdetailBinding;
 import youdian.apk.ipqc.obsever.CountModel;
-import youdian.apk.ipqc.obsever.FirstCheckItemObserver;
-import youdian.apk.ipqc.obsever.FirstCheckResultObserver;
 import youdian.apk.ipqc.obsever.InsCheckItemObserver;
 import youdian.apk.ipqc.obsever.InsCheckResultObserver;
 import youdian.apk.ipqc.obsever.InsCheckSnObserver;
 import youdian.apk.ipqc.obsever.OptionObserver;
 import youdian.apk.ipqc.obsever.ProgressObserver;
-import youdian.apk.ipqc.presenter.CheckDetailPresenter_CHUJIAN;
 import youdian.apk.ipqc.presenter.CheckDetailPresenter_XUNJIAN;
 import youdian.apk.ipqc.utils.CommonUtils;
 import youdian.apk.ipqc.utils.Constans;
@@ -66,8 +59,6 @@ import youdian.apk.ipqc.utils.UserUtils;
 import youdian.apk.ipqc.wedige.CustomPopupWindow;
 
 import static youdian.apk.ipqc.utils.Constans.Abnormal;
-import static youdian.apk.ipqc.utils.Constans.FLAG_SN;
-import static youdian.apk.ipqc.utils.Constans.FirstCheck;
 import static youdian.apk.ipqc.utils.Constans.Inspection;
 import static youdian.apk.ipqc.utils.Constans.NEW;
 import static youdian.apk.ipqc.utils.Constans.Normal;
@@ -85,7 +76,6 @@ public class CheckDetail_Xunjian_Activity extends BaseMvpActivity<CheckDetailPre
     private CustomPopupWindow customPopupWindow;
     private BottomSheetDialog dialog;
     private ProgressAdapter progressAdapter;
-    private SuggestionAdapter suggestionAdapter;
     List<ProgressObserver> processList = new ObservableArrayList<>();
     private InsCheckDetailAdapter checkDetailAdapter;
     private SnChouyangAdapter snChouyangAdapter;
@@ -307,45 +297,6 @@ public class CheckDetail_Xunjian_Activity extends BaseMvpActivity<CheckDetailPre
 
     }
 
-    /**
-     * 响应presenter,显示底部弹窗（建议）
-     *
-     * @param list
-     */
-    @Override
-    public void showBottomDialog(List<OptionData> list) {
-        if (dialog == null) {
-            dialog = new BottomSheetDialog(this);
-        }
-        dialog.setCancelable(false);
-        dialog.setCanceledOnTouchOutside(true);
-        View view = LayoutInflater.from(CheckDetail_Xunjian_Activity.this).inflate(R.layout.dialog_suggest, null);
-        RecyclerView bottom_lv = view.findViewById(R.id.bottom_lv);
-        Button btn_commit = view.findViewById(R.id.re_commit);
-        EditText edt_sug = view.findViewById(R.id.edt_sug);
-        bottom_lv.setLayoutManager(new LinearLayoutManager(
-                this, RecyclerView.VERTICAL, false));
-        suggestionList = new ObservableArrayList<>();
-        for (OptionData optionData : list) {
-            suggestionList.add(new OptionObserver(optionData));
-        }
-        if (suggestionAdapter == null) {
-            suggestionAdapter = new SuggestionAdapter();
-            bottom_lv.setAdapter(suggestionAdapter);
-        }
-        suggestionAdapter.refresh(suggestionList);
-        btn_commit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                resultObserver.setResult_status(getStatus());
-                resultObserver.setInspection_result_details(allCheckItemList);
-                mPresenter.postInsResult(resultObserver);
-                dialog.dismiss();
-            }
-        });
-        dialog.setContentView(view);
-
-    }
 
     public void showDialog() {
         if (dialog.isShowing())

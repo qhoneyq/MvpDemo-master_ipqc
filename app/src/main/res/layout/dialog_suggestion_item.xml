@@ -17,13 +17,11 @@
         android:descendantFocusability="blocksDescendants"
         android:paddingTop="@dimen/dp_10">
 
-        <CheckBox
+        <ImageView
             android:id="@+id/cb_item"
             android:layout_width="@dimen/dp_13"
             android:layout_height="@dimen/dp_13"
             android:layout_alignParentStart="true"
-            android:checked="@={suggest.check}"
-            android:focusable="false"
             android:layout_margin="@dimen/dp_5"
             android:button="@null"
             android:background="@drawable/checkbox"
@@ -37,6 +35,7 @@
             android:text="@={suggest.option_name}"
             android:layout_centerVertical="true"
             android:textColor="@color/black_54"
+            android:focusableInTouchMode="false"
             android:layout_toRightOf="@id/cb_item"
             android:layout_marginLeft="@dimen/dp_7"
             android:textSize="@dimen/sp_12"

@@ -20,7 +20,7 @@
             android:textColor="@color/black_87"
             android:textSize="@dimen/sp_13" />
 
-        <androidx.recyclerview.widget.RecyclerView
+        <ListView
             android:id="@+id/bottom_lv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

@@ -95,45 +95,6 @@ public class CheckDetailPresenter_XUNJIAN extends BasePresenter<CheckDetailContr
                 });
     }
 
-    /**
-     * 获取检验建议
-     * @param option
-     */
-    @Override
-    public void getCheckSuggestion(String option) {
-        model.getSelectInfo(option)
-                .compose(RxScheduler.Obs_io_main())
-//                .to(mView.bindAutoDispose())//解决内存泄漏
-                .subscribe(new Observer<Response<List<OptionData>>>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-                        mView.hideLoading();
-                    }
-
-                    @Override
-                    public void onNext(@NonNull Response<List<OptionData>> listResponse) {
-                        if (option.equals(Constans.FirstSug)) {
-                            suggestList = listResponse.getData();
-                            if (suggestList.size() <= 0)
-                                mView.onError( "建议内容为空");
-                            else
-                                mView.showBottomDialog(suggestList);
-                        }
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        mView.hideLoading();
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        mView.hideLoading();
-                    }
-                });
-
-    }
 
     /**
      * 底部弹窗
@@ -162,7 +123,11 @@ public class CheckDetailPresenter_XUNJIAN extends BasePresenter<CheckDetailContr
 
                     @Override
                     public void onNext(@NonNull Response<InsCheckResultObserver> response) {
-                        mView.showPopWindow(true,"检验成功");
+                        if (response.getCode() == 100)
+                            mView.showPopWindow(true, "检验成功");
+                        else
+                            mView.onError(response.getMsg());
+
 
                     }
 

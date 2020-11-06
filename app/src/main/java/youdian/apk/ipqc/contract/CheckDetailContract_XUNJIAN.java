@@ -52,7 +52,6 @@ public interface CheckDetailContract_XUNJIAN {
 
         void setprocess(List<ProgressObserver> list);
 
-        void showBottomDialog(List<OptionData> list);
 
         void showPopWindow(boolean issucceed,String result);
     }
@@ -64,7 +63,6 @@ public interface CheckDetailContract_XUNJIAN {
 
         void getCheckListData(String ins_checklist_id);
 
-        void getCheckSuggestion(String option);
 
         void showBottomDialog();
 

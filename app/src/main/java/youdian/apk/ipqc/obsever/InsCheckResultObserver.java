@@ -35,9 +35,28 @@ public class InsCheckResultObserver extends BaseObservable implements Serializab
     private List<InsCheckItemObserver> inspection_result_details = new ArrayList<>();
     private List<InsCheckSnObserver> inspection_check_sns = new ArrayList<>();
 
+    private String organization_name ="";
+    private String organization_code ="";
     private String frequency = "";
     private String period = "";
 
+    @Bindable
+    public String getOrganization_name() {
+        return organization_name;
+    }
+
+    public void setOrganization_name(String organization_name) {
+        this.organization_name = organization_name;
+        notifyPropertyChanged(BR.organization_name);}
+
+    @Bindable
+    public String getOrganization_code() {
+        return organization_code;
+    }
+
+    public void setOrganization_code(String organization_code) {
+        this.organization_code = organization_code;
+        notifyPropertyChanged(BR.organization_code);}
     @Bindable
     public String getShift() {
         return shift;

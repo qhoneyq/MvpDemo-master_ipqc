@@ -1,19 +1,16 @@
 package youdian.apk.ipqc.activity;
 
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,10 +32,8 @@ import autodispose2.AutoDisposeConverter;
 import youdian.apk.dianjian.utils.DatetimeUtil;
 import youdian.apk.ipqc.R;
 import youdian.apk.ipqc.adapter.ActionDetailAdapter;
-import youdian.apk.ipqc.adapter.BottomSheetAdapter;
-import youdian.apk.ipqc.adapter.OptionBottomSheetAdapter;
+import youdian.apk.ipqc.adapter.FirstSugAdapter;
 import youdian.apk.ipqc.adapter.ProgressAdapter;
-import youdian.apk.ipqc.adapter.SuggestionAdapter;
 import youdian.apk.ipqc.base.BaseMvpActivity;
 import youdian.apk.ipqc.bean.OptionData;
 import youdian.apk.ipqc.contract.CheckDetailContract_CHUJIAN;
@@ -46,14 +41,11 @@ import youdian.apk.ipqc.databinding.ActivityFirstcheckdetailBinding;
 import youdian.apk.ipqc.obsever.CountModel;
 import youdian.apk.ipqc.obsever.FirstCheckItemObserver;
 import youdian.apk.ipqc.obsever.FirstCheckResultObserver;
-import youdian.apk.ipqc.obsever.InsCheckItemObserver;
 import youdian.apk.ipqc.obsever.OptionObserver;
 import youdian.apk.ipqc.obsever.ProgressObserver;
 import youdian.apk.ipqc.presenter.CheckDetailPresenter_CHUJIAN;
-import youdian.apk.ipqc.presenter.NewChujianPresenter;
 import youdian.apk.ipqc.utils.CommonUtils;
 import youdian.apk.ipqc.utils.Constans;
-import youdian.apk.ipqc.utils.MyUtils;
 import youdian.apk.ipqc.utils.MycountDownTimer;
 import youdian.apk.ipqc.utils.UserUtils;
 import youdian.apk.ipqc.wedige.CustomPopupWindow;
@@ -76,7 +68,7 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
     private CustomPopupWindow customPopupWindow;
     private BottomSheetDialog dialog;
     private ProgressAdapter progressAdapter;
-    private SuggestionAdapter suggestionAdapter;
+    private FirstSugAdapter suggestionAdapter;
     ObservableList<ProgressObserver> processList = new ObservableArrayList<>();
     private ActionDetailAdapter checkDetailAdapter;
     private FirstCheckResultObserver resultObserver;//检验记录表头
@@ -111,7 +103,7 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
         INTENTFLAG = bundle.getString(Constans.INTENTFLAG);
         binding.tvSn.setText(resultObserver.getSn());
         binding.setCount(countModel);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false){
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false) {
             @Override
             public boolean canScrollVertically() {
                 return false;
@@ -246,32 +238,42 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(true);
         View view = LayoutInflater.from(CheckDetail_Chujian_Activity.this).inflate(R.layout.dialog_suggest, null);
-        RecyclerView bottom_lv = view.findViewById(R.id.bottom_lv);
+        ListView bottom_lv = view.findViewById(R.id.bottom_lv);
         Button btn_commit = view.findViewById(R.id.re_commit);
         EditText edt_sug = view.findViewById(R.id.edt_sug);
-        bottom_lv.setLayoutManager(new LinearLayoutManager(
-                this, RecyclerView.VERTICAL, false));
         suggestionList = new ObservableArrayList<>();
         for (OptionData optionData : list) {
             suggestionList.add(new OptionObserver(optionData));
         }
-        if (suggestionAdapter == null) {
-            suggestionAdapter = new SuggestionAdapter();
-            bottom_lv.setAdapter(suggestionAdapter);
-        }
-        suggestionAdapter.refresh(suggestionList);
+        suggestionAdapter = new FirstSugAdapter(this, suggestionList);
+        bottom_lv.setAdapter(suggestionAdapter);
+        bottom_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                suggestionAdapter.setSelectPosition(i);
+            }
+        });
         btn_commit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String sug = "";
-                for (OptionObserver optionObserver : suggestionList) {
-                    if (optionObserver.isCheck()) {
-                        sug = sug + optionObserver.getOption_value() + ";";
-                    }
+                int sel = suggestionAdapter.getSelectPosition();
+                if (sel>suggestionList.size()){
+                    showMsg("请选择建议");
+                    return;
                 }
+
+                if (sel==0)
+                    resultObserver.setResult_status(Normal);
+                else
+                    resultObserver.setResult_status(Abnormal);
+                String sug = suggestionList.get(sel).getOption_name();
+//                for (OptionObserver optionObserver : suggestionList) {
+//                    if (optionObserver.isCheck()) {
+//                        sug = sug + optionObserver.getOption_value() + ";";
+//                    }
+//                }
                 sug = sug + edt_sug.getText().toString();
                 resultObserver.setSuggestion(sug);
-                resultObserver.setResult_status(getStatus());
                 resultObserver.setFirst_result_details(allCheckItemList);
                 mPresenter.postFirstResult(resultObserver);
                 dialog.dismiss();
@@ -356,16 +358,16 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
      *
      * @return
      */
-    private String getStatus() {
-        String isNomal = Normal;
-        for (FirstCheckItemObserver check : allCheckItemList) {
-            if (check.getDetail_status() != null && check.getDetail_status().equals(Abnormal)) {
-                isNomal = Abnormal;
-                break;
-            }
-        }
-        return isNomal;
-    }
+//    private String getStatus() {
+//        String isNomal = Normal;
+//        for (FirstCheckItemObserver check : allCheckItemList) {
+//            if (check.getDetail_status() != null && check.getDetail_status().equals(Abnormal)) {
+//                isNomal = Abnormal;
+//                break;
+//            }
+//        }
+//        return isNomal;
+//    }
 
     /**
      * 查询当前点检结数量

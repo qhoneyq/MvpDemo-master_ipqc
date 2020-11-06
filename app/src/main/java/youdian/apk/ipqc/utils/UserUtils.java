@@ -107,4 +107,11 @@ public class UserUtils {
         }
         return baseResponseBean.getData().getPnum();
     }
+    public String getBUName(){
+        Response<UserData> baseResponseBean = getLoginBean();
+        if (baseResponseBean == null){
+            return null;
+        }
+        return baseResponseBean.getData().getBu_name();
+    }
 }
