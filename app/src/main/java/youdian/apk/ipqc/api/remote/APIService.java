@@ -133,7 +133,7 @@ public interface APIService {
      * @return
      */
     @GET("inschecks/{inspection_checklist_id}/")
-    Observable<Response<InsCheckList>> getInsCheckDataList(@Path("inspection_checklist_id") String inspection_checklist_id);
+    Observable<Response<InsCheckList>> getInsCheckDataList(@Path("inspection_checklist_id") String inspection_checklist_id,@Query("frequency") String frequency);
 
     /**
      * 初件提交记录

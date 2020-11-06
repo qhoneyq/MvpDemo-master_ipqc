@@ -63,11 +63,11 @@ public class CheckDetailPresenter_XUNJIAN extends BasePresenter<CheckDetailContr
      * @param ins_checklist_id
      */
     @Override
-    public void getCheckListData(String ins_checklist_id) {
+    public void getCheckListData(String ins_checklist_id,String frequency) {
         if (!isViewAttached()) {
             return;
         }
-        model.getCheckListData(ins_checklist_id)
+        model.getCheckListData(ins_checklist_id,frequency)
                 .compose(RxScheduler.Obs_io_main())
 //                .to(mView.bindAutoDispose())//解决内存泄漏
                 .subscribe(new Observer<Response<InsCheckList>>() {

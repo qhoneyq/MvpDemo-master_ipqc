@@ -30,7 +30,7 @@ public interface CheckDetailContract_XUNJIAN {
 
     interface IModel {
         //获取初件工序及检验项
-        Observable<Response<InsCheckList>> getCheckListData(String ins_checklist_id);
+        Observable<Response<InsCheckList>> getCheckListData(String ins_checklist_id,String frequency);
 
         Observable<Response<List<ProgressObserver>>> getProcess(String first_checklist_id);
 
@@ -61,7 +61,7 @@ public interface CheckDetailContract_XUNJIAN {
 
         void getProcess(String ins_checklist_id);
 
-        void getCheckListData(String ins_checklist_id);
+        void getCheckListData(String ins_checklist_id,String frequency);
 
 
         void showBottomDialog();

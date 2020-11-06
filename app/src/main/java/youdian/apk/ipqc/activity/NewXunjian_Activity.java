@@ -89,13 +89,13 @@ public class NewXunjian_Activity extends BaseMvpActivity<NewXunjianPresenter> im
         if (INTENTFLAG.equals(Constans.NEW)) {
             String time = DatetimeUtil.INSTANCE.getNows_ss();
             resultObserver.setCheck_time(time);
-//            resultObserver.setCheck_quantity("Check_quantity");
-//            resultObserver.setWork_no("Work_no");
-//            resultObserver.setPart_no("part_no");
-//            resultObserver.setEdition("edition");
-//            resultObserver.setProduction_batch("Production_batch");
-//            resultObserver.setCheck_quantity("123");
-//            resultObserver.setMachine_type("Machine_type");
+            resultObserver.setCheck_quantity("Check_quantity");
+            resultObserver.setWork_no("Work_no");
+            resultObserver.setPart_no("part_no");
+            resultObserver.setEdition("edition");
+            resultObserver.setProduction_batch("Production_batch");
+            resultObserver.setCheck_quantity("123");
+            resultObserver.setMachine_type("Machine_type");
         }
         binding.jianyanshuliang.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         binding.setInspection(resultObserver);
@@ -376,7 +376,7 @@ public class NewXunjian_Activity extends BaseMvpActivity<NewXunjianPresenter> im
             binding.shengchanpici.setError(null);
         }
         if (resultObserver.getPeriod().isEmpty()) {
-            binding.shengchanpici.setError(getResources().getString(R.string.shijianduan_err));
+            binding.shijianduan.setError(getResources().getString(R.string.shijianduan_err));
             return;
         } else {
             binding.shengchanpici.setError(null);

@@ -24,8 +24,8 @@ public class Model_Xunjian_CheckDetail implements CheckDetailContract_XUNJIAN.IM
      * @return
      */
     @Override
-    public Observable<Response<InsCheckList>> getCheckListData(String ins_checklist_id) {
-        return RetrofitClient.getInstance().getApi().getInsCheckDataList(ins_checklist_id);
+    public Observable<Response<InsCheckList>> getCheckListData(String ins_checklist_id,String frequency) {
+        return RetrofitClient.getInstance().getApi().getInsCheckDataList(ins_checklist_id,frequency);
     }
 
     /**

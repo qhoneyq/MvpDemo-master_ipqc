@@ -240,7 +240,7 @@ public class CheckDetail_Xunjian_Activity extends BaseMvpActivity<CheckDetailPre
         }
         progressAdapter.notifyDataSetChanged();
         if (INTENTFLAG.equals(NEW))
-            mPresenter.getCheckListData(resultObserver.getIns_checklist_id() + "");
+            mPresenter.getCheckListData(resultObserver.getIns_checklist_id() + "",resultObserver.getFrequency());
         else {
             allCheckItemList = resultObserver.getInspection_result_details();
             snCheckItemList = resultObserver.getInspection_check_sns();
@@ -337,11 +337,13 @@ public class CheckDetail_Xunjian_Activity extends BaseMvpActivity<CheckDetailPre
             binding.rvAction.setAdapter(checkDetailAdapter);
 
         }
+        countModel.setCount_ed("0");
         countModel.setCount_all(onCheckItemList.size() + "");
         binding.rvAction.removeAllViews();
 
         checkDetailAdapter.noyify(onCheckItemList);
         binding.rvAction.setAdapter(checkDetailAdapter);
+        checkDetailAdapter.notifyDataSetChanged();
     }
 
 
