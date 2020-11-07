@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-//apply plugin: 'replugin-plugin-gradle'
+apply plugin: 'replugin-plugin-gradle'
 
 android {
     compileSdkVersion 29
@@ -13,7 +13,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
 
-//        vectorDrawables.useSupportLibrary = true
+        vectorDrawables.useSupportLibrary = true
 
     }
 
@@ -45,14 +45,14 @@ android {
 
 
 }
-//repluginPluginConfig {
-//    //插件名
-//    pluginName = "ipqc"
-//    //宿主app的包名
-//    hostApplicationId = "youdian.apk"
-//    //宿主app的启动activity
-//    hostAppLauncherActivity = "youdian.apk.MainActivity"
-//}
+repluginPluginConfig {
+    //插件名
+    pluginName = "ipqc"
+    //宿主app的包名
+    hostApplicationId = "youdian.apk"
+    //宿主app的启动activity
+    hostAppLauncherActivity = "youdian.apk.MainActivity"
+}
 
 
 dependencies {
@@ -88,7 +88,7 @@ dependencies {
     //优化adapter
     implementation 'com.github.xiaohaozi9825:adapter_plus:1.9'
 
-//    implementation 'com.qihoo360.replugin:replugin-plugin-lib:2.3.3'
+    implementation 'com.qihoo360.replugin:replugin-plugin-lib:2.3.3'
 
     //方法数量过多
     implementation 'com.android.support:multidex:1.0.3'

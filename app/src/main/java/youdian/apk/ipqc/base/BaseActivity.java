@@ -26,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 
+import com.qihoo360.replugin.loader.a.PluginFragmentActivity;
 
 import java.io.UnsupportedEncodingException;
 
@@ -38,7 +39,7 @@ import static youdian.apk.ipqc.utils.Constans.REQUEST_PERMISSION_CODE;
 
 /**
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends PluginFragmentActivity {
 
     //读写权限
     public static String[] PERMISSIONS_STORAGE = {
