@@ -182,11 +182,12 @@ public class NewXunjian_Activity extends BaseMvpActivity<NewXunjianPresenter> im
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (flag.equals(Frequency)) {
-//                    resultObserver.setFrequency(listbottom.get(i).getOption_value());
-                    binding.jianyanpinlv.setText(listbottom.get(i).getOption_name());
+                    resultObserver.setFrequency(listbottom.get(i).getOption_value());
+                    resultObserver.setFrequency_name(listbottom.get(i).getOption_name());
                     //根据value确认时间段是否可选
                     if (listbottom.get(i).getOption_value().equals(Constans.MeiBan) || listbottom.get(i).getOption_value().equals(HuangXian)) {
-                        resultObserver.setPeriod(listbottom.get(i).getOption_name());
+                        resultObserver.setPeriod(listbottom.get(i).getOption_value());
+                        resultObserver.setPeriod_name(listbottom.get(i).getOption_name());
                         binding.shijianduan.setClickable(false);
                     } else {
                         binding.shijianduan.setClickable(true);
@@ -280,7 +281,7 @@ public class NewXunjian_Activity extends BaseMvpActivity<NewXunjianPresenter> im
             @Override
             public void onClick(View view) {
                 flag = "";
-                flag = binding.jianyanpinlv.getText().toString();
+                flag = resultObserver.getFrequency();
                 if (!flag.equals("")) {
                     mPresenter.getSelectInfo(flag);
                 } else

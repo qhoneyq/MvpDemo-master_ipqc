@@ -39,6 +39,8 @@ public class InsCheckResultObserver extends BaseObservable implements Serializab
     private String organization_code ="";
     private String frequency = "";
     private String period = "";
+    private String frequency_name = "";
+    private String period_name = "";
     private String dev_code ="";
 
     @Bindable
@@ -320,4 +322,22 @@ public class InsCheckResultObserver extends BaseObservable implements Serializab
         this.inspection_check_sns = inspection_check_sns;
         notifyPropertyChanged(BR.inspection_check_sns);
     }
+
+    @Bindable
+    public String getFrequency_name() {
+        return frequency_name;
+    }
+
+    public void setFrequency_name(String frequency_name) {
+        this.frequency_name = frequency_name;
+   notifyPropertyChanged(BR.frequency_name); }
+
+    @Bindable
+    public String getPeriod_name() {
+        return period_name;
+    }
+
+    public void setPeriod_name(String period_name) {
+        this.period_name = period_name;
+   notifyPropertyChanged(BR.period_name); }
 }

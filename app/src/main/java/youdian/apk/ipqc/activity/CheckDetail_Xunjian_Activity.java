@@ -111,8 +111,8 @@ public class CheckDetail_Xunjian_Activity extends BaseMvpActivity<CheckDetailPre
         INTENTFLAG = bundle.getString(Constans.INTENTFLAG);
         binding = DataBindingUtil.setContentView(this, getLayoutId());
         binding.tvLine.setText(resultObserver.getLine_name());
-        binding.tvFrequency.setText(resultObserver.getFrequency());
-        binding.tvPeriod.setText(resultObserver.getPeriod());
+        binding.tvFrequency.setText(resultObserver.getFrequency_name());
+        binding.tvPeriod.setText(resultObserver.getPeriod_name());
         binding.setCount(countModel);
         snCheckItemList = new ArrayList<>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false){

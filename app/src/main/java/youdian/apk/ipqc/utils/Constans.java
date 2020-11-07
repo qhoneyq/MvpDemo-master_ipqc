@@ -72,7 +72,7 @@ public class Constans {
     public static String Text = "Text";
 
 
-    public static String MeiBan = "每班";
-    public static String HuangXian = "換線";
+    public static String MeiBan = "preClass";
+    public static String HuangXian = "changeLine";
 
 }

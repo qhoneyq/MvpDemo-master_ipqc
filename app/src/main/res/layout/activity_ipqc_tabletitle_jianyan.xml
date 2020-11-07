@@ -388,7 +388,7 @@
                             android:background="@drawable/edt_search_bg"
                             android:gravity="center_vertical|right"
                             android:hint="@string/frequency_err"
-                            android:text="@={inspection.frequency}"
+                            android:text="@={inspection.frequency_name}"
                             android:textColor="@color/gray_54"
                             android:textSize="@dimen/sp_14" />
 
@@ -419,7 +419,7 @@
                             android:background="@drawable/edt_search_bg"
                             android:gravity="center_vertical|right"
                             android:hint="@string/shijianduan_err"
-                            android:text="@={inspection.period}"
+                            android:text="@={inspection.period_name}"
                             android:textColor="@color/gray_54"
                             android:textSize="@dimen/sp_14" />
 
