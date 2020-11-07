@@ -39,7 +39,16 @@ public class FirstCheckResultObserver extends BaseObservable implements Serializ
 
     private String organization_name ="";
     private String organization_code ="";
+    private String dev_code ="";
 
+    @Bindable
+    public String getDev_code() {
+        return dev_code;
+    }
+
+    public void setDev_code(String dev_code) {
+        this.dev_code = dev_code;
+    notifyPropertyChanged(BR.dev_code);}
 
     @Bindable
     public String getOrganization_name() {

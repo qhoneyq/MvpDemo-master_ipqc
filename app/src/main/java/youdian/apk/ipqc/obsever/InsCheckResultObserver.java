@@ -39,6 +39,16 @@ public class InsCheckResultObserver extends BaseObservable implements Serializab
     private String organization_code ="";
     private String frequency = "";
     private String period = "";
+    private String dev_code ="";
+
+    @Bindable
+    public String getDev_code() {
+        return dev_code;
+    }
+
+    public void setDev_code(String dev_code) {
+        this.dev_code = dev_code;
+        notifyPropertyChanged(BR.dev_code);}
 
     @Bindable
     public String getOrganization_name() {

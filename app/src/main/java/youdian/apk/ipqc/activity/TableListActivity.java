@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import autodispose2.AutoDisposeConverter;
 import youdian.apk.ipqc.R;
+import youdian.apk.ipqc.adapter.TableAdapter;
 import youdian.apk.ipqc.adapter.TableListAdapter;
 import youdian.apk.ipqc.adapter.ZhichengAdapter;
 import youdian.apk.ipqc.base.BaseMvpActivity;
@@ -33,7 +34,7 @@ public class TableListActivity extends BaseMvpActivity<TableListPresenter> imple
 
     private IpqcHolderBinding binding;
     private ZhichengAdapter seAdapter;
-    private TableListAdapter tableListAdapter;
+    private TableAdapter tableListAdapter;
     private ObservableArrayList<SEObsever> seList;
     private ObservableArrayList<HomeTableObsever> tableObseversList;
     private String flag;//初件 or 巡检
@@ -60,6 +61,8 @@ public class TableListActivity extends BaseMvpActivity<TableListPresenter> imple
     public void initView() {
         binding = DataBindingUtil.setContentView(this, getLayoutId());
         flag = getIntent().getStringExtra("param");
+        tableObseversList = new ObservableArrayList<>();
+
         if (flag.equals(Constans.FirstCheck)) {
             binding.headerview.setTitleText(getResources().getString(R.string.pagetitle_chujian));
         } else
@@ -119,48 +122,51 @@ public class TableListActivity extends BaseMvpActivity<TableListPresenter> imple
 
 
     @Override
-    public void setTableList(ObservableArrayList<HomeTableObsever> tableObseversList) {
-        binding.ipqcMainTablelistRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        binding.ipqcMainTablelistRv.setItemAnimator(new DefaultItemAnimator());
-        if (tableListAdapter == null) {
-            tableListAdapter = new TableListAdapter();
-            tableListAdapter.setOnItemClickListener(itemHometableRvBinding -> {
+    public void setTableList(ObservableArrayList<HomeTableObsever> tableList) {
+        tableObseversList.clear();
+        tableObseversList = tableList;
+
+        tableListAdapter = new TableAdapter(this, tableObseversList);
+        binding.ipqcMainTablelistRv.setAdapter(tableListAdapter);
+        binding.ipqcMainTablelistRv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                HomeTableObsever tableObsever = tableObseversList.get(i);
                 if (flag.equals(Constans.FirstCheck)) {
                     firstCheckResult = new FirstCheckResultObserver();
                     firstCheckResult.setCheck_person(UserUtils.getInstance().getPnum());
                     firstCheckResult.setOrganization_name(UserUtils.getInstance().getBUName());
                     firstCheckResult.setOrganization_code(UserUtils.getInstance().getBUCODE());
-                    firstCheckResult.setSe_name(itemHometableRvBinding.getTableitem().getSe_name());
-                    firstCheckResult.setSe_code(itemHometableRvBinding.getTableitem().getSe());
-                    firstCheckResult.setFirst_checklist_id(itemHometableRvBinding.getTableitem().getId());
-                    firstCheckResult.setFirst_checklist_name(itemHometableRvBinding.getTableitem().getList_name());
-                    firstCheckResult.setFirst_checklist_code(itemHometableRvBinding.getTableitem().getList_code());
+                    firstCheckResult.setSe_name(tableObsever.getSe_name());
+                    firstCheckResult.setSe_code(tableObsever.getSe());
+                    firstCheckResult.setFirst_checklist_id(tableObsever.getId());
+                    firstCheckResult.setFirst_checklist_name(tableObsever.getList_name());
+                    firstCheckResult.setFirst_checklist_code(tableObsever.getList_code());
+                    firstCheckResult.setDev_code(devId);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(Constans.FirstCheck, firstCheckResult);
-                    bundle.putString(Constans.INTENTFLAG,Constans.NEW);
+                    bundle.putString(Constans.INTENTFLAG, Constans.NEW);
                     //跳转表头
-                    NewChujian_Activity.startActivity(this, bundle);
+                    NewChujian_Activity.startActivity(TableListActivity.this, bundle);
                 } else {
                     InsCheckResult = new InsCheckResultObserver();
                     InsCheckResult.setCheck_person(UserUtils.getInstance().getPnum());
-                    InsCheckResult.setSe_name(itemHometableRvBinding.getTableitem().getSe_name());
+                    InsCheckResult.setSe_name(tableObsever.getSe_name());
                     InsCheckResult.setOrganization_name(UserUtils.getInstance().getBUName());
                     InsCheckResult.setOrganization_code(UserUtils.getInstance().getBUCODE());
-                    InsCheckResult.setSe_code(itemHometableRvBinding.getTableitem().getSe());
-                    InsCheckResult.setIns_checklist_id(itemHometableRvBinding.getTableitem().getId());
-                    InsCheckResult.setIns_checklist_name(itemHometableRvBinding.getTableitem().getList_name());
-                    InsCheckResult.setIns_checklist_code(itemHometableRvBinding.getTableitem().getList_code());
+                    InsCheckResult.setSe_code(tableObsever.getSe());
+                    InsCheckResult.setIns_checklist_id(tableObsever.getId());
+                    InsCheckResult.setIns_checklist_name(tableObsever.getList_name());
+                    InsCheckResult.setIns_checklist_code(tableObsever.getList_code());
+                    InsCheckResult.setDev_code(devId);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(Constans.Inspection, InsCheckResult);
-                    bundle.putString(Constans.INTENTFLAG,Constans.NEW);
+                    bundle.putString(Constans.INTENTFLAG, Constans.NEW);
                     //跳转表头
-                    NewXunjian_Activity.startActivity(this, bundle);
+                    NewXunjian_Activity.startActivity(TableListActivity.this, bundle);
                 }
-
-            });
-            binding.ipqcMainTablelistRv.setAdapter(tableListAdapter);
-        }
-        tableListAdapter.refresh(tableObseversList);
+            }
+        });
     }
 
 

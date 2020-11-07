@@ -37,7 +37,7 @@
                 android:background="@color/_8A000000" />
 
 
-            <androidx.recyclerview.widget.RecyclerView
+            <ListView
                 android:id="@+id/ipqc_main_tablelist_rv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
