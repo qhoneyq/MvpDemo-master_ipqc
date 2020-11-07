@@ -17,6 +17,15 @@ android {
 
     }
 
+    lintOptions {
+        abortOnError false
+    }
+    lintOptions {
+        disable 'InvalidPackage'
+        //只要添加下面这一句就可以了
+        disable 'MissingTranslation'
+    }
+
     buildTypes {
 
         release {

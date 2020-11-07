@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\build\\intermediates\\res\\merged\\release\\values-v11\\values-v11.xml",
+            "outputFile": "C:\\Users\\Administrator\\AndroidStudioProjects\\MvpDemo-master_ipqc\\zxing-android-embedded\\build\\intermediates\\res\\merged\\release\\values-v11\\values-v11.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\res\\values-v11\\zxing_themes.xml",
+                    "source": "C:\\Users\\Administrator\\AndroidStudioProjects\\MvpDemo-master_ipqc\\zxing-android-embedded\\res\\values-v11\\zxing_themes.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "2",
@@ -25,10 +25,10 @@
             ]
         },
         {
-            "outputFile": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-v11\\values-v11.xml",
+            "outputFile": "C:\\Users\\Administrator\\AndroidStudioProjects\\MvpDemo-master_ipqc\\zxing-android-embedded\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-v11\\values-v11.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\res\\values-v11\\zxing_themes.xml",
+                    "source": "C:\\Users\\Administrator\\AndroidStudioProjects\\MvpDemo-master_ipqc\\zxing-android-embedded\\res\\values-v11\\zxing_themes.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "2",

@@ -1,20 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-ro\\values-ro.xml",
+            "outputFile": "C:\\Users\\Administrator\\AndroidStudioProjects\\MvpDemo-master_ipqc\\zxing-android-embedded\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-ro\\values-ro.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-2\\files-2.1\\b83c95b674d6ec76a731848e77580652\\res\\values-ro\\values-ro.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "100",
-                        "endOffsets": "151"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\res-orig\\values-ro\\zxing_strings.xml",
+                    "source": "C:\\Users\\Administrator\\AndroidStudioProjects\\MvpDemo-master_ipqc\\zxing-android-embedded\\res-orig\\values-ro\\zxing_strings.xml",
                     "from": {
                         "startLines": "17,18,19,20",
                         "startColumns": "2,2,2,2",
@@ -28,25 +18,25 @@
                         "startOffsets": "156,215,267,376",
                         "endColumns": "58,51,108,116",
                         "endOffsets": "210,262,371,488"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-2\\files-2.1\\65a626b6654f3d8a34e411da67432273\\res\\values-ro\\values-ro.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
                     }
                 }
             ]
         },
         {
-            "outputFile": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\build\\intermediates\\res\\merged\\release\\values-ro\\values-ro.xml",
+            "outputFile": "C:\\Users\\Administrator\\AndroidStudioProjects\\MvpDemo-master_ipqc\\zxing-android-embedded\\build\\intermediates\\res\\merged\\release\\values-ro\\values-ro.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-2\\files-2.1\\b83c95b674d6ec76a731848e77580652\\res\\values-ro\\values-ro.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "100",
-                        "endOffsets": "151"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\Administrator\\Downloads\\MvpDemo-master\\MvpDemo-master\\zxing-android-embedded\\res-orig\\values-ro\\zxing_strings.xml",
+                    "source": "C:\\Users\\Administrator\\AndroidStudioProjects\\MvpDemo-master_ipqc\\zxing-android-embedded\\res-orig\\values-ro\\zxing_strings.xml",
                     "from": {
                         "startLines": "17,18,19,20",
                         "startColumns": "2,2,2,2",
@@ -60,6 +50,16 @@
                         "startOffsets": "156,215,267,376",
                         "endColumns": "58,51,108,116",
                         "endOffsets": "210,262,371,488"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-2\\files-2.1\\65a626b6654f3d8a34e411da67432273\\res\\values-ro\\values-ro.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
                     }
                 }
             ]

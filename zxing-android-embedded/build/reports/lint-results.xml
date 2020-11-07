@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="5" by="lint 3.4.1">
+
+    <issue
+        id="CanvasSize"
+        severity="Warning"
+        message="Calling `Canvas.getWidth()` is usually wrong; you should be calling `getWidth()` instead"
+        category="Correctness"
+        priority="6"
+        summary="Wrong Canvas Size"
+        explanation="In a custom view&apos;s draw implementation, you should normally call `getWidth` and `getHeight` on the custom view itself, not on the `canvas` instance.&#xA;&#xA;Canvas width and height are the width and height of the `Canvas`, which is not always the same as size of the view.&#xA;&#xA;In the hardware accelerated path the width and height of the canvas typically always match that of the `View` because every view goes to its own recorded `DisplayList`. But in software rendering there&apos;s just one canvas that is clipped and transformed as it makes its way through the `View` tree, and otherwise remains the same `Canvas` object for every View&apos;s draw method.&#xA;&#xA;You should only use Canvas state to adjust how much you draw, such as a quick-reject for early work avoidance if it&apos;s going to be clipped away, but not what you draw."
+        errorLine1="        int width = canvas.getWidth();"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~">
+        <location
+            file="C:\Users\Administrator\AndroidStudioProjects\MvpDemo-master_ipqc\zxing-android-embedded\src\com\journeyapps\barcodescanner\ViewfinderView.java"
+            line="144"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="CanvasSize"
+        severity="Warning"
+        message="Calling `Canvas.getHeight()` is usually wrong; you should be calling `getHeight()` instead"
+        category="Correctness"
+        priority="6"
+        summary="Wrong Canvas Size"
+        explanation="In a custom view&apos;s draw implementation, you should normally call `getWidth` and `getHeight` on the custom view itself, not on the `canvas` instance.&#xA;&#xA;Canvas width and height are the width and height of the `Canvas`, which is not always the same as size of the view.&#xA;&#xA;In the hardware accelerated path the width and height of the canvas typically always match that of the `View` because every view goes to its own recorded `DisplayList`. But in software rendering there&apos;s just one canvas that is clipped and transformed as it makes its way through the `View` tree, and otherwise remains the same `Canvas` object for every View&apos;s draw method.&#xA;&#xA;You should only use Canvas state to adjust how much you draw, such as a quick-reject for early work avoidance if it&apos;s going to be clipped away, but not what you draw."
+        errorLine1="        int height = canvas.getHeight();"
+        errorLine2="                     ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="C:\Users\Administrator\AndroidStudioProjects\MvpDemo-master_ipqc\zxing-android-embedded\src\com\journeyapps\barcodescanner\ViewfinderView.java"
+            line="145"
+            column="22"/>
+    </issue>
+
+    <issue
+        id="OldTargetApi"
+        severity="Warning"
+        message="Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the android.os.Build.VERSION_CODES javadoc for details."
+        category="Correctness"
+        priority="6"
+        summary="Target SDK attribute is not targeting latest version"
+        explanation="When your application runs on a version of Android that is more recent than your `targetSdkVersion` specifies that it has been tested with, various compatibility modes kick in. This ensures that your application continues to work, but it may look out of place. For example, if the `targetSdkVersion` is less than 14, your app may get an option button in the UI.&#xA;&#xA;To fix this issue, set the `targetSdkVersion` to the highest available value. Then test your app to make sure everything works correctly. You may want to consult the compatibility notes to see what changes apply to each version you are adding support for: http://developer.android.com/reference/android/os/Build.VERSION_CODES.html as well as follow this guide:&#xA;https://developer.android.com/distribute/best-practices/develop/target-sdk.html"
+        url="https://developer.android.com/distribute/best-practices/develop/target-sdk.html"
+        urls="https://developer.android.com/distribute/best-practices/develop/target-sdk.html,http://developer.android.com/reference/android/os/Build.VERSION_CODES.html"
+        errorLine1="        targetSdkVersion 29"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="C:\Users\Administrator\AndroidStudioProjects\MvpDemo-master_ipqc\zxing-android-embedded\build.gradle"
+            line="55"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        severity="Warning"
+        message="A newer version of junit:junit than 4.12 is available: 4.13"
+        category="Correctness"
+        priority="4"
+        summary="Obsolete Gradle Dependency"
+        explanation="This detector looks for usages of libraries where the version you are using is not the current stable release. Using older versions is fine, and there are cases where you deliberately want to stick with an older version. However, you may simply not be aware that a more recent version is available, and that is what this lint check helps find."
+        errorLine1="    testImplementation &apos;junit:junit:4.12&apos;"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="C:\Users\Administrator\AndroidStudioProjects\MvpDemo-master_ipqc\zxing-android-embedded\build.gradle"
+            line="13"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        severity="Warning"
+        message="Unnecessary; SDK_INT is always >= 19"
+        category="Performance"
+        priority="6"
+        summary="Obsolete SDK_INT Version Check"
+        explanation="This check flags version checks that are not necessary, because the `minSdkVersion` (or surrounding known API level) is already at least as high as the version checked for.&#xA;&#xA;Similarly, it also looks for resources in `-vNN` folders, such as `values-v14` where the version qualifier is less than or equal to the `minSdkVersion`, where the contents should be merged into the best folder."
+        errorLine1="                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="C:\Users\Administrator\AndroidStudioProjects\MvpDemo-master_ipqc\zxing-android-embedded\src\com\journeyapps\barcodescanner\camera\CameraManager.java"
+            line="275"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        severity="Warning"
+        message="Unnecessary; SDK_INT is always >= 19"
+        category="Performance"
+        priority="6"
+        summary="Obsolete SDK_INT Version Check"
+        explanation="This check flags version checks that are not necessary, because the `minSdkVersion` (or surrounding known API level) is already at least as high as the version checked for.&#xA;&#xA;Similarly, it also looks for resources in `-vNN` folders, such as `values-v14` where the version qualifier is less than or equal to the `minSdkVersion`, where the contents should be merged into the best folder."
+        errorLine1="        if(useTextureView &amp;&amp; Build.VERSION.SDK_INT >= 14) {"
+        errorLine2="                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="C:\Users\Administrator\AndroidStudioProjects\MvpDemo-master_ipqc\zxing-android-embedded\src\com\journeyapps\barcodescanner\CameraPreview.java"
+            line="300"
+            column="30"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        severity="Warning"
+        message="Unnecessary; SDK_INT is never &lt; 19"
+        category="Performance"
+        priority="6"
+        summary="Obsolete SDK_INT Version Check"
+        explanation="This check flags version checks that are not necessary, because the `minSdkVersion` (or surrounding known API level) is already at least as high as the version checked for.&#xA;&#xA;Similarly, it also looks for resources in `-vNN` folders, such as `values-v14` where the version qualifier is less than or equal to the `minSdkVersion`, where the contents should be merged into the best folder."
+        errorLine1="            if (Build.VERSION.SDK_INT &lt; 11) {"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="C:\Users\Administrator\AndroidStudioProjects\MvpDemo-master_ipqc\zxing-android-embedded\src\com\journeyapps\barcodescanner\CameraPreview.java"
+            line="306"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        severity="Warning"
+        message="Unnecessary; SDK_INT is always >= 19"
+        category="Performance"
+        priority="6"
+        summary="Obsolete SDK_INT Version Check"
+        explanation="This check flags version checks that are not necessary, because the `minSdkVersion` (or surrounding known API level) is already at least as high as the version checked for.&#xA;&#xA;Similarly, it also looks for resources in `-vNN` folders, such as `values-v14` where the version qualifier is less than or equal to the `minSdkVersion`, where the contents should be merged into the best folder."
+        errorLine1="            } else if(textureView != null &amp;&amp; Build.VERSION.SDK_INT >= 14 &amp;&amp; textureView.getSurfaceTexture() != null) {"
+        errorLine2="                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="C:\Users\Administrator\AndroidStudioProjects\MvpDemo-master_ipqc\zxing-android-embedded\src\com\journeyapps\barcodescanner\CameraPreview.java"
+            line="499"
+            column="46"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        severity="Warning"
+        message="Unnecessary; SDK_INT is always >= 19"
+        category="Performance"
+        priority="6"
+        summary="Obsolete SDK_INT Version Check"
+        explanation="This check flags version checks that are not necessary, because the `minSdkVersion` (or surrounding known API level) is already at least as high as the version checked for.&#xA;&#xA;Similarly, it also looks for resources in `-vNN` folders, such as `values-v14` where the version qualifier is less than or equal to the `minSdkVersion`, where the contents should be merged into the best folder."
+        errorLine1="        } else if(textureView != null &amp;&amp; Build.VERSION.SDK_INT >= 14) {"
+        errorLine2="                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="C:\Users\Administrator\AndroidStudioProjects\MvpDemo-master_ipqc\zxing-android-embedded\src\com\journeyapps\barcodescanner\CameraPreview.java"
+            line="525"
+            column="42"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        severity="Warning"
+        message="Unnecessary; SDK_INT is always >= 19"
+        category="Performance"
+        priority="6"
+        summary="Obsolete SDK_INT Version Check"
+        explanation="This check flags version checks that are not necessary, because the `minSdkVersion` (or surrounding known API level) is already at least as high as the version checked for.&#xA;&#xA;Similarly, it also looks for resources in `-vNN` folders, such as `values-v14` where the version qualifier is less than or equal to the `minSdkVersion`, where the contents should be merged into the best folder."
+        errorLine1="        } else if(textureView != null &amp;&amp; Build.VERSION.SDK_INT >= 14) {"
+        errorLine2="                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="C:\Users\Administrator\AndroidStudioProjects\MvpDemo-master_ipqc\zxing-android-embedded\src\com\journeyapps\barcodescanner\CameraPreview.java"
+            line="594"
+            column="42"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        severity="Warning"
+        message="Unnecessary; SDK_INT is always >= 19"
+        category="Performance"
+        priority="6"
+        summary="Obsolete SDK_INT Version Check"
+        explanation="This check flags version checks that are not necessary, because the `minSdkVersion` (or surrounding known API level) is already at least as high as the version checked for.&#xA;&#xA;Similarly, it also looks for resources in `-vNN` folders, such as `values-v14` where the version qualifier is less than or equal to the `minSdkVersion`, where the contents should be merged into the best folder."
+        errorLine1="        if(currentSurfaceSize == null &amp;&amp; textureView != null &amp;&amp; Build.VERSION.SDK_INT >= 14) {"
+        errorLine2="                                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="C:\Users\Administrator\AndroidStudioProjects\MvpDemo-master_ipqc\zxing-android-embedded\src\com\journeyapps\barcodescanner\CameraPreview.java"
+            line="628"
+            column="65"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        severity="Warning"
+        message="Unnecessary; SDK_INT is always >= 19"
+        category="Performance"
+        priority="6"
+        summary="Obsolete SDK_INT Version Check"
+        explanation="This check flags version checks that are not necessary, because the `minSdkVersion` (or surrounding known API level) is already at least as high as the version checked for.&#xA;&#xA;Similarly, it also looks for resources in `-vNN` folders, such as `values-v14` where the version qualifier is less than or equal to the `minSdkVersion`, where the contents should be merged into the best folder."
+        errorLine1="            if(Build.VERSION.SDK_INT >= 11) {"
+        errorLine2="               ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="C:\Users\Administrator\AndroidStudioProjects\MvpDemo-master_ipqc\zxing-android-embedded\src\com\journeyapps\barcodescanner\camera\CameraSurface.java"
+            line="45"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        severity="Warning"
+        message="Unnecessary; SDK_INT is always >= 19"
+        category="Performance"
+        priority="6"
+        summary="Obsolete SDK_INT Version Check"
+        explanation="This check flags version checks that are not necessary, because the `minSdkVersion` (or surrounding known API level) is already at least as high as the version checked for.&#xA;&#xA;Similarly, it also looks for resources in `-vNN` folders, such as `values-v14` where the version qualifier is less than or equal to the `minSdkVersion`, where the contents should be merged into the best folder."
+        errorLine1="            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="C:\Users\Administrator\AndroidStudioProjects\MvpDemo-master_ipqc\zxing-android-embedded\src\com\google\zxing\integration\android\IntentIntegrator.java"
+            line="289"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        severity="Warning"
+        message="Unnecessary; SDK_INT is always >= 19"
+        category="Performance"
+        priority="6"
+        summary="Obsolete SDK_INT Version Check"
+        explanation="This check flags version checks that are not necessary, because the `minSdkVersion` (or surrounding known API level) is already at least as high as the version checked for.&#xA;&#xA;Similarly, it also looks for resources in `-vNN` folders, such as `values-v14` where the version qualifier is less than or equal to the `minSdkVersion`, where the contents should be merged into the best folder."
+        errorLine1="            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="C:\Users\Administrator\AndroidStudioProjects\MvpDemo-master_ipqc\zxing-android-embedded\src\com\google\zxing\integration\android\IntentIntegrator.java"
+            line="301"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        severity="Warning"
+        message="This folder configuration (`v11`) is unnecessary; `minSdkVersion` is 19. Merge all the resources in this folder into `values`."
+        category="Performance"
+        priority="6"
+        summary="Obsolete SDK_INT Version Check"
+        explanation="This check flags version checks that are not necessary, because the `minSdkVersion` (or surrounding known API level) is already at least as high as the version checked for.&#xA;&#xA;Similarly, it also looks for resources in `-vNN` folders, such as `values-v14` where the version qualifier is less than or equal to the `minSdkVersion`, where the contents should be merged into the best folder.">
+        <location
+            file="C:\Users\Administrator\AndroidStudioProjects\MvpDemo-master_ipqc\zxing-android-embedded\res\values-v11"/>
+    </issue>
+
+</issues>

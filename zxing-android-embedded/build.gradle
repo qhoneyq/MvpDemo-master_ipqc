@@ -35,6 +35,12 @@ android {
         // symlink. TODO: what about id?
         disable 'LocaleFolder'
     }
+    lintOptions {
+        disable 'InvalidPackage'
+        //只要添加下面这一句就可以了
+        disable 'MissingTranslation'
+    }
+
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
