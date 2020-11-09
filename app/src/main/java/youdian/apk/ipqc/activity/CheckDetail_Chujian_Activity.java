@@ -1,13 +1,18 @@
 package youdian.apk.ipqc.activity;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -122,7 +127,18 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
         binding.heardview.setLeftClick(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onError(getResources().getString(R.string.returnmsg));
+                new AlertDialog.Builder(CheckDetail_Chujian_Activity.this)
+                        .setTitle("退出")
+                        .setMessage(getResources().getString(R.string.returnmsg))
+                        .setNegativeButton("确定",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface arg0,
+                                                        int arg1) {
+                                        finish();
+
+                                    }
+                                }).setPositiveButton("取消", null).show();
             }
         });
         binding.btnRewritetitle.setOnClickListener(new View.OnClickListener() {
@@ -295,15 +311,19 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
             img_icon.setImageResource(R.mipmap.icon_green);
             tvResult.setTextColor(Color.BLACK);
             tvResult.setText(result);
+            MycountDownTimer downTimer = new MycountDownTimer(this, tvofftime, 6000, 1);
+            downTimer.start();
+            customPopupWindow.showAtLocation(binding.getRoot(), Gravity.CENTER, 0, 0);
+            CommonUtils.setBackgroundAlpha((float) 0.3, getWindow());
         } else {
             img_icon.setImageResource(R.mipmap.icon_red);
             tvResult.setTextColor(Color.BLACK);
             tvResult.setText(result);
-        }
-        MycountDownTimer downTimer = new MycountDownTimer(this, tvofftime, 6000, 1);
-        downTimer.start();
-        customPopupWindow.showAtLocation(binding.getRoot(), Gravity.CENTER, 0, 0);
-        CommonUtils.setBackgroundAlpha((float) 0.3, getWindow());
+            MycountDownTimer downTimer = new MycountDownTimer(customPopupWindow, tvofftime, 6000, 1);
+            downTimer.start();
+            customPopupWindow.showAtLocation(binding.getRoot(), Gravity.CENTER, 0, 0);
+            CommonUtils.setBackgroundAlpha((float) 0.3, getWindow());}
+
 
     }
 
@@ -407,6 +427,75 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
         }
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            new AlertDialog.Builder(CheckDetail_Chujian_Activity.this)
+                    .setTitle("退出")
+                    .setMessage(getResources().getString(R.string.returnmsg))
+                    .setNegativeButton("确定",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface arg0,
+                                                    int arg1) {
+                             finish();
 
+                                }
+                            }).setPositiveButton("取消", null).show();
+            return true;
+
+        } else if (keyCode == KeyEvent.KEYCODE_HOME) {
+            System.out.println("HOME has been pressed yet ...");
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (isShouldHideInput(v, ev)) {
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+            return super.dispatchTouchEvent(ev);
+        }
+        // 必不可少，否则所有的组件都不会有TouchEvent了
+        if (getWindow().superDispatchTouchEvent(ev)) {
+            return true;
+        }
+        return onTouchEvent(ev);
+    }
+
+    /**
+     * 根据EditText所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘，因为当用户点击EditText时则不能隐藏
+     *
+     * @param v
+     * @param event
+     * @return
+     */
+    public  boolean isShouldHideInput(View v, MotionEvent event) {
+        if (v != null && (v instanceof EditText)) {
+            int[] leftTop = { 0, 0 };
+            //获取输入框当前的location位置
+            v.getLocationInWindow(leftTop);
+            int left = leftTop[0];
+            int top = leftTop[1];
+            int bottom = top + v.getHeight();
+            int right = left + v.getWidth();
+            if (event.getX() > left && event.getX() < right
+                    && event.getY() > top && event.getY() < bottom) {
+                // 点击的是输入框区域，保留点击EditText的事件
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 

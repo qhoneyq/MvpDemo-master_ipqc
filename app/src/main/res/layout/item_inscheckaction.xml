@@ -24,7 +24,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
-            android:focusable="true"
             android:orientation="horizontal">
 
 
@@ -68,7 +67,6 @@
             android:layout_height="@dimen/dp_30"
             android:layout_marginBottom="@dimen/dp_10"
             android:background="@drawable/edt_bg"
-            android:focusable="true"
             android:gravity="center_vertical"
             android:hint="请输入检验结果"
             android:inputType=""
@@ -156,8 +154,6 @@
                 android:layout_below="@id/ct_rg"
                 android:layout_marginTop="@dimen/dp_8"
                 android:background="@drawable/edt_bg"
-                android:editable="true"
-                android:focusable="true"
                 android:hint="@string/input_tip"
                 android:inputType=""
                 android:paddingLeft="@dimen/dp_10"

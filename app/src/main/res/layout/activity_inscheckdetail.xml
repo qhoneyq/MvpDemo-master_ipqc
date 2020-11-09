@@ -262,6 +262,7 @@
                         android:layout_height="match_parent"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
+                        android:descendantFocusability="afterDescendants"
                         android:orientation="vertical">
 
 
@@ -289,11 +290,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_below="@id/diver_split"
+                            android:padding="@dimen/dp_10"
                             android:descendantFocusability="afterDescendants"
                             android:focusable="false"
-                            android:focusableInTouchMode="false"
-                            android:nestedScrollingEnabled="false"
-                            android:padding="@dimen/dp_10" />
+                            android:focusableInTouchMode="false" />
 
                     </LinearLayout>
                 </androidx.core.widget.NestedScrollView>

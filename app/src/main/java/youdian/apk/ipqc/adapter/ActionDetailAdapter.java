@@ -2,6 +2,7 @@ package youdian.apk.ipqc.adapter;
 
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.text.Editable;
@@ -10,6 +11,8 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -224,6 +227,39 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
                         summary(actionDetail, viewHolder.getBindingAdapterPosition());
                     }
                 });
+            //监听软键盘是否显示或隐藏
+            viewHolder.binding.ctEdt.getViewTreeObserver().addOnGlobalLayoutListener(
+                    new ViewTreeObserver.OnGlobalLayoutListener() {
+                        @Override
+                        public void onGlobalLayout() {
+                            Rect r = new Rect();
+                            viewHolder.binding.ctEdt.getWindowVisibleDisplayFrame(r);
+                            int screenHeight = viewHolder.binding.ctRgEdtNote.getRootView()
+                                    .getHeight();
+                            int heightDifference = screenHeight - (r.bottom);
+                            if (heightDifference > 200) {
+                                //软键盘显示
+                                viewHolder.binding.ctEdt.setFocusable(true);
+                            } else {
+                                //软键盘隐藏
+                                viewHolder.binding.ctEdt.clearFocus();
+
+                            }
+                        }
+
+                    });
+            //设置获取焦点
+            viewHolder.binding.ctEdt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    viewHolder.binding.ctEdt.setFocusable(true);
+                    viewHolder.binding.ctEdt.setFocusableInTouchMode(true);
+                    viewHolder.binding.ctEdt.requestFocus();
+                    viewHolder.binding.ctEdt.findFocus();
+                    InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(viewHolder.binding.ctEdt, InputMethodManager.SHOW_FORCED);// 显示输入法
+                }
+            });
                 viewHolder.binding.ctEdt.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -297,7 +333,39 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
                     }
                 });
 
+            //设置获取焦点
+            viewHolder.binding.ctRgEdtNote.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    viewHolder.binding.ctRgEdtNote.setFocusable(true);
+                    viewHolder.binding.ctRgEdtNote.setFocusableInTouchMode(true);
+                    viewHolder.binding.ctRgEdtNote.requestFocus();
+                    viewHolder.binding.ctRgEdtNote.findFocus();
+                    InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(viewHolder.binding.ctRgEdtNote, InputMethodManager.SHOW_FORCED);// 显示输入法
+                }
+            });
+            //监听软键盘是否显示或隐藏
+            viewHolder.binding.ctRgEdtNote.getViewTreeObserver().addOnGlobalLayoutListener(
+                    new ViewTreeObserver.OnGlobalLayoutListener() {
+                        @Override
+                        public void onGlobalLayout() {
+                            Rect r = new Rect();
+                            viewHolder.binding.ctRgEdtNote.getWindowVisibleDisplayFrame(r);
+                            int screenHeight = viewHolder.binding.ctRgEdtNote.getRootView()
+                                    .getHeight();
+                            int heightDifference = screenHeight - (r.bottom);
+                            if (heightDifference > 200) {
+                                //软键盘显示
+                                viewHolder.binding.ctRgEdtNote.setFocusable(true);
+                            } else {
+                                //软键盘隐藏
+                                viewHolder.binding.ctRgEdtNote.clearFocus();
 
+                            }
+                        }
+
+                    });
                 //下拉控件监听
                 viewHolder.binding.ctDropdown.addTextChangedListener(new TextWatcher() {
                     @Override
@@ -318,6 +386,7 @@ public class ActionDetailAdapter extends RecyclerView.Adapter<ActionDetailAdapte
                     }
                 });
         }
+
     }
 
     @Override
