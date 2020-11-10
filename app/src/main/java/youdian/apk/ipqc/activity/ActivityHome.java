@@ -45,10 +45,11 @@ public class ActivityHome extends BaseActivity {
                                 @Override
                                 public void onClick(DialogInterface arg0,
                                                     int arg1) {
-                                    Intent intent = new Intent(Intent.ACTION_MAIN);
-                                    intent.addCategory(Intent.CATEGORY_HOME);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    startActivity(intent);
+//                                    Intent intent = new Intent(Intent.ACTION_MAIN);
+//                                    intent.addCategory(Intent.CATEGORY_HOME);
+//                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                                    startActivity(intent);
+                                    finish();
 
                                 }
                             }).setPositiveButton("取消", null).show();
@@ -89,8 +90,16 @@ public class ActivityHome extends BaseActivity {
         });
         binding.homeHeaderview.setTitleText(getResources().getString(R.string.title));
         binding.homeHeaderview.showIcon(true);
-        binding.homeHeaderview.setLeftIcon(R.mipmap.login_icon_user);
+        binding.homeHeaderview.showRightIcon(true);
+        binding.homeHeaderview.setLeftIcon(R.mipmap.home_icon_return);
+        binding.homeHeaderview.setRightIcon(R.mipmap.home_icon_mine);
         binding.homeHeaderview.setLeftClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        binding.homeHeaderview.setRightClick(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new AlertDialog.Builder(ActivityHome.this)

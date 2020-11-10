@@ -8,10 +8,10 @@ import youdian.apk.ipqc.base.Baseapplicton;
 public class Constans {
     public static final String SIGN = "d883fd21fb995169";
     ////正式版本地址
-//    public static final String BASEURL = "http://10.134.171.219:9091/v1/";
-//    public static final String BASEURLLogin = "http://10.134.171.219:9091/";
-    public static final String BASEURL = "http://10.134.171.201:9091/v1/";
-    public static final String BASEURLLogin = "http://10.134.171.201:9091/";
+    public static final String BASEURL = "http://10.67.124.112:8082/v1/";
+    public static final String BASEURLLogin = "http://10.67.124.112:8082/";
+//    public static final String BASEURL = "http://10.134.171.201:9091/v1/";
+//    public static final String BASEURLLogin = "http://10.134.171.201:9091/";
 //    public static final String BASEURL = "http://api.ucheck.efoxconn.com:9092/";
     public static final String APK_DOWNLOAD_URL = "http://api.ucheck.efoxconn.com:9092/v1/user/download/";
 //    public static final String BASEURL = "http://10.134.171.134:9092/";
@@ -74,5 +74,15 @@ public class Constans {
 
     public static String MeiBan = "preClass";
     public static String HuangXian = "changeLine";
+
+    // request参数
+    public static final int REQ_QR_CODE = 11002; // // 打开扫描界面请求码
+    public static final int REQ_PERM_CAMERAdemo = 11003; // 打开摄像头
+    public static final String INTENT_EXTRA_KEY_QR_SCAN = "qr_scan_result";
+
+
+    public static String NFCACTIVITY = "com.cesbg.youdian.NfcActivity";
+    public static String QRACTIVITY = "com.cesbg.youdian.QRCodeScanActivity";
+
 
 }

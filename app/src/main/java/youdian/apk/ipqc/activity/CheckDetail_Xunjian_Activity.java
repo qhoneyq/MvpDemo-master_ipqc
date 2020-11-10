@@ -3,6 +3,7 @@ package youdian.apk.ipqc.activity;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -37,6 +38,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.qihoo360.replugin.RePlugin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +62,7 @@ import youdian.apk.ipqc.obsever.ProgressObserver;
 import youdian.apk.ipqc.presenter.CheckDetailPresenter_XUNJIAN;
 import youdian.apk.ipqc.utils.CommonUtils;
 import youdian.apk.ipqc.utils.Constans;
+import youdian.apk.ipqc.utils.DividerItemDecoration;
 import youdian.apk.ipqc.utils.MycountDownTimer;
 import youdian.apk.ipqc.utils.UserUtils;
 import youdian.apk.ipqc.wedige.CustomPopupWindow;
@@ -68,6 +71,8 @@ import static youdian.apk.ipqc.utils.Constans.Abnormal;
 import static youdian.apk.ipqc.utils.Constans.Inspection;
 import static youdian.apk.ipqc.utils.Constans.NEW;
 import static youdian.apk.ipqc.utils.Constans.Normal;
+import static youdian.apk.ipqc.utils.Constans.QRACTIVITY;
+import static youdian.apk.ipqc.utils.Constans.REQ_QR_CODE;
 
 /**
  * Created by Android Studio.
@@ -128,6 +133,7 @@ public class CheckDetail_Xunjian_Activity extends BaseMvpActivity<CheckDetailPre
             }
         };
         binding.rvAction.setHasFixedSize(true);
+        binding.rvAction.addItemDecoration(new DividerItemDecoration(CheckDetail_Xunjian_Activity.this,DividerItemDecoration.VERTICAL_LIST));
         binding.rvAction.setItemAnimator(new DefaultItemAnimator());
         binding.rvAction.setLayoutManager(layoutManager);
         binding.rvAction.setNestedScrollingEnabled(false);
@@ -434,10 +440,16 @@ public class CheckDetail_Xunjian_Activity extends BaseMvpActivity<CheckDetailPre
             return;
         }
         // 二维码扫码
-        IntentIntegrator integrator = new IntentIntegrator(this);
-        integrator.setOrientationLocked(false);
-        integrator.setCaptureActivity(SmallCaptureActivity.class);
-        integrator.initiateScan();
+//        IntentIntegrator integrator = new IntentIntegrator(this);
+//        integrator.setOrientationLocked(false);
+//        integrator.setCaptureActivity(SmallCaptureActivity.class);
+//        integrator.initiateScan();
+
+
+        Intent intent = new Intent();
+        intent.setComponent(new ComponentName(RePlugin.getHostContext().getPackageName(), QRACTIVITY));
+        CheckDetail_Xunjian_Activity.this.startActivityForResult(intent, REQ_QR_CODE);
+
     }
 
     //
@@ -464,9 +476,12 @@ public class CheckDetail_Xunjian_Activity extends BaseMvpActivity<CheckDetailPre
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //二维码扫描结果回调
-        if (requestCode == IntentIntegrator.REQUEST_CODE && resultCode == RESULT_OK) {
-            IntentResult Result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-            String scanResult = Result.getContents();
+//        if (requestCode == IntentIntegrator.REQUEST_CODE && resultCode == RESULT_OK) {
+//            IntentResult Result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+//            String scanResult = Result.getContents();
+        if (requestCode == REQ_QR_CODE && resultCode == RESULT_OK) {
+            Bundle bundle = data.getExtras();
+            String scanResult  = bundle.getString(Constans.INTENT_EXTRA_KEY_QR_SCAN);
             for (InsCheckSnObserver observer : snCheckItemList) {
                 if (observer.getSn().equals(scanResult))
                     snCheckItemList.remove(observer);
@@ -528,52 +543,52 @@ public class CheckDetail_Xunjian_Activity extends BaseMvpActivity<CheckDetailPre
     }
 
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            View v = getCurrentFocus();
-            if (isShouldHideInput(v, ev)) {
-
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (imm != null) {
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                }
-            }
-            return super.dispatchTouchEvent(ev);
-        }
-        // 必不可少，否则所有的组件都不会有TouchEvent了
-        if (getWindow().superDispatchTouchEvent(ev)) {
-            return true;
-        }
-        return onTouchEvent(ev);
-    }
-
-    /**
-     * 根据EditText所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘，因为当用户点击EditText时则不能隐藏
-     *
-     * @param v
-     * @param event
-     * @return
-     */
-    public  boolean isShouldHideInput(View v, MotionEvent event) {
-        if (v != null && (v instanceof EditText)) {
-            int[] leftTop = { 0, 0 };
-            //获取输入框当前的location位置
-            v.getLocationInWindow(leftTop);
-            int left = leftTop[0];
-            int top = leftTop[1];
-            int bottom = top + v.getHeight();
-            int right = left + v.getWidth();
-            if (event.getX() > left && event.getX() < right
-                    && event.getY() > top && event.getY() < bottom) {
-                // 点击的是输入框区域，保留点击EditText的事件
-                return false;
-            } else {
-                return true;
-            }
-        }
-        return false;
-    }
+//    @Override
+//    public boolean dispatchTouchEvent(MotionEvent ev) {
+//        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+//            View v = getCurrentFocus();
+//            if (isShouldHideInput(v, ev)) {
+//
+//                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//                if (imm != null) {
+//                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+//                }
+//            }
+//            return super.dispatchTouchEvent(ev);
+//        }
+//        // 必不可少，否则所有的组件都不会有TouchEvent了
+//        if (getWindow().superDispatchTouchEvent(ev)) {
+//            return true;
+//        }
+//        return onTouchEvent(ev);
+//    }
+//
+//    /**
+//     * 根据EditText所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘，因为当用户点击EditText时则不能隐藏
+//     *
+//     * @param v
+//     * @param event
+//     * @return
+//     */
+//    public  boolean isShouldHideInput(View v, MotionEvent event) {
+//        if (v != null && (v instanceof EditText)) {
+//            int[] leftTop = { 0, 0 };
+//            //获取输入框当前的location位置
+//            v.getLocationInWindow(leftTop);
+//            int left = leftTop[0];
+//            int top = leftTop[1];
+//            int bottom = top + v.getHeight();
+//            int right = left + v.getWidth();
+//            if (event.getX() > left && event.getX() < right
+//                    && event.getY() > top && event.getY() < bottom) {
+//                // 点击的是输入框区域，保留点击EditText的事件
+//                return false;
+//            } else {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
 }
 

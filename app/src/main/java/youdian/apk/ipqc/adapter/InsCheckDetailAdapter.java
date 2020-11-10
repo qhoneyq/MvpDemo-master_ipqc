@@ -9,6 +9,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -52,6 +53,14 @@ public class InsCheckDetailAdapter extends RecyclerView.Adapter<InsCheckDetailAd
     private int Count = 0;                    //已点检项目数量
     private onCountChangeListener onCountChangeListener;    //点检状态监听
     private boolean[] ischeck;
+    private TextWatcher textWatcherValue, textWatcherNote;
+
+    //输入法
+    InputMethodManager inputMethodManager ;
+
+    //edittext的焦点位置
+    int etFocusPos = -1;
+
 
     //    onClick onclick;
     public InsCheckDetailAdapter(Context context, List<InsCheckItemObserver> list_action, InsCheckDetailAdapter.onCountChangeListener listener) {
@@ -62,7 +71,7 @@ public class InsCheckDetailAdapter extends RecyclerView.Adapter<InsCheckDetailAd
         for (int i = 0; i < list_action.size(); i++) {
             ischeck[i] = false;
         }
-
+        inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 
     public interface onCountChangeListener {
@@ -216,39 +225,49 @@ public class InsCheckDetailAdapter extends RecyclerView.Adapter<InsCheckDetailAd
                     summary(actionDetail, viewHolder.getBindingAdapterPosition());
                 }
             });  //监听软键盘是否显示或隐藏
-            viewHolder.binding.ctEdt.getViewTreeObserver().addOnGlobalLayoutListener(
-                    new ViewTreeObserver.OnGlobalLayoutListener() {
-                        @Override
-                        public void onGlobalLayout() {
-                            Rect r = new Rect();
-                            viewHolder.binding.ctEdt.getWindowVisibleDisplayFrame(r);
-                            int screenHeight = viewHolder.binding.ctRgEdtNote.getRootView()
-                                    .getHeight();
-                            int heightDifference = screenHeight - (r.bottom);
-                            if (heightDifference > 200) {
-                                //软键盘显示
-                                viewHolder.binding.ctEdt.setFocusable(true);
-                            } else {
-                                //软键盘隐藏
-                                viewHolder.binding.ctEdt.clearFocus();
-
-                            }
-                        }
-
-                    });
-            //设置获取焦点
-            viewHolder.binding.ctEdt.setOnClickListener(new View.OnClickListener() {
+            viewHolder.binding.ctEdt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
-                public void onClick(View v) {
-                   viewHolder.binding.ctEdt.setFocusable(true);
-                   viewHolder.binding.ctEdt.setFocusableInTouchMode(true);
-                   viewHolder.binding.ctEdt.requestFocus();
-                   viewHolder.binding.ctEdt.findFocus();
-                    InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.showSoftInput(viewHolder.binding.ctEdt, InputMethodManager.SHOW_FORCED);// 显示输入法
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (hasFocus) {
+                        etFocusPos = viewHolder.getBindingAdapterPosition();
+                        Log.e("tag", "etFocusPos焦点选中-" + etFocusPos);
+                    }
                 }
             });
-            viewHolder.binding.ctEdt.addTextChangedListener(new TextWatcher() {
+//            viewHolder.binding.ctEdt.getViewTreeObserver().addOnGlobalLayoutListener(
+//                    new ViewTreeObserver.OnGlobalLayoutListener() {
+//                        @Override
+//                        public void onGlobalLayout() {
+//                            Rect r = new Rect();
+//                            viewHolder.binding.ctEdt.getWindowVisibleDisplayFrame(r);
+//                            int screenHeight = viewHolder.binding.ctRgEdtNote.getRootView()
+//                                    .getHeight();
+//                            int heightDifference = screenHeight - (r.bottom);
+//                            if (heightDifference > 200) {
+//                                //软键盘显示
+//                                viewHolder.binding.ctEdt.setFocusable(true);
+//                            } else {
+//                                //软键盘隐藏
+//                                viewHolder.binding.ctEdt.clearFocus();
+//
+//                            }
+//                        }
+//
+//                    });
+//            //设置获取焦点
+//            viewHolder.binding.ctEdt.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                   viewHolder.binding.ctEdt.setFocusable(true);
+//                   viewHolder.binding.ctEdt.setFocusableInTouchMode(true);
+//                   viewHolder.binding.ctEdt.requestFocus();
+//                   viewHolder.binding.ctEdt.findFocus();
+//                    InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+//                    imm.showSoftInput(viewHolder.binding.ctEdt, InputMethodManager.SHOW_FORCED);// 显示输入法
+//                }
+//            });
+//            viewHolder.binding.ctEdt.addTextChangedListener(textWatcherValue);
+            textWatcherValue = new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -301,8 +320,8 @@ public class InsCheckDetailAdapter extends RecyclerView.Adapter<InsCheckDetailAd
                         }
                     }
                 }
-            });
-            TextWatcher textWatcher = new TextWatcher() {
+            };
+            textWatcherNote = new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -325,9 +344,11 @@ public class InsCheckDetailAdapter extends RecyclerView.Adapter<InsCheckDetailAd
                 @Override
                 public void onFocusChange(View view, boolean b) {
                     if (b) {
-                        viewHolder.binding.ctRgEdtNote.addTextChangedListener(textWatcher);
-                    } else {
-                        viewHolder.binding.ctRgEdtNote.removeTextChangedListener(textWatcher);
+//                        viewHolder.binding.ctRgEdtNote.addTextChangedListener(textWatcher);
+                        etFocusPos = viewHolder.getBindingAdapterPosition();
+                        Log.e("tag", "etFocusPos焦点选中-" + etFocusPos);
+//                    } else {
+//                        viewHolder.binding.ctRgEdtNote.removeTextChangedListener(textWatcher);
                     }
 
                 }
@@ -390,6 +411,42 @@ public class InsCheckDetailAdapter extends RecyclerView.Adapter<InsCheckDetailAd
         }
     }
 
+    @Override
+    public void onViewDetachedFromWindow(InsCheckDetailAdapter.MyHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        Log.e("tag", "隐藏item=" + holder.getAdapterPosition());
+        MyHolder viewHolder = (MyHolder) holder;
+        viewHolder.binding.ctEdt.removeTextChangedListener(textWatcherValue);
+        viewHolder.binding.ctEdt.clearFocus();
+        viewHolder.binding.ctRgEdtNote.removeTextChangedListener(textWatcherNote);
+        viewHolder.binding.ctRgEdtNote.clearFocus();
+        if (etFocusPos == holder.getBindingAdapterPosition()) {
+            if (viewHolder.binding.ctEdt.getVisibility() == View.VISIBLE) {
+                inputMethodManager.hideSoftInputFromWindow(((MyHolder) holder).binding.ctEdt.getWindowToken(), 0);
+            } else if (viewHolder.binding.ctRgEdtNote.getVisibility() == View.VISIBLE) {
+                inputMethodManager.hideSoftInputFromWindow(((MyHolder) holder).binding.ctRgEdtNote.getWindowToken(), 0);
+            }
+        }
+    }
+
+    @Override
+    public void onViewAttachedToWindow(InsCheckDetailAdapter.MyHolder holder) {
+        super.onViewAttachedToWindow(holder);
+        Log.e("tag", "显示item=" + holder.getAdapterPosition());
+        MyHolder viewHolder = (MyHolder) holder;
+        viewHolder.binding.ctEdt.addTextChangedListener(textWatcherValue);
+        viewHolder.binding.ctRgEdtNote.addTextChangedListener(textWatcherNote);
+        if (etFocusPos == holder.getBindingAdapterPosition()) {
+            if (viewHolder.binding.ctEdt.getVisibility() == View.VISIBLE) {
+                viewHolder.binding.ctEdt.requestFocus();
+                viewHolder.binding.ctEdt.setSelection(viewHolder.binding.ctEdt.getText().length());
+            } else if (viewHolder.binding.ctRgEdtNote.getVisibility() == View.VISIBLE) {
+                viewHolder.binding.ctRgEdtNote.requestFocus();
+                viewHolder.binding.ctRgEdtNote.setSelection(viewHolder.binding.ctRgEdtNote.getText().length());
+            }
+
+        }
+    }
 
 
     @Override

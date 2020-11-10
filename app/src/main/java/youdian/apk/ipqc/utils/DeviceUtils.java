@@ -9,6 +9,7 @@ import android.telephony.TelephonyManager;
 import androidx.core.app.ActivityCompat;
 
 import java.util.Locale;
+import java.util.UUID;
 
 /**
  * 设备信息工具类

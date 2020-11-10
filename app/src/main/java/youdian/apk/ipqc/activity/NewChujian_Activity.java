@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -30,6 +31,7 @@ import androidx.databinding.DataBindingUtil;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.qihoo360.replugin.RePlugin;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -55,6 +57,8 @@ import static youdian.apk.ipqc.utils.Constans.FLAG_LINE;
 import static youdian.apk.ipqc.utils.Constans.FLAG_SHIFT;
 import static youdian.apk.ipqc.utils.Constans.FLAG_SN;
 import static youdian.apk.ipqc.utils.Constans.FirstCheck;
+import static youdian.apk.ipqc.utils.Constans.QRACTIVITY;
+import static youdian.apk.ipqc.utils.Constans.REQ_QR_CODE;
 
 
 /**
@@ -427,10 +431,13 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
             return;
         }
         // 二维码扫码
-        IntentIntegrator integrator = new IntentIntegrator(this);
-        integrator.setOrientationLocked(false);
-        integrator.setCaptureActivity(SmallCaptureActivity.class);
-        integrator.initiateScan();
+//        IntentIntegrator integrator = new IntentIntegrator(this);
+//        integrator.setOrientationLocked(false);
+//        integrator.setCaptureActivity(SmallCaptureActivity.class);
+//        integrator.initiateScan();
+        Intent intent = new Intent();
+        intent.setComponent(new ComponentName(RePlugin.getHostContext().getPackageName(), QRACTIVITY));
+        NewChujian_Activity.this.startActivityForResult(intent, REQ_QR_CODE);
     }
 
     //
@@ -439,7 +446,8 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
                                            @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
-            case Constans.REQ_PERM_CAMERA:
+            case Constans.REQ_PERM_CAMERAdemo:
+//            case Constans.REQ_PERM_CAMERA:
                 // 摄像头权限申请
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // 获得授权
@@ -457,9 +465,13 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //二维码扫描结果回调
-        if (requestCode == IntentIntegrator.REQUEST_CODE && resultCode == RESULT_OK) {
-            IntentResult Result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-            String scanResult = Result.getContents();
+//        if (requestCode == IntentIntegrator.REQUEST_CODE && resultCode == RESULT_OK) {
+//            IntentResult Result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+//        String scanResult = Result.getContents();
+
+        if (requestCode == REQ_QR_CODE && resultCode == RESULT_OK) {
+            Bundle bundle = data.getExtras();
+            String scanResult  = bundle.getString(Constans.INTENT_EXTRA_KEY_QR_SCAN);
             resultObserver.setSn(scanResult);
         } else {
             showError(FLAG_SN, "请重新扫描");

@@ -60,7 +60,7 @@ repluginPluginConfig {
     //宿主app的包名
     hostApplicationId = "youdian.apk"
     //宿主app的启动activity
-    hostAppLauncherActivity = "youdian.apk.MainActivity"
+    hostAppLauncherActivity = "youdian.apk.HomeActivity"
 }
 
 
