@@ -134,7 +134,8 @@
                     android:includeFontPadding="false"
                     android:text="@string/xiugaibiaotou"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_13" />
+                    android:textSize="@dimen/sp_13"
+                    android:visibility="gone"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -262,7 +263,8 @@
                         android:layout_height="match_parent"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
-                        android:descendantFocusability="afterDescendants"
+                        android:descendantFocusability="beforeDescendants"
+
                         android:orientation="vertical">
 
 
@@ -290,10 +292,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_below="@id/diver_split"
+                            android:transcriptMode="normal"
                             android:padding="@dimen/dp_10"
-                            android:descendantFocusability="afterDescendants"
-                            android:focusable="false"
-                            android:focusableInTouchMode="false" />
+                            android:descendantFocusability="beforeDescendants"
+                            android:fastScrollEnabled="false"/>
 
                     </LinearLayout>
                 </androidx.core.widget.NestedScrollView>

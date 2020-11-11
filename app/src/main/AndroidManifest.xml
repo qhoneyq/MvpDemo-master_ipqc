@@ -38,12 +38,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.LoginActivity"/>
-        <activity android:name=".activity.CheckDetail_Chujian_Activity"/>
+        <activity android:name=".activity.CheckDetail_Chujian_Activity"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            />
         <activity android:name=".activity.NewChujian_Activity"/>
         <activity android:name=".activity.NewXunjian_Activity"/>
         <activity android:name=".activity.SmallCaptureActivity"/>
         <activity android:name=".activity.TableListActivity"/>
-        <activity android:name=".activity.CheckDetail_Xunjian_Activity"/>
+        <activity android:name=".activity.CheckDetail_Xunjian_Activity"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
     </application>
 
 </manifest>

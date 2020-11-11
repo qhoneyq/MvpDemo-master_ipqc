@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -65,6 +67,7 @@ import youdian.apk.ipqc.utils.Constans;
 import youdian.apk.ipqc.utils.DividerItemDecoration;
 import youdian.apk.ipqc.utils.MycountDownTimer;
 import youdian.apk.ipqc.utils.UserUtils;
+import youdian.apk.ipqc.wedige.ControlScrollLayoutManager;
 import youdian.apk.ipqc.wedige.CustomPopupWindow;
 
 import static youdian.apk.ipqc.utils.Constans.Abnormal;
@@ -126,17 +129,19 @@ public class CheckDetail_Xunjian_Activity extends BaseMvpActivity<CheckDetailPre
         binding.tvPeriod.setText(resultObserver.getPeriod_name());
         binding.setCount(countModel);
         snCheckItemList = new ArrayList<>();
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false){
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        };
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false){
+//            @Override
+//            public boolean canScrollVertically() {
+//                return false;
+//            }
+//        };
+        ControlScrollLayoutManager layoutManager = new ControlScrollLayoutManager(this,RecyclerView.VERTICAL,false,binding.rvAction);
+        layoutManager.setCanAutoScroll(true);
         binding.rvAction.setHasFixedSize(true);
-        binding.rvAction.addItemDecoration(new DividerItemDecoration(CheckDetail_Xunjian_Activity.this,DividerItemDecoration.VERTICAL_LIST));
+//        binding.rvAction.addItemDecoration(new DividerItemDecoration(CheckDetail_Xunjian_Activity.this,DividerItemDecoration.VERTICAL_LIST));
         binding.rvAction.setItemAnimator(new DefaultItemAnimator());
         binding.rvAction.setLayoutManager(layoutManager);
-        binding.rvAction.setNestedScrollingEnabled(false);
+        binding.rvAction.setItemAnimator(null);
         mPresenter = new CheckDetailPresenter_XUNJIAN();
         mPresenter.attachView(this);
         mPresenter.getProcess(resultObserver.getIns_checklist_id() + "");
@@ -321,7 +326,7 @@ public class CheckDetail_Xunjian_Activity extends BaseMvpActivity<CheckDetailPre
             MycountDownTimer downTimer = new MycountDownTimer(customPopupWindow, tvofftime, 6000, 1);
             downTimer.start();
             customPopupWindow.showAtLocation(binding.getRoot(), Gravity.CENTER, 0, 0);
-            CommonUtils.setBackgroundAlpha((float) 0.3, getWindow());
+            CommonUtils.setBackgroundAlpha((float) 1.0, getWindow());
         }
 
     }
@@ -363,6 +368,7 @@ public class CheckDetail_Xunjian_Activity extends BaseMvpActivity<CheckDetailPre
         }
         if (checkDetailAdapter == null) {
             checkDetailAdapter = new InsCheckDetailAdapter(this, onCheckItemList, this);
+            checkDetailAdapter.setHasStableIds(true);
             binding.rvAction.setAdapter(checkDetailAdapter);
 
         }
@@ -542,7 +548,7 @@ public class CheckDetail_Xunjian_Activity extends BaseMvpActivity<CheckDetailPre
         return super.onKeyDown(keyCode, event);
     }
 
-
+//
 //    @Override
 //    public boolean dispatchTouchEvent(MotionEvent ev) {
 //        if (ev.getAction() == MotionEvent.ACTION_DOWN) {

@@ -103,14 +103,14 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
             String time = DatetimeUtil.INSTANCE.getNows_ss();
             resultObserver.setCheck_time(time);
         }
-//        resultObserver.setSn("12345sn");
-//        resultObserver.setCheck_quantity("Check_quantity");
-//        resultObserver.setWork_no("Work_no");
-//        resultObserver.setPart_no("part_no");
-//        resultObserver.setEdition("edition");
-//        resultObserver.setProduction_batch("Production_batch");
-//        resultObserver.setCheck_quantity("123");
-//        resultObserver.setMachine_type("Machine_type");
+        resultObserver.setSn("12345sn");
+        resultObserver.setCheck_quantity("Check_quantity");
+        resultObserver.setWork_no("Work_no");
+        resultObserver.setPart_no("part_no");
+        resultObserver.setEdition("edition");
+        resultObserver.setProduction_batch("Production_batch");
+        resultObserver.setCheck_quantity("123");
+        resultObserver.setMachine_type("Machine_type");
         binding.setFirstcheck(resultObserver);
         binding.jianyanshuliang.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         binding.headview.setTitleText(resultObserver.getFirst_checklist_name() + getResources().getString(R.string.biaotouxinxi));

@@ -45,7 +45,8 @@
                     android:includeFontPadding="false"
                     android:text="@string/xiugaibiaotou"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_13" />
+                    android:textSize="@dimen/sp_13"
+                    android:visibility="gone"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"

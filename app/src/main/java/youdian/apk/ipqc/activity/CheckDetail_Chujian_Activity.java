@@ -116,7 +116,6 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
         };
         binding.rvAction.setItemAnimator(new DefaultItemAnimator());
         binding.rvAction.setHasFixedSize(true);
-        binding.rvAction.setHasFixedSize(true);
         binding.rvAction.setLayoutManager(layoutManager);
         mPresenter = new CheckDetailPresenter_CHUJIAN();
         mPresenter.attachView(this);
@@ -322,7 +321,7 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
             MycountDownTimer downTimer = new MycountDownTimer(customPopupWindow, tvofftime, 6000, 1);
             downTimer.start();
             customPopupWindow.showAtLocation(binding.getRoot(), Gravity.CENTER, 0, 0);
-            CommonUtils.setBackgroundAlpha((float) 0.3, getWindow());}
+            CommonUtils.setBackgroundAlpha((float) 1.0, getWindow());}
 
 
     }

@@ -35,10 +35,7 @@ import java.util.List;
 
 import youdian.apk.dianjian.utils.DatetimeUtil;
 import youdian.apk.ipqc.R;
-import youdian.apk.ipqc.databinding.ItemCheckactionBinding;
 import youdian.apk.ipqc.databinding.ItemInscheckactionBinding;
-import youdian.apk.ipqc.obsever.CheckItemObserver;
-import youdian.apk.ipqc.obsever.FirstCheckItemObserver;
 import youdian.apk.ipqc.obsever.InsCheckItemObserver;
 import youdian.apk.ipqc.utils.CommonUtils;
 import youdian.apk.ipqc.utils.Constans;
@@ -55,12 +52,6 @@ public class InsCheckDetailAdapter extends RecyclerView.Adapter<InsCheckDetailAd
     private boolean[] ischeck;
     private TextWatcher textWatcherValue, textWatcherNote;
 
-    //输入法
-    InputMethodManager inputMethodManager ;
-
-    //edittext的焦点位置
-    int etFocusPos = -1;
-
 
     //    onClick onclick;
     public InsCheckDetailAdapter(Context context, List<InsCheckItemObserver> list_action, InsCheckDetailAdapter.onCountChangeListener listener) {
@@ -71,16 +62,13 @@ public class InsCheckDetailAdapter extends RecyclerView.Adapter<InsCheckDetailAd
         for (int i = 0; i < list_action.size(); i++) {
             ischeck[i] = false;
         }
-        inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 
     public interface onCountChangeListener {
         public void getCheckedCount(int s);
 
         public void getCheckDetail(InsCheckItemObserver checkItemObserver);
-
     }
-
 
     @NonNull
     @Override
@@ -101,7 +89,6 @@ public class InsCheckDetailAdapter extends RecyclerView.Adapter<InsCheckDetailAd
             super(binding.getRoot());
             this.binding = binding;
         }
-
     }
 
     @Override
@@ -109,10 +96,7 @@ public class InsCheckDetailAdapter extends RecyclerView.Adapter<InsCheckDetailAd
         if (viewHolder instanceof InsCheckDetailAdapter.MyHolder && list_action.size() > 0) {
 
             InsCheckItemObserver actionDetail = list_action.get(viewHolder.getBindingAdapterPosition());
-//            if (actionDetail.isIsvisiable()) {
-//                actionDetail.setNote("");
             viewHolder.binding.setInscheckitem(actionDetail);
-//                viewHolder.setVisibility(actionDetail.isIsvisiable());
 
             //检查标准tip
             viewHolder.binding.imgTip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -122,7 +106,6 @@ public class InsCheckDetailAdapter extends RecyclerView.Adapter<InsCheckDetailAd
                         showPopupWindow(viewHolder.binding.imgTip, actionDetail.getMethod());
                 }
             });
-
             //根据check_control_id确定所显示控件 --------- 1:radiogroup;2:number(100-200);3:下拉列表;其他：文本框
             //除了数字输入，其他都有radio选择
             if (actionDetail.getControl_code().equals(Constans.Radio)) {
@@ -173,8 +156,6 @@ public class InsCheckDetailAdapter extends RecyclerView.Adapter<InsCheckDetailAd
                     viewHolder.binding.ctRbNa.setChecked(true);
                     viewHolder.binding.ctDropdown.setText(actionDetail.getDetail_value());
                 }
-
-//        } else if (actionDetail.getControl_code().equals("Text")) {
             } else {//文本
                 viewHolder.binding.ctEdt.setVisibility(View.VISIBLE);
                 viewHolder.binding.ctEdt.setText(actionDetail.getDetail_value());
@@ -190,14 +171,15 @@ public class InsCheckDetailAdapter extends RecyclerView.Adapter<InsCheckDetailAd
                 }
             }
 
+
             /******************************************** 各种监听 ****************************************************/
 
             //radiogroup控件选择监听
             viewHolder.binding.ctRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
-
                     actionDetail.setCheck_time(DatetimeUtil.INSTANCE.getNows_ss());
+                    actionDetail.setNote("");
                     if (checkedId == R.id.ct_rb_no) {
                         viewHolder.binding.ctRgEdtNote.setVisibility(View.VISIBLE);
                         actionDetail.setDetail_status(Constans.Abnormal);
@@ -209,13 +191,11 @@ public class InsCheckDetailAdapter extends RecyclerView.Adapter<InsCheckDetailAd
                         viewHolder.binding.ctRgEdtNote.setVisibility(View.GONE);
                         if (checkedId == R.id.ct_rb_yes) {
                             actionDetail.setDetail_status(Constans.Normal);
-                            actionDetail.setNote("");
                             if (actionDetail.getControl_code().equals("Radio")) {
                                 actionDetail.setDetail_value("True");
                             }
                         } else {
                             actionDetail.setDetail_status(Constans.NA);
-                            actionDetail.setNote("");
                             if (actionDetail.getControl_code().equals("Radio")) {
                                 actionDetail.setDetail_value("NA");
                             }
@@ -224,49 +204,39 @@ public class InsCheckDetailAdapter extends RecyclerView.Adapter<InsCheckDetailAd
                     }
                     summary(actionDetail, viewHolder.getBindingAdapterPosition());
                 }
-            });  //监听软键盘是否显示或隐藏
-            viewHolder.binding.ctEdt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            });
+
+            viewHolder.binding.ctEdt.getViewTreeObserver().addOnGlobalLayoutListener(
+                    new ViewTreeObserver.OnGlobalLayoutListener() {
+                        @Override
+                        public void onGlobalLayout() {
+                            Rect r = new Rect();
+                            viewHolder.binding.ctEdt.getWindowVisibleDisplayFrame(r);
+                            int screenHeight = viewHolder.binding.ctRgEdtNote.getRootView()
+                                    .getHeight();
+                            int heightDifference = screenHeight - (r.bottom);
+                            if (heightDifference > 200) {
+                                //软键盘显示
+                                viewHolder.binding.ctEdt.setFocusable(true);
+                            } else {
+                                //软键盘隐藏
+                                viewHolder.binding.ctEdt.clearFocus();
+                            }
+                        }
+
+                    });
+            //设置获取焦点
+            viewHolder.binding.ctEdt.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (hasFocus) {
-                        etFocusPos = viewHolder.getBindingAdapterPosition();
-                        Log.e("tag", "etFocusPos焦点选中-" + etFocusPos);
-                    }
+                public void onClick(View v) {
+                   viewHolder.binding.ctEdt.setFocusable(true);
+                   viewHolder.binding.ctEdt.setFocusableInTouchMode(true);
+                   viewHolder.binding.ctEdt.requestFocus();
+                   viewHolder.binding.ctEdt.findFocus();
+                    InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(viewHolder.binding.ctEdt, InputMethodManager.SHOW_FORCED);// 显示输入法
                 }
             });
-//            viewHolder.binding.ctEdt.getViewTreeObserver().addOnGlobalLayoutListener(
-//                    new ViewTreeObserver.OnGlobalLayoutListener() {
-//                        @Override
-//                        public void onGlobalLayout() {
-//                            Rect r = new Rect();
-//                            viewHolder.binding.ctEdt.getWindowVisibleDisplayFrame(r);
-//                            int screenHeight = viewHolder.binding.ctRgEdtNote.getRootView()
-//                                    .getHeight();
-//                            int heightDifference = screenHeight - (r.bottom);
-//                            if (heightDifference > 200) {
-//                                //软键盘显示
-//                                viewHolder.binding.ctEdt.setFocusable(true);
-//                            } else {
-//                                //软键盘隐藏
-//                                viewHolder.binding.ctEdt.clearFocus();
-//
-//                            }
-//                        }
-//
-//                    });
-//            //设置获取焦点
-//            viewHolder.binding.ctEdt.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                   viewHolder.binding.ctEdt.setFocusable(true);
-//                   viewHolder.binding.ctEdt.setFocusableInTouchMode(true);
-//                   viewHolder.binding.ctEdt.requestFocus();
-//                   viewHolder.binding.ctEdt.findFocus();
-//                    InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-//                    imm.showSoftInput(viewHolder.binding.ctEdt, InputMethodManager.SHOW_FORCED);// 显示输入法
-//                }
-//            });
-//            viewHolder.binding.ctEdt.addTextChangedListener(textWatcherValue);
             textWatcherValue = new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -340,19 +310,7 @@ public class InsCheckDetailAdapter extends RecyclerView.Adapter<InsCheckDetailAd
                     }
                 }
             };
-            viewHolder.binding.ctRgEdtNote.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View view, boolean b) {
-                    if (b) {
-//                        viewHolder.binding.ctRgEdtNote.addTextChangedListener(textWatcher);
-                        etFocusPos = viewHolder.getBindingAdapterPosition();
-                        Log.e("tag", "etFocusPos焦点选中-" + etFocusPos);
-//                    } else {
-//                        viewHolder.binding.ctRgEdtNote.removeTextChangedListener(textWatcher);
-                    }
 
-                }
-            });
             //设置获取焦点
             viewHolder.binding.ctRgEdtNote.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -420,13 +378,7 @@ public class InsCheckDetailAdapter extends RecyclerView.Adapter<InsCheckDetailAd
         viewHolder.binding.ctEdt.clearFocus();
         viewHolder.binding.ctRgEdtNote.removeTextChangedListener(textWatcherNote);
         viewHolder.binding.ctRgEdtNote.clearFocus();
-        if (etFocusPos == holder.getBindingAdapterPosition()) {
-            if (viewHolder.binding.ctEdt.getVisibility() == View.VISIBLE) {
-                inputMethodManager.hideSoftInputFromWindow(((MyHolder) holder).binding.ctEdt.getWindowToken(), 0);
-            } else if (viewHolder.binding.ctRgEdtNote.getVisibility() == View.VISIBLE) {
-                inputMethodManager.hideSoftInputFromWindow(((MyHolder) holder).binding.ctRgEdtNote.getWindowToken(), 0);
-            }
-        }
+
     }
 
     @Override
@@ -436,7 +388,6 @@ public class InsCheckDetailAdapter extends RecyclerView.Adapter<InsCheckDetailAd
         MyHolder viewHolder = (MyHolder) holder;
         viewHolder.binding.ctEdt.addTextChangedListener(textWatcherValue);
         viewHolder.binding.ctRgEdtNote.addTextChangedListener(textWatcherNote);
-        if (etFocusPos == holder.getBindingAdapterPosition()) {
             if (viewHolder.binding.ctEdt.getVisibility() == View.VISIBLE) {
                 viewHolder.binding.ctEdt.requestFocus();
                 viewHolder.binding.ctEdt.setSelection(viewHolder.binding.ctEdt.getText().length());
@@ -445,7 +396,7 @@ public class InsCheckDetailAdapter extends RecyclerView.Adapter<InsCheckDetailAd
                 viewHolder.binding.ctRgEdtNote.setSelection(viewHolder.binding.ctRgEdtNote.getText().length());
             }
 
-        }
+
     }
 
 
@@ -563,7 +514,7 @@ public class InsCheckDetailAdapter extends RecyclerView.Adapter<InsCheckDetailAd
                         Count = getCount();
                         onCountChangeListener.getCheckedCount(Count);
                     } else {
-                        ischeck[position] = true;
+//                        ischeck[position] = true;
                         Count = getCount();
                         onCountChangeListener.getCheckedCount(Count);
                     }
