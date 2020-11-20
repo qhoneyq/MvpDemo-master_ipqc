@@ -33,17 +33,20 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
                 .subscribe(new Observer<Response<UserData>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        mView.hideLoading();
+                        mView.showLoading();
                     }
 
                     @Override
                     public void onNext(@NonNull Response<UserData> userDataResponse) {
                         mView.dealUserData(userDataResponse);
+                        mView.hideLoading();
+
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
                         mView.onError(e.getMessage());
+                        mView.hideLoading();
                     }
 
                     @Override

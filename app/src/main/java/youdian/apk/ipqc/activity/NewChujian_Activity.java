@@ -15,6 +15,7 @@ import android.text.InputType;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -95,6 +96,8 @@ public class NewChujian_Activity extends BaseMvpActivity<NewChujianPresenter> im
 
     @Override
     public void initView() {
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
         binding = DataBindingUtil.setContentView(this, getLayoutId());
         Bundle bundle = getIntent().getBundleExtra("param");
         resultObserver = (FirstCheckResultObserver) bundle.getSerializable(FirstCheck);

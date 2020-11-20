@@ -1,25 +1,21 @@
 package youdian.apk.ipqc.activity;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.KeyEvent;
 import android.view.View;
 
 
-import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 
 
 import youdian.apk.ipqc.R;
 import youdian.apk.ipqc.base.BaseActivity;
 import youdian.apk.ipqc.databinding.ActivityHomeBinding;
-import youdian.apk.ipqc.obsever.FirstCheckResultObserver;
-import youdian.apk.ipqc.obsever.InsCheckResultObserver;
 import youdian.apk.ipqc.utils.Constans;
-import youdian.apk.ipqc.utils.DeviceUtils;
+import youdian.apk.ipqc.utils.DeviceUtil;
 import youdian.apk.ipqc.utils.UserUtils;
 
 public class ActivityHome extends BaseActivity {
@@ -34,25 +30,11 @@ public class ActivityHome extends BaseActivity {
         intent.putExtra("param", data);
         context.startActivity(intent);
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            new AlertDialog.Builder(ActivityHome.this)
-                    .setTitle("退出")
-                    .setMessage("确定退出应用吗")
-                    .setNegativeButton("确定",
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface arg0,
-                                                    int arg1) {
-//                                    Intent intent = new Intent(Intent.ACTION_MAIN);
-//                                    intent.addCategory(Intent.CATEGORY_HOME);
-//                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                                    startActivity(intent);
-                                    finish();
-
-                                }
-                            }).setPositiveButton("取消", null).show();
+            finish();
             return true;
 
         } else if (keyCode == KeyEvent.KEYCODE_HOME) {
@@ -69,8 +51,8 @@ public class ActivityHome extends BaseActivity {
 
     @Override
     public void initView() {
-        binding = DataBindingUtil.setContentView(this,getLayoutId());
-        if (!UserUtils.getInstance().isLogin()){
+        binding = DataBindingUtil.setContentView(this, getLayoutId());
+        if (!UserUtils.getInstance().isLogin()) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         }
@@ -104,7 +86,7 @@ public class ActivityHome extends BaseActivity {
             public void onClick(View view) {
                 new AlertDialog.Builder(ActivityHome.this)
                         .setTitle("切换用户")
-                        .setMessage("确定切换其他用户登录吗\n"+ DeviceUtils.getDeviceId(ActivityHome.this))
+                        .setMessage("当前用户：" + UserUtils.getInstance().getPnum() + "\n确定切换其他用户登录吗")
                         .setNegativeButton("确定",
                                 new DialogInterface.OnClickListener() {
                                     @Override
@@ -121,7 +103,7 @@ public class ActivityHome extends BaseActivity {
 
     }
 
-    public void firstCheckClick(){
+    public void firstCheckClick() {
 //        Bundle bundle =new Bundle();
 //        FirstCheckResultObserver observer = new FirstCheckResultObserver();
 //        observer.setCheck_person("admin");
@@ -131,10 +113,10 @@ public class ActivityHome extends BaseActivity {
 //        observer.setSe_name("sename");
 //        bundle.putSerializable(Constans.FirstCheck,observer);
 //            NewChujian_Activity.startActivity(this, bundle);
-            TableListActivity.startTableListActivity(this, Constans.FirstCheck);
+        TableListActivity.startTableListActivity(this, Constans.FirstCheck);
     }
 
-    public void insChecksClick(){
+    public void insChecksClick() {
 //                Bundle bundle =new Bundle();
 //        InsCheckResultObserver observer = new InsCheckResultObserver();
 //        observer.setCheck_person("admin");
@@ -144,7 +126,7 @@ public class ActivityHome extends BaseActivity {
 //        observer.setSe_name("sename");
 //        bundle.putSerializable(Constans.Inspection,observer);
 //            NewXunjian_Activity.startActivity(this, bundle);
-            TableListActivity.startTableListActivity(this, Constans.Inspection);
+        TableListActivity.startTableListActivity(this, Constans.Inspection);
     }
 
 

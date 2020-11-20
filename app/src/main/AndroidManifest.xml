@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="youdian.apk.ipqc">
 
 
+    <uses-sdk tools:overrideLibrary="com.engineer.linktextview.lib" />
+
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
+    <!-- ======= REPLUGIN ======= -->
+    <!-- SDK Only (4Stats)。也是“常用的”几个权限 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- 联网权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.PREVENT_POWER_KEY" />
@@ -16,9 +25,10 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.NFC" />
 
-
     <uses-feature android:name="android.hardware.camera.autofocus" /> <!-- 自动聚焦权限 -->
     <uses-permission android:name="android.permission.VIBRATE" />
+
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
 
     <application
@@ -29,6 +39,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
+        android:requestLegacyExternalStorage="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.ActivityHome">
             <intent-filter>
@@ -41,12 +52,14 @@
         <activity android:name=".activity.CheckDetail_Chujian_Activity"
             android:windowSoftInputMode="stateHidden|adjustPan"
             />
-        <activity android:name=".activity.NewChujian_Activity"/>
-        <activity android:name=".activity.NewXunjian_Activity"/>
+        <activity android:name=".activity.NewChujian_Activity"
+            android:launchMode="singleTop"/>
+        <activity android:name=".activity.NewXunjian_Activity"
+            android:launchMode="singleTop"/>
         <activity android:name=".activity.SmallCaptureActivity"/>
         <activity android:name=".activity.TableListActivity"/>
         <activity android:name=".activity.CheckDetail_Xunjian_Activity"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
     </application>
 
 </manifest>

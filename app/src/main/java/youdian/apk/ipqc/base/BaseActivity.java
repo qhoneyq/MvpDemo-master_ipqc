@@ -2,7 +2,6 @@ package youdian.apk.ipqc.base;
 
 import android.Manifest;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -17,12 +16,10 @@ import android.nfc.tech.NfcV;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.provider.Settings;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 
@@ -31,20 +28,20 @@ import com.qihoo360.replugin.loader.a.PluginFragmentActivity;
 import java.io.UnsupportedEncodingException;
 
 import youdian.apk.ipqc.utils.AndroidBug54971Workaround;
+import youdian.apk.ipqc.utils.DeviceUtil;
 import youdian.apk.ipqc.utils.MyUtils;
+import youdian.apk.ipqc.utils.PermissionTool;
 import youdian.apk.ipqc.wedige.WaitDialog;
 
 import static youdian.apk.ipqc.utils.Constans.REQUEST_PERMISSION_CODE;
 
 
 /**
+ *
  */
 public abstract class BaseActivity extends PluginFragmentActivity {
 
-    //读写权限
-    public static String[] PERMISSIONS_STORAGE = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE};    //请求状态码
+
 
     public WaitDialog waitDialog;
 
@@ -55,7 +52,6 @@ public abstract class BaseActivity extends PluginFragmentActivity {
     protected String[][] mTechLists;
     protected IntentFilter ndef;
 
-    protected String devId="";
 
 
     @Override
@@ -67,16 +63,19 @@ public abstract class BaseActivity extends PluginFragmentActivity {
 //        if (AndroidBug54971Workaround.checkDeviceHasNavigationBar(this)) {                                  //适配华为手机虚拟键遮挡tab的问题
 //            AndroidBug54971Workaround.assistActivity(findViewById(android.R.id.content));                   //需要在setContentView()方法后面执行
 //        }
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, REQUEST_PERMISSION_CODE);
-            }
-        }
-        waitDialog = new WaitDialog(this);
-        devId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+//            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//                ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, REQUEST_PERMISSION_CODE);
+//            }
+
+        waitDialog = new WaitDialog(BaseActivity.this);
+//        devId = DeviceUtil.readDeviceId(BaseActivity.this);
 
         initView();
+
+
     }
+
+
     protected void initNfc() {
         //NFC适配器，所有的关于NFC的操作从该适配器进行
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);

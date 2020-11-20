@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -82,6 +83,7 @@ public class NewXunjian_Activity extends BaseMvpActivity<NewXunjianPresenter> im
 
     @Override
     public void initView() {
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         binding = DataBindingUtil.setContentView(this, getLayoutId());
         Bundle bundle = getIntent().getBundleExtra("param");
         resultObserver = (InsCheckResultObserver) bundle.getSerializable(Inspection);
@@ -365,7 +367,7 @@ public class NewXunjian_Activity extends BaseMvpActivity<NewXunjianPresenter> im
             binding.shengchanpici.setError(null);
         }
         if (resultObserver.getMachine_type().isEmpty()) {
-            binding.shengchanpici.setError(getResources().getString(R.string.jizhong_err));
+            binding.shengchanpici.setError(getResources().getString(R.string.product_err));
             return;
         } else {
             binding.shengchanpici.setError(null);

@@ -6,12 +6,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -53,6 +56,7 @@ import youdian.apk.ipqc.utils.CommonUtils;
 import youdian.apk.ipqc.utils.Constans;
 import youdian.apk.ipqc.utils.MycountDownTimer;
 import youdian.apk.ipqc.utils.UserUtils;
+import youdian.apk.ipqc.utils.Utils;
 import youdian.apk.ipqc.wedige.CustomPopupWindow;
 
 import static youdian.apk.ipqc.utils.Constans.Abnormal;
@@ -102,6 +106,7 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
 
     @Override
     public void initView() {
+
         Bundle bundle = getIntent().getBundleExtra("param");
         resultObserver = (FirstCheckResultObserver) bundle.getSerializable(FirstCheck);
         binding = DataBindingUtil.setContentView(this, getLayoutId());
@@ -116,6 +121,7 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
         };
         binding.rvAction.setItemAnimator(new DefaultItemAnimator());
         binding.rvAction.setHasFixedSize(true);
+
         binding.rvAction.setLayoutManager(layoutManager);
         mPresenter = new CheckDetailPresenter_CHUJIAN();
         mPresenter.attachView(this);
@@ -165,8 +171,10 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
         customPopupWindow = new CustomPopupWindow.Builder(this)
                 .setContentView(R.layout.popwindow_result)
                 .setCancleClickOutSide(true)
-                .setwidth(getResources().getDimensionPixelSize(R.dimen.dp_240))
-                .setheight(getResources().getDimensionPixelSize(R.dimen.dp_160))
+                .setwidth(getWindow().getWindowManager().getDefaultDisplay().getWidth())
+//                .setwidth(getResources().getDimensionPixelSize(R.dimen.dp_240))
+                .setheight(getWindow().getWindowManager().getDefaultDisplay().getHeight())
+//                .setheight(getResources().getDimensionPixelSize(R.dimen.dp_160))
                 .build();
 
 
@@ -271,13 +279,16 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
         btn_commit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (Utils.isFastDoubleClick()) {
+                    return;
+                }
                 int sel = suggestionAdapter.getSelectPosition();
-                if (sel>suggestionList.size()){
+                if (sel > suggestionList.size()) {
                     showMsg("请选择建议");
                     return;
                 }
 
-                if (sel==0)
+                if (sel == 0)
                     resultObserver.setResult_status(Normal);
                 else
                     resultObserver.setResult_status(Abnormal);
@@ -321,7 +332,8 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
             MycountDownTimer downTimer = new MycountDownTimer(customPopupWindow, tvofftime, 6000, 1);
             downTimer.start();
             customPopupWindow.showAtLocation(binding.getRoot(), Gravity.CENTER, 0, 0);
-            CommonUtils.setBackgroundAlpha((float) 1.0, getWindow());}
+            CommonUtils.setBackgroundAlpha((float) 1.0, getWindow());
+        }
 
 
     }
@@ -396,9 +408,17 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
     private int getNumber() {
         int count = 0;
         for (FirstCheckItemObserver check : allCheckItemList) {
-            if (!check.getDetail_status().equals("")) {
+            if (!check.getDetail_status().equals("")) {//有狀態值
+                if (!check.getControl_code().equals(Constans.Number)) {//除數字框外,you狀態值判斷
+                    if (check.getDetail_status().equals(Abnormal)
+                            && check.getNote().equals("")) {
+                        break;
+                    } else
+                        count++;
+                } else {
+                    count++;
+                }
                 check.setEmp_no(UserUtils.getInstance().getPnum());
-                count++;
             }
         }
         return count;
@@ -411,18 +431,18 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
     }
 
     @Override
-    public void getCheckDetail(FirstCheckItemObserver checkItemObserver) {
-        checkItemObserver.setCheck_time(DatetimeUtil.INSTANCE.getNows_ss());
+    public void getCheckDetail(FirstCheckItemObserver checkItemObserver, int inputType) {
+//        checkItemObserver.setCheck_time(DatetimeUtil.INSTANCE.getNows_ss());
         for (int i = 0; i < allCheckItemList.size(); i++) {
             FirstCheckItemObserver check = allCheckItemList.get(i);
             if (checkItemObserver.getItem().equals(check.getItem())) {
                 check.setNote(checkItemObserver.getNote());
-                check.setCheck_time(DatetimeUtil.INSTANCE.getNows_ss());
                 check.setDetail_value(checkItemObserver.getDetail_value());
                 check.setDetail_status(checkItemObserver.getDetail_status());
+                if (check.getCheck_time().equals(""))
+                    check.setCheck_time(DatetimeUtil.INSTANCE.getNows_ss());
                 break;
-            } else
-                return;
+            }
         }
     }
 
@@ -437,7 +457,7 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
                                 @Override
                                 public void onClick(DialogInterface arg0,
                                                     int arg1) {
-                             finish();
+                                    finish();
 
                                 }
                             }).setPositiveButton("取消", null).show();
@@ -453,48 +473,67 @@ public class CheckDetail_Chujian_Activity extends BaseMvpActivity<CheckDetailPre
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            View v = getCurrentFocus();
-            if (isShouldHideInput(v, ev)) {
-
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (imm != null) {
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+            // 获取当前焦点所在的控件；
+            View view = getCurrentFocus();
+            if (view != null && view instanceof EditText) {
+                Rect r = new Rect();
+                view.getGlobalVisibleRect(r);
+                int rawX = (int) ev.getRawX();
+                int rawY = (int) ev.getRawY();
+                // 判断点击的点是否落在当前焦点所在的 view 上；
+                if (!r.contains(rawX, rawY)) {
+                    view.clearFocus();
                 }
             }
-            return super.dispatchTouchEvent(ev);
         }
-        // 必不可少，否则所有的组件都不会有TouchEvent了
-        if (getWindow().superDispatchTouchEvent(ev)) {
-            return true;
-        }
-        return onTouchEvent(ev);
+        return super.dispatchTouchEvent(ev);
     }
 
-    /**
-     * 根据EditText所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘，因为当用户点击EditText时则不能隐藏
-     *
-     * @param v
-     * @param event
-     * @return
-     */
-    public  boolean isShouldHideInput(View v, MotionEvent event) {
-        if (v != null && (v instanceof EditText)) {
-            int[] leftTop = { 0, 0 };
-            //获取输入框当前的location位置
-            v.getLocationInWindow(leftTop);
-            int left = leftTop[0];
-            int top = leftTop[1];
-            int bottom = top + v.getHeight();
-            int right = left + v.getWidth();
-            if (event.getX() > left && event.getX() < right
-                    && event.getY() > top && event.getY() < bottom) {
-                // 点击的是输入框区域，保留点击EditText的事件
-                return false;
-            } else {
-                return true;
-            }
-        }
-        return false;
-    }
+//    @Override
+//    public boolean dispatchTouchEvent(MotionEvent ev) {
+//        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+//            View v = getCurrentFocus();
+//            if (isShouldHideInput(v, ev)) {
+//
+//                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//                if (imm != null) {
+//                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+//                }
+//            }
+//            return super.dispatchTouchEvent(ev);
+//        }
+//        // 必不可少，否则所有的组件都不会有TouchEvent了
+//        if (getWindow().superDispatchTouchEvent(ev)) {
+//            return true;
+//        }
+//        return onTouchEvent(ev);
+//    }
+//
+//    /**
+//     * 根据EditText所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘，因为当用户点击EditText时则不能隐藏
+//     *
+//     * @param v
+//     * @param event
+//     * @return
+//     */
+//    public  boolean isShouldHideInput(View v, MotionEvent event) {
+//        if (v != null && (v instanceof EditText)) {
+//            int[] leftTop = { 0, 0 };
+//            //获取输入框当前的location位置
+//            v.getLocationInWindow(leftTop);
+//            int left = leftTop[0];
+//            int top = leftTop[1];
+//            int bottom = top + v.getHeight();
+//            int right = left + v.getWidth();
+//            if (event.getX() > left && event.getX() < right
+//                    && event.getY() > top && event.getY() < bottom) {
+//                // 点击的是输入框区域，保留点击EditText的事件
+//                return false;
+//            } else {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 }
 

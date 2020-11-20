@@ -1,5 +1,7 @@
 package youdian.apk.ipqc.base;
 
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -9,6 +11,8 @@ import autodispose2.AutoDispose;
 import autodispose2.AutoDisposeConverter;
 import autodispose2.androidx.lifecycle.AndroidLifecycleScopeProvider;
 import youdian.apk.ipqc.utils.AndroidBug54971Workaround;
+import youdian.apk.ipqc.utils.DeviceUtil;
+import youdian.apk.ipqc.utils.PermissionTool;
 
 /**
  * @author azheng
@@ -24,7 +28,31 @@ public abstract class BaseMvpActivity<T extends BasePresenter> extends BaseActiv
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PermissionTool.Request(this, new PermissionTool.PermissionCallBack() {
+            @Override
+            public void Success() {
+                // 在权限请求完成后，才可执行的逻辑
+                DeviceUtil.getDeviceId(BaseMvpActivity.this);
+            }
+        });
+    }
+    /**
+     * 处理权限请求结果，若未授权，则继续请求
+     */
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PermissionTool.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+        }
+    }
 
+
+    /**
+     * Activity执行结果
+     */
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        PermissionTool.onActivityResult(this, requestCode, resultCode, data);
     }
 
 

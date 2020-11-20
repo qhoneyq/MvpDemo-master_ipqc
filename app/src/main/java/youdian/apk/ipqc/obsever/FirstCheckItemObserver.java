@@ -31,6 +31,7 @@ public class FirstCheckItemObserver extends BaseObservable implements Serializab
     private String note="";
     private String check_time = "";
     private String emp_no = "";
+    private int sort = 1 ;
     private boolean isvisiable=false;
 
     public FirstCheckItemObserver(FirstCheckProcess firstCheckProcess, FirstCheckListItem firstCheckListItem) {

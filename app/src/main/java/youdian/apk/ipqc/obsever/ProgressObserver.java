@@ -10,9 +10,10 @@ import youdian.apk.ipqc.BR;
 public class ProgressObserver extends BaseObservable implements Serializable {
 
     int id;
+    int sort = 1;
     String process_name;
     String process_code;
-    String progress_sn ="";
+    String progress_sn = "";
     String note = "";
 
     public ProgressObserver() {
@@ -27,6 +28,16 @@ public class ProgressObserver extends BaseObservable implements Serializable {
     }
 
     @Bindable
+    public int getSort() {
+        return sort;
+    }
+
+    public void setSort(int sort) {
+        this.sort = sort;
+        notifyPropertyChanged(BR.sort);
+    }
+
+    @Bindable
     public int getId() {
         return id;
     }
@@ -34,7 +45,8 @@ public class ProgressObserver extends BaseObservable implements Serializable {
     @Bindable
     public void setId(int id) {
         this.id = id;
-        notifyPropertyChanged(BR.id);}
+        notifyPropertyChanged(BR.id);
+    }
 
 
     @Bindable
@@ -44,7 +56,8 @@ public class ProgressObserver extends BaseObservable implements Serializable {
 
     public void setProcess_name(String process_name) {
         this.process_name = process_name;
-        notifyPropertyChanged(BR.process_name);}
+        notifyPropertyChanged(BR.process_name);
+    }
 
 
     @Bindable
@@ -54,7 +67,8 @@ public class ProgressObserver extends BaseObservable implements Serializable {
 
     public void setProcess_code(String process_code) {
         this.process_code = process_code;
-        notifyPropertyChanged(BR.process_code);}
+        notifyPropertyChanged(BR.process_code);
+    }
 
 
     @Bindable
@@ -64,7 +78,8 @@ public class ProgressObserver extends BaseObservable implements Serializable {
 
     public void setProgress_sn(String progress_sn) {
         this.progress_sn = progress_sn;
-        notifyPropertyChanged(BR.progress_sn);}
+        notifyPropertyChanged(BR.progress_sn);
+    }
 
     @Bindable
     public String getNote() {
@@ -73,5 +88,6 @@ public class ProgressObserver extends BaseObservable implements Serializable {
 
     public void setNote(String note) {
         this.note = note;
-    notifyPropertyChanged(BR.note);}
+        notifyPropertyChanged(BR.note);
+    }
 }

@@ -22,7 +22,9 @@ public class InsCheckItemObserver extends BaseObservable implements Serializable
     private String process_code;
     private String process_sn;
     private String process_note;
+    private int process_sort = 1 ;
     private int item_id;
+    private int item_sort = 1;
     private String item_sn;
     private String item;
     private String reference_value = "";

@@ -67,4 +67,22 @@ public class Utils {
         Toast.makeText(cxt, message, Toast.LENGTH_SHORT).show();
     }
 
+    private static long lastClickTime;
+
+    public static boolean isFastDoubleClick() {
+
+        long time = System.currentTimeMillis();
+
+        if ( time - lastClickTime < 100) {
+
+            return true;
+
+        }
+
+        lastClickTime = time;
+
+        return false;
+
+    }
+
 }

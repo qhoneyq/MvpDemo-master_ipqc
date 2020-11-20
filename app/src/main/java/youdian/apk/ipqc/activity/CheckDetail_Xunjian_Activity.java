@@ -56,6 +56,7 @@ import youdian.apk.ipqc.bean.OptionData;
 import youdian.apk.ipqc.contract.CheckDetailContract_XUNJIAN;
 import youdian.apk.ipqc.databinding.ActivityInscheckdetailBinding;
 import youdian.apk.ipqc.obsever.CountModel;
+import youdian.apk.ipqc.obsever.FirstCheckItemObserver;
 import youdian.apk.ipqc.obsever.InsCheckItemObserver;
 import youdian.apk.ipqc.obsever.InsCheckResultObserver;
 import youdian.apk.ipqc.obsever.InsCheckSnObserver;
@@ -67,6 +68,7 @@ import youdian.apk.ipqc.utils.Constans;
 import youdian.apk.ipqc.utils.DividerItemDecoration;
 import youdian.apk.ipqc.utils.MycountDownTimer;
 import youdian.apk.ipqc.utils.UserUtils;
+import youdian.apk.ipqc.utils.Utils;
 import youdian.apk.ipqc.wedige.ControlScrollLayoutManager;
 import youdian.apk.ipqc.wedige.CustomPopupWindow;
 
@@ -135,7 +137,7 @@ public class CheckDetail_Xunjian_Activity extends BaseMvpActivity<CheckDetailPre
 //                return false;
 //            }
 //        };
-        ControlScrollLayoutManager layoutManager = new ControlScrollLayoutManager(this,RecyclerView.VERTICAL,false,binding.rvAction);
+        ControlScrollLayoutManager layoutManager = new ControlScrollLayoutManager(this, RecyclerView.VERTICAL, false, binding.rvAction);
         layoutManager.setCanAutoScroll(true);
         binding.rvAction.setHasFixedSize(true);
 //        binding.rvAction.addItemDecoration(new DividerItemDecoration(CheckDetail_Xunjian_Activity.this,DividerItemDecoration.VERTICAL_LIST));
@@ -162,7 +164,8 @@ public class CheckDetail_Xunjian_Activity extends BaseMvpActivity<CheckDetailPre
                                         finish();
 
                                     }
-                                }).setPositiveButton("取消", null).show();            }
+                                }).setPositiveButton("取消", null).show();
+            }
         });
         binding.btnRewritetitle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,6 +188,9 @@ public class CheckDetail_Xunjian_Activity extends BaseMvpActivity<CheckDetailPre
         binding.btnCommit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (Utils.isFastDoubleClick()) {
+                    return;
+                }
                 if (getNumber() == allCheckItemList.size()) {
 //                    showDialog();
                     resultObserver.setResult_status(getStatus());
@@ -206,8 +212,10 @@ public class CheckDetail_Xunjian_Activity extends BaseMvpActivity<CheckDetailPre
         customPopupWindow = new CustomPopupWindow.Builder(this)
                 .setContentView(R.layout.popwindow_result)
                 .setCancleClickOutSide(true)
-                .setwidth(getResources().getDimensionPixelSize(R.dimen.dp_240))
-                .setheight(getResources().getDimensionPixelSize(R.dimen.dp_160))
+                .setwidth(getWindow().getWindowManager().getDefaultDisplay().getWidth())
+//                .setwidth(getResources().getDimensionPixelSize(R.dimen.dp_240))
+                .setheight(getWindow().getWindowManager().getDefaultDisplay().getHeight())
+//                .setheight(getResources().getDimensionPixelSize(R.dimen.dp_160))
                 .build();
     }
 
@@ -268,7 +276,7 @@ public class CheckDetail_Xunjian_Activity extends BaseMvpActivity<CheckDetailPre
         }
         progressAdapter.notifyDataSetChanged();
         if (INTENTFLAG.equals(NEW))
-            mPresenter.getCheckListData(resultObserver.getIns_checklist_id() + "",resultObserver.getFrequency());
+            mPresenter.getCheckListData(resultObserver.getIns_checklist_id() + "", resultObserver.getFrequency());
         else {
             allCheckItemList = resultObserver.getInspection_result_details();
             snCheckItemList = resultObserver.getInspection_check_sns();
@@ -406,11 +414,19 @@ public class CheckDetail_Xunjian_Activity extends BaseMvpActivity<CheckDetailPre
     private int getNumber() {
         int count = 0;
         for (InsCheckItemObserver check : allCheckItemList) {
-            if (!check.getDetail_status().equals("")) {
+            if (!check.getDetail_status().equals("")) {//有狀態值
+                if (!check.getControl_code().equals(Constans.Number)) {//除數字框外,you狀態值判斷
+                    if (check.getDetail_status().equals(Abnormal)
+                            && check.getNote().equals("")) {
+                        break;
+                    } else
+                        count++;
+                } else {
+                    count++;
+                }
                 check.setEmp_no(UserUtils.getInstance().getPnum());
                 check.setTime_period(resultObserver.getPeriod());
                 check.setFrequency(resultObserver.getFrequency());
-                count++;
             }
         }
         return count;
@@ -424,14 +440,15 @@ public class CheckDetail_Xunjian_Activity extends BaseMvpActivity<CheckDetailPre
 
     @Override
     public void getCheckDetail(InsCheckItemObserver checkItemObserver) {
-        checkItemObserver.setCheck_time(DatetimeUtil.INSTANCE.getNows_ss());
         for (int i = 0; i < allCheckItemList.size(); i++) {
             InsCheckItemObserver check = allCheckItemList.get(i);
             if (checkItemObserver.getItem().equals(check.getItem())) {
                 check.setNote(checkItemObserver.getNote());
-                check.setCheck_time(DatetimeUtil.INSTANCE.getNows_ss());
                 check.setDetail_value(checkItemObserver.getDetail_value());
                 check.setDetail_status(checkItemObserver.getDetail_status());
+                if (check.getCheck_time().equals("")){
+                    check.setCheck_time(DatetimeUtil.INSTANCE.getNows_ss());
+                }
                 break;
             } else
                 return;
@@ -487,7 +504,7 @@ public class CheckDetail_Xunjian_Activity extends BaseMvpActivity<CheckDetailPre
 //            String scanResult = Result.getContents();
         if (requestCode == REQ_QR_CODE && resultCode == RESULT_OK) {
             Bundle bundle = data.getExtras();
-            String scanResult  = bundle.getString(Constans.INTENT_EXTRA_KEY_QR_SCAN);
+            String scanResult = bundle.getString(Constans.INTENT_EXTRA_KEY_QR_SCAN);
             for (InsCheckSnObserver observer : snCheckItemList) {
                 if (observer.getSn().equals(scanResult))
                     snCheckItemList.remove(observer);
@@ -548,7 +565,24 @@ public class CheckDetail_Xunjian_Activity extends BaseMvpActivity<CheckDetailPre
         return super.onKeyDown(keyCode, event);
     }
 
-//
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            // 获取当前焦点所在的控件；
+            View view = getCurrentFocus();
+            if (view != null && view instanceof EditText) {
+                Rect r = new Rect();
+                view.getGlobalVisibleRect(r);
+                int rawX = (int) ev.getRawX();
+                int rawY = (int) ev.getRawY();
+                // 判断点击的点是否落在当前焦点所在的 view 上；
+                if (!r.contains(rawX, rawY)) {
+                    view.clearFocus();
+                }
+            }
+        }
+        return super.dispatchTouchEvent(ev);
+    }
 //    @Override
 //    public boolean dispatchTouchEvent(MotionEvent ev) {
 //        if (ev.getAction() == MotionEvent.ACTION_DOWN) {

@@ -11,6 +11,7 @@ import android.nfc.Tag;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -30,7 +31,7 @@ import youdian.apk.ipqc.bean.UserData;
 import youdian.apk.ipqc.contract.LoginContract;
 import youdian.apk.ipqc.databinding.ActivityLoginBinding;
 import youdian.apk.ipqc.presenter.LoginPresenter;
-import youdian.apk.ipqc.utils.DeviceUtils;
+import youdian.apk.ipqc.utils.DeviceUtil;
 import youdian.apk.ipqc.utils.MyUtils;
 import youdian.apk.ipqc.utils.UserUtils;
 import youdian.apk.ipqc.utils.Utils;
@@ -43,7 +44,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
 
     private MyUtils myUtils;
     String gid = "";
-
+    String devId = "";
     NfcAdapter mAdapter;
     Dialog dialog_nfc;
     NdefMessage mNdefPushMessage;
@@ -63,6 +64,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         myUtils = new MyUtils();
+        DeviceUtil.getDeviceId(this);
         mAdapter = NfcAdapter.getDefaultAdapter(this);
         binding.btnLoginCommit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +75,12 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         });
         mPresenter = new LoginPresenter();
         mPresenter.attachView(this);
-
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                devId = DeviceUtil.readDeviceId(LoginActivity.this);
+            }
+        }).start();
     }
 
     private void showSomeMsg(Object res) {
@@ -92,21 +99,25 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
      * Login by pnum and password
      */
     private void Login(String method) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                devId = DeviceUtil.readDeviceId(LoginActivity.this);
+            }
+        }).start();
+
+
         if (method.equals("account")) {
             String emp_no = binding.edtLoginPnum.getText().toString();
             String pass = binding.edtLoginPass.getText().toString();
 
             if (TextUtils.isEmpty(method) || TextUtils.isEmpty(emp_no) || TextUtils.isEmpty(pass)) {
-                showSomeMsg(R.string.empty_login);
+                showSomeMsg(getResources().getString(R.string.empty_login));
                 return;
             }
         }
-        if (!devId.equals("")) {
             mPresenter.login(devId, binding.edtLoginPnum.getText().toString(), binding.edtLoginPass.getText().toString(),
                     gid, method);
-        } else {
-            showSomeMsg(R.string.empty_dev);
-        }
         gid = "";
         isOnShowing = false;
 

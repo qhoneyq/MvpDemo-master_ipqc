@@ -41,7 +41,7 @@ import youdian.apk.ipqc.utils.UserUtils;
  * Time: 下午 6:55
  * Function:
  */
-public class CheckDetailPresenter_CHUJIAN extends BasePresenter<CheckDetailContract_CHUJIAN.View> implements CheckDetailContract_CHUJIAN.Presenter, ActionDetailAdapter.onCountChangeListener {
+public class CheckDetailPresenter_CHUJIAN extends BasePresenter<CheckDetailContract_CHUJIAN.View> implements CheckDetailContract_CHUJIAN.Presenter{
 
     private CheckDetailContract_CHUJIAN.IModel model;
 
@@ -237,14 +237,5 @@ public class CheckDetailPresenter_CHUJIAN extends BasePresenter<CheckDetailContr
                 });
     }
 
-    @Override
-    public void getCheckedCount(int s) {
-
-    }
-
-    @Override
-    public void getCheckDetail(FirstCheckItemObserver checkItemObserver) {
-
-    }
     //FirstSug
 }

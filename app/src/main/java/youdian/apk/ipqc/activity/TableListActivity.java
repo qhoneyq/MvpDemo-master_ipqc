@@ -27,6 +27,7 @@ import youdian.apk.ipqc.obsever.InsCheckResultObserver;
 import youdian.apk.ipqc.obsever.SEObsever;
 import youdian.apk.ipqc.presenter.TableListPresenter;
 import youdian.apk.ipqc.utils.Constans;
+import youdian.apk.ipqc.utils.DeviceUtil;
 import youdian.apk.ipqc.utils.UserUtils;
 import youdian.apk.ipqc.utils.Utils;
 
@@ -38,6 +39,7 @@ public class TableListActivity extends BaseMvpActivity<TableListPresenter> imple
     private ObservableArrayList<SEObsever> seList;
     private ObservableArrayList<HomeTableObsever> tableObseversList;
     private String flag;//初件 or 巡检
+    private String devId;
 
     private FirstCheckResultObserver firstCheckResult;//初件记录，首页确定se name and code,checklist name and code ,and checkpersion
     private InsCheckResultObserver InsCheckResult;//巡检记录，首页确定se name and code,checklis  t name and code ,and checkpersion
@@ -78,6 +80,12 @@ public class TableListActivity extends BaseMvpActivity<TableListPresenter> imple
         mPresenter = new TableListPresenter();
         mPresenter.attachView(this);
         getSEList();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                devId = DeviceUtil.readDeviceId(TableListActivity.this);
+            }
+        }).start();
     }
 
     private void showSomeMsg(Object res) {
@@ -131,7 +139,11 @@ public class TableListActivity extends BaseMvpActivity<TableListPresenter> imple
         binding.ipqcMainTablelistRv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (Utils.isFastDoubleClick()) {
+                    return;
+                }
                 HomeTableObsever tableObsever = tableObseversList.get(i);
+
                 if (flag.equals(Constans.FirstCheck)) {
                     firstCheckResult = new FirstCheckResultObserver();
                     firstCheckResult.setCheck_person(UserUtils.getInstance().getPnum());
